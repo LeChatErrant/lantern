@@ -11,7 +11,7 @@ import typesTemplate from './template/types.template';
 import helpersTemplate from './template/helpers.template';
 import specTemplate from './template/spec.template';
 
-const projectPath = path.join(__dirname, '..', '..');
+const projectPath = path.join('.');
 const componentPath = path.join(projectPath, 'src', 'components');
 const prismaPath = path.join(projectPath, 'prisma');
 
