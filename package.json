@@ -1,13 +1,15 @@
 {
   "name": "templated-project-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI to assist development of API-template, devops-template and back-office-template",
   "main": "bin/index.js",
   "types": "bin/index.d.ts",
   "bin": {
     "templated-project-cli": "bin/index.js"
   },
-  "files": ["bin/**/*"],
+  "files": [
+    "bin/**/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",
@@ -18,14 +20,17 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
+    "version": "git add -A src",
     "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LeChatErrant/templated-project-cli.git"
   },
-  "keywords": ["cli", "templated"],
+  "keywords": [
+    "cli",
+    "templated"
+  ],
   "author": "LeChatErrant",
   "license": "ISC",
   "bugs": {
