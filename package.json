@@ -2,14 +2,16 @@
   "name": "templated-project-cli",
   "version": "1.0.0",
   "description": "CLI to assist development of API-template, devops-template and back-office-template",
-  "main": "dist/index.js",
+  "main": "bin/index.js",
+  "types": "bin/index.d.ts",
   "bin": {
-    "templated-project-cli": "dist/index.js"
+    "templated-project-cli": "bin/index.js"
   },
+  "files": ["bin/**/*"],
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",
-    "start": "node dist",
+    "start": "node bin",
     "dev": "ts-node src",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
@@ -23,8 +25,8 @@
     "type": "git",
     "url": "git+https://github.com/LeChatErrant/templated-project-cli.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cli", "templated"],
+  "author": "LeChatErrant",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LeChatErrant/templated-project-cli/issues"
