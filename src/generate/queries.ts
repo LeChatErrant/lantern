@@ -2,8 +2,6 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import pluralize from 'pluralize';
 
-import { Options } from './types';
-
 /**
  * Prompt the user for the name of the resource to be created
  *

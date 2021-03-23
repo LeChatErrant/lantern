@@ -6,8 +6,6 @@ import { queryPluralizedResourceName, queryResourceName } from './queries';
 import { templateNewResource } from './templater';
 
 async function generate() {
-  displayCLIBanner();
-
   const resourceName = await queryResourceName();
   const resourceNamePluralized = await queryPluralizedResourceName(resourceName);
 

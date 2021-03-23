@@ -1,22 +1,23 @@
-import inquirer from 'inquirer';
+import Commands from '../Commands';
+import generate from '../generate';
+import edit from '../edit';
 
-import { displayCLIBanner } from '../utils';
+import { queryAction } from './queries';
 
 async function all() {
-  displayCLIBanner();
+  const action = await queryAction();
 
-  const { action } = await inquirer.prompt([{
-    name: 'action',
-    type: 'list',
-    message: 'What do you want to do ?',
-    choices: [
-      'Init a new project',
-      'Generate an API resource',
-      'Edit an API resource',
-      'Remove an API resource',
-    ],
-  }]);
-  console.log(action);
+  switch (action) {
+    case Commands.init: console.log('wip');
+      break;
+    case Commands.generate: await generate();
+      break;
+    case Commands.edit: await edit();
+      break;
+    case Commands.remove: console.log('wip');
+      break;
+    // no default
+  }
 }
 
 export default all;

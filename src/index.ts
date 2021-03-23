@@ -4,14 +4,15 @@ import clui from 'clui';
 import clear from 'clear';
 import figlet from 'figlet';
 import chalk from 'chalk';
-import { Command } from 'commander';
+import commander from 'commander';
 
 import { version } from '../package.json';
 
+import Commands from './Commands';
 import generate from './generate';
 import all from './all';
 
-const cli = new Command();
+const cli = new commander.Command();
 
 cli
   .version(version, '-v, --version')
@@ -26,7 +27,7 @@ cli
 
 cli
   .command('generate')
-  .description('Generate a new API resource')
+  .description(Commands.generate)
   .action(generate);
 
 cli.parse();
