@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
-import clui from 'clui';
-import clear from 'clear';
-import figlet from 'figlet';
-import chalk from 'chalk';
 import commander from 'commander';
 
 import { version } from '../package.json';
 
 import Commands from './Commands';
-import generate from './generate';
 import all from './all';
+import generate from './generate';
+import edit from './edit';
 
 const cli = new commander.Command();
 
@@ -29,5 +26,10 @@ cli
   .command('generate')
   .description(Commands.generate)
   .action(generate);
+
+cli
+  .command('edit')
+  .description(Commands.edit)
+  .action(edit);
 
 cli.parse();
