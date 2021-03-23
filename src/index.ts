@@ -9,10 +9,15 @@ import { Command } from 'commander';
 import { version } from '../package.json';
 
 import generate from './generate';
+import all from './all';
 
 async function main() {
   const cli = new Command();
   cli.version(version, '-v, --version');
+
+  cli
+    .command('commands', { hidden: true, isDefault: true })
+    .action(all);
 
   cli
     .command('generate')
