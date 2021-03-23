@@ -3,6 +3,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 
 import { capitalize, npmRun } from '../utils';
+
 import routesTemplate from './template/routes.template';
 import controllersTemplate from './template/controllers.template';
 import middlewareTemplate from './template/middleware.template';
@@ -17,6 +18,10 @@ const prismaPath = path.join(projectPath, 'prisma');
 
 async function fillPrismaSchema(singular: string) {
   const schemaPath = path.join(prismaPath, 'schema.prisma');
+  if (!fs.existsSync(schemaPath)) {
+    console.error(`${schemaPath} doesn't exist`);
+    return false;
+  }
   const initialLength = fs.statSync(schemaPath).size;
 
   console.log(`Creating ${chalk.green(capitalize(singular))} model in ${chalk.blue(schemaPath)}`);
@@ -31,7 +36,7 @@ async function fillPrismaSchema(singular: string) {
     await npmRun('prisma:generate');
     return true;
   } catch (error) {
-    console.log(`The model ${chalk.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${chalk.blue(schemaPath)} `);
+    console.error(`The model ${chalk.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${chalk.blue(schemaPath)} `);
     fs.truncateSync(schemaPath, initialLength);
     return false;
   }

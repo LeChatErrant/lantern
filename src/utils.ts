@@ -1,6 +1,7 @@
 import npm from 'npm';
 import chalk from 'chalk';
 import figlet from 'figlet';
+import clear from 'clear';
 
 /**
  * Capitalize the given string
@@ -13,6 +14,7 @@ export function capitalize(str: string) {
 }
 
 export function displayCLIBanner() {
+  clear();
   console.log(
     chalk.green(
       figlet.textSync('Templated   project - CLI', { horizontalLayout: 'full' }),
