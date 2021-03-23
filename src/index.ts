@@ -11,20 +11,22 @@ import { version } from '../package.json';
 import generate from './generate';
 import all from './all';
 
-async function main() {
-  const cli = new Command();
-  cli.version(version, '-v, --version');
+const cli = new Command();
 
-  cli
-    .command('commands', { hidden: true, isDefault: true })
-    .action(all);
+cli
+  .version(version, '-v, --version')
+  .addHelpCommand()
+  .allowExcessArguments(false)
+  .allowUnknownOption(false);
 
-  cli
-    .command('generate')
-    .description('Generate a new resource API')
-    .action(generate);
+cli
+  .command('default', { hidden: true, isDefault: true })
+  .description('List available commands')
+  .action(all);
 
-  cli.parse();
-}
+cli
+  .command('generate')
+  .description('Generate a new API resource')
+  .action(generate);
 
-main();
+cli.parse();
