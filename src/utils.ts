@@ -1,4 +1,6 @@
 import npm from 'npm';
+import chalk from 'chalk';
+import figlet from 'figlet';
 
 /**
  * Capitalize the given string
@@ -8,6 +10,14 @@ import npm from 'npm';
  */
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function displayCLIBanner() {
+  console.log(
+    chalk.green(
+      figlet.textSync('Templated   project - CLI', { horizontalLayout: 'full' }),
+    ),
+  );
 }
 
 export async function npmRun(script: string, args: string[] = []) {

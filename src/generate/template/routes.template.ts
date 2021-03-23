@@ -1,4 +1,4 @@
-import { capitalize } from '../utils';
+import { capitalize } from '../../utils';
 
 const routesTemplate = (singular: string, plural: string) => `\
 import express from 'express';

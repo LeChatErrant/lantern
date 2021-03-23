@@ -1,4 +1,4 @@
-import { capitalize } from '../utils';
+import { capitalize } from '../../utils';
 
 const typesTemplate = (singular: string) => `\
 import { } from 'class-validator';

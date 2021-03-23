@@ -4,43 +4,22 @@ import clui from 'clui';
 import clear from 'clear';
 import figlet from 'figlet';
 import chalk from 'chalk';
+import { Command } from 'commander';
 
-import type { Options } from './new_resource/types';
-import { queryOptions, queryPluralizedResourceName, queryResourceName } from './new_resource/cli';
-import { templateNewResource } from './new_resource/templater';
+import { version } from '../package.json';
+
+import generate from './generate';
 
 async function main() {
-  const options: Options = {
-    database_model: {
-      desc: 'Create a default database model',
-      default: true,
-    },
-    tests: {
-      desc: 'Create test files and extend requester',
-      default: true,
-    },
-  };
+  const cli = new Command();
+  cli.version(version, '-v, --version');
 
-  clear();
-  console.log(
-    chalk.green(
-      figlet.textSync('Templated   project - CLI', { horizontalLayout: 'full' }),
-    ),
-  );
+  cli
+    .command('generate')
+    .description('Generate a new resource API')
+    .action(generate);
 
-  const resourceName = await queryResourceName();
-  const resourceNamePluralized = await queryPluralizedResourceName(resourceName);
-  // await queryOptions(options);
-
-  const spinner = new clui.Spinner('Generating new API resource...');
-  spinner.start();
-  const success = await templateNewResource(resourceName, resourceNamePluralized);
-  spinner.stop();
-
-  if (!success) {
-    console.error('Aborting...');
-    process.exit(1);
-  }
+  cli.parse();
 }
 
 main();

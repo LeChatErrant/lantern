@@ -1,4 +1,4 @@
-import { capitalize } from '../utils';
+import { capitalize } from '../../utils';
 
 const prismaTemplate = (singular: string) => `\
 model ${capitalize(singular)} {

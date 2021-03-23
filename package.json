@@ -13,7 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",
-    "start": "node bin",
+    "start": "node bin/src",
     "dev": "ts-node src",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
@@ -41,6 +41,7 @@
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
+    "commander": "^7.2.0",
     "figlet": "^1.5.0",
     "inquirer": "^8.0.0",
     "np": "^7.4.0",

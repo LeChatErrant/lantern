@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
 
-import { capitalize, npmRun } from './utils';
+import { capitalize, npmRun } from '../utils';
 import routesTemplate from './template/routes.template';
 import controllersTemplate from './template/controllers.template';
 import middlewareTemplate from './template/middleware.template';

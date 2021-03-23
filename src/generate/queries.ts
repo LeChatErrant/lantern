@@ -48,31 +48,3 @@ export async function queryPluralizedResourceName(resourceName: string) {
   }]);
   return pluralizedResourceName.toLowerCase();
 }
-
-/**
- * Prompt the user for the given `options`
- * The `desc` field of each option will be displayed, and `default` will be taken in account
- * Directly fill the `value` field of each `options`
- *
- * @param options
- */
-export async function queryOptions(options: Options) {
-  const { options: selectedOptions }: { options: string[] } = await inquirer.prompt([{
-    name: 'options',
-    type: 'checkbox',
-    message: 'Select options',
-    choices: Object
-      .entries(options)
-      .map(([name, option]) => ({
-        value: name,
-        name: option.desc,
-        checked: option.default,
-      })),
-  }]);
-
-  Object
-    .entries(options)
-    .forEach(([name, option]) => {
-      option.value = selectedOptions.includes(name);
-    });
-}
