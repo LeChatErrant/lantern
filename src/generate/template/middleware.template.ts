@@ -1,6 +1,6 @@
 import { capitalize } from '../../utils';
 
-const middlewareTemplate = (singular: string, plural: string) => `\
+const middlewareTemplate = (singular: string) => `\
 import handler from 'express-async-handler';
 import httpStatus from 'http-status-codes';
 import createError from 'http-errors';

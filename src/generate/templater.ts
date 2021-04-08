@@ -65,7 +65,7 @@ export async function templateNewResource(singular: string, plural: string) {
 
   createTemplatedFile(resourcePath, `${singular}Routes.ts`, routesTemplate(singular, plural));
   createTemplatedFile(resourcePath, `${singular}Controllers.ts`, controllersTemplate(singular, plural));
-  createTemplatedFile(resourcePath, `${singular}Middleware.ts`, middlewareTemplate(singular, plural));
+  createTemplatedFile(resourcePath, `${singular}Middleware.ts`, middlewareTemplate(singular));
   createTemplatedFile(resourcePath, `${singular}Types.ts`, typesTemplate(singular));
   createTemplatedFile(resourcePath, `${singular}Helpers.ts`, helpersTemplate(singular));
   createTemplatedFile(resourcePath, `${singular}.spec.ts`, specTemplate(singular));

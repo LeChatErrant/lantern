@@ -1,7 +1,5 @@
 import clui from 'clui';
 
-import { displayCLIBanner } from '../utils';
-
 import { queryPluralizedResourceName, queryResourceName } from './queries';
 import { templateNewResource } from './templater';
 
