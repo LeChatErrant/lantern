@@ -31,7 +31,11 @@
     "cli",
     "templated"
   ],
-  "author": "LeChatErrant",
+  "author": {
+    "name": "LeChatErrant",
+    "email": "guillaume.hector@epitech.eu",
+    "url": "https://github.com/LeChatErrant/"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LeChatErrant/templated-project-cli/issues"
