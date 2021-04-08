@@ -26,7 +26,7 @@ const ${singular}Middleware = handler(async (req, res, next) => {
     return;
   }
 
-  const ${singular} = await db.${singular}.findFirst({ where: { id: ${singular}Id, authorId: userId } });
+  const ${singular} = await db.${singular}.findFirst({ where: { id: ${singular}Id, userId } });
   if (!${singular}) {
     next(createError(httpStatus.NOT_FOUND, \`${capitalize(singular)} \${${singular}Id} of user \${userId} not found\`));
   } else {

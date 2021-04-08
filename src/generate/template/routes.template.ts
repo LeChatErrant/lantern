@@ -24,7 +24,7 @@ router.get(
   }),
 );
 
-router.${singular}(
+router.post(
   '/users/:userId/${plural}',
   validate(${capitalize(singular)}CreateDto),
   ownershipMiddleware,

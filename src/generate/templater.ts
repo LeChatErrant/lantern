@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
 
-import { capitalize, npmRun } from '../utils';
+import { capitalize, insert, npmRun } from '../utils';
 
 import routesTemplate from './template/routes.template';
 import controllersTemplate from './template/controllers.template';
@@ -34,12 +34,34 @@ async function fillPrismaSchema(singular: string) {
   try {
     await npmRun('prisma:format');
     await npmRun('prisma:generate');
+    console.log(`Model ${chalk.green(capitalize(singular))} created in ${chalk.blue(schemaPath)}`);
     return true;
   } catch (error) {
     console.error(`The model ${chalk.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${chalk.blue(schemaPath)} `);
     fs.truncateSync(schemaPath, initialLength);
     return false;
   }
+}
+
+function fillRouter(singular: string, plural: string) {
+  const routerPath = path.join(componentPath, 'index.ts');
+  console.log(`Filling ${chalk.green(routerPath)}...`);
+  if (!fs.existsSync(routerPath)) {
+    console.error(`${componentPath} doesn't exist.`);
+    return false;
+  }
+
+  let content = fs.readFileSync(routerPath).toString();
+  const lastImportPos = content.lastIndexOf('import');
+  const lineAfterLastImport = content.indexOf('\n', lastImportPos) + 1;
+  content = insert(content, lineAfterLastImport, `import ${plural} from './${singular}/${singular}Routes';\n`);
+
+  const lastRouterPos = content.lastIndexOf('router.use(');
+  const lineAfterLastRouter = content.indexOf('\n', lastRouterPos) + 1;
+  content = insert(content, lineAfterLastRouter, `router.use(${plural});\n`);
+
+  fs.writeFileSync(routerPath, content);
+  return true;
 }
 
 function createTemplatedFile(directory: string, filename: string, content: string) {
@@ -59,6 +81,9 @@ export async function templateNewResource(singular: string, plural: string) {
 
   const prismaSuccess = await fillPrismaSchema(singular);
   if (!prismaSuccess) return false;
+
+  const routerSuccess = fillRouter(singular, plural);
+  if (!routerSuccess) return false;
 
   console.log(`Creating ${chalk.green(resourcePath)} folder`);
   fs.mkdirSync(resourcePath);

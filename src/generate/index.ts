@@ -7,10 +7,10 @@ async function generate() {
   const resourceName = await queryResourceName();
   const resourceNamePluralized = await queryPluralizedResourceName(resourceName);
 
-  const spinner = new clui.Spinner('Generating new API resource...');
-  spinner.start();
+  // const spinner = new clui.Spinner('Generating new API resource...');
+  // spinner.start();
   const success = await templateNewResource(resourceName, resourceNamePluralized);
-  spinner.stop();
+  // spinner.stop();
 
   if (!success) {
     console.error('Aborting...');
