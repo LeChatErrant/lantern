@@ -9,6 +9,7 @@ import Requester from '../../appRequester';
 import db from '../../appDatabase';
 import logger from '../../appLogger';
 import waitApp from '../../utils/waitApp';
+import closeApp from '../../utils/closeApp';
 
 const app = new Requester();
 
@@ -24,9 +25,9 @@ beforeAll(async () => {
   await waitApp();
 });
 
-// Gracefully terminate prisma query engine
+// Gracefully terminate external services connections
 afterAll(async () => {
-  await db.$disconnect();
+  await closeApp();
 });
 
 // Reset session before each test, create a user and log in
