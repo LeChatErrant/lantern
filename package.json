@@ -2,10 +2,8 @@
   "name": "templated-project-cli",
   "version": "2.0.2",
   "description": "CLI to assist development of API-template, devops-template and back-office-template",
-  "main": "bin/index.js",
-  "types": "bin/index.d.ts",
   "bin": {
-    "templated-project-cli": "bin/index.js"
+    "templated-project-cli": "bin/src/index.js"
   },
   "files": [
     "bin/**/*"
