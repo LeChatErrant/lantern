@@ -8,6 +8,7 @@ import httpStatus from 'http-status-codes';
 import Requester from '../../appRequester';
 import db from '../../appDatabase';
 import logger from '../../appLogger';
+import waitApp from '../../utils/waitApp';
 
 const app = new Requester();
 
@@ -17,6 +18,16 @@ const user = {
   password: 'password',
   id: '',
 };
+
+// Wait for all external services (db, redis...)
+beforeAll(async () => {
+  await waitApp();
+});
+
+// Gracefully terminate prisma query engine
+afterAll(async () => {
+  await db.$disconnect();
+});
 
 // Reset session before each test, create a user and log in
 beforeEach(async () => {
