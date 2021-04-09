@@ -18,7 +18,6 @@ It essentially saves your time by writing **boilerplate code** for you
 
 1. Install the CLI with `npm install -g templated-project-cli`
 2. Simply run `templated-project-cli` to launch the CLI
-3. Get help on commands with `templated-project-cli --help` or on a specific command with `templated-project-cli [command] --help`
 
 # Documentation
 
