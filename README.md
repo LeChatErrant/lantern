@@ -4,13 +4,13 @@ A Command-Line Interface for **[API-template](https://github.com/LeChatErrant/AP
 
 # What is it ?
 
-This Command-Line Interface purpose is to help you to initialize, develop and maintain projects generated from **[API-template](https://github.com/LeChatErrant/API-template)**
+This Command-Line Interface purpose is to help you to **initialize**, **develop** and **maintain** projects generated from **[API-template](https://github.com/LeChatErrant/API-template)**
 
 It essentially saves your time by writing **boilerplate code** for you
 
 > It is currently under heavy development, so new features will be release soon ❤️
-
-Don't hesitate to share your improvements or to give feedback on **[Discord](https://discord.gg/4Djq9Qsc3e)** :wink:
+>
+> Don't hesitate to share your improvements or to give feedback on **[Discord](https://discord.gg/4Djq9Qsc3e)** :wink:
 
 ![Demo](.github/assets/generate.gif)
 
