@@ -21,7 +21,7 @@ It essentially saves your time by writing **boilerplate code** for you
 
 # Documentation
 
-Documentation is currently being written and should be available soon. At this moment, simply refers to [API-template wiki page](https://github.com/LeChatErrant/API-template/wiki/Create-new-resource)
+Documentation is currently being written and should be available soon. At this moment, simply refers to **[API-template wiki page](https://github.com/LeChatErrant/API-template/wiki/Create-new-resource)**
 
 # Work in progress
 
