@@ -1,6 +1,6 @@
 # Templated-project-cli
 
-A Command-Line Interface for [API-template](https://github.com/LeChatErrant/API-template)
+A Command-Line Interface for **[API-template](https://github.com/LeChatErrant/API-template)**
 
 # What is it ?
 
