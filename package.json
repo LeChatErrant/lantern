@@ -45,7 +45,7 @@
     "clui": "^0.3.6",
     "commander": "^7.2.0",
     "figlet": "^1.5.0",
-    "inquirer": "^8.0.0",
+    "inquirer": "^8.2.0",
     "np": "^7.4.0",
     "npm": "^7.6.3",
     "pluralize": "^8.0.0",
