@@ -16,6 +16,17 @@ const projectPath = path.join('.');
 const componentPath = path.join(projectPath, 'src', 'components');
 const prismaPath = path.join(projectPath, 'prisma');
 
+function createFolder(folderPath: string) {
+  if (fs.existsSync(folderPath)) {
+    console.error(`The directory ${folderPath} already exists`);
+    return false;
+  }
+
+  console.log(`Creating ${chalk.green(folderPath)} folder`);
+  fs.mkdirSync(folderPath);
+  return true;
+}
+
 async function fillPrismaSchema(singular: string) {
   const schemaPath = path.join(prismaPath, 'schema.prisma');
   if (!fs.existsSync(schemaPath)) {
@@ -74,19 +85,14 @@ function createTemplatedFile(directory: string, filename: string, content: strin
 export async function templateNewResource(singular: string, plural: string) {
   const resourcePath = path.join(componentPath, singular);
 
-  if (fs.existsSync(resourcePath)) {
-    console.error(`The directory ${resourcePath} already exists`);
-    return false;
-  }
+  const folderSuccess = await createFolder(resourcePath);
+  if (!folderSuccess) return false;
 
   const prismaSuccess = await fillPrismaSchema(singular);
   if (!prismaSuccess) return false;
 
   const routerSuccess = fillRouter(singular, plural);
   if (!routerSuccess) return false;
-
-  console.log(`Creating ${chalk.green(resourcePath)} folder`);
-  fs.mkdirSync(resourcePath);
 
   createTemplatedFile(resourcePath, `${singular}Routes.ts`, routesTemplate(singular, plural));
   createTemplatedFile(resourcePath, `${singular}Controllers.ts`, controllersTemplate(singular, plural));
