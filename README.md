@@ -8,9 +8,9 @@ This Command-Line Interface purpose is to help you to **initialize**, **develop*
 
 It essentially saves your time by writing **boilerplate code** for you
 
-> It is currently under heavy development, so new features will be release soon ❤️
+> The project is currently under heavy development, so new features will be release soon ❤️
 >
-> Don't hesitate to share your improvements or to give feedback on **[Discord](https://discord.gg/4Djq9Qsc3e)** :wink:
+> Don't hesitate to share your improvements or to give feedback on Discord **(LeChatErrant#6074)** :wink:
 
 ![Demo](.github/assets/generate.gif)
 
@@ -25,6 +25,7 @@ Documentation is currently being written and should be available soon. At this m
 
 # Work in progress
 
+ - [ ] Automatic type sharing between front and back
  - [ ] More options when creating API resource (especially which relations to create)
  - [ ] Init new project from scratch
  - [ ] Edit an existing resource
