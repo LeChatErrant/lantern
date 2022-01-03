@@ -63,7 +63,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.25.4",
     "ts-node": "^10.4.0"
   }
 }
