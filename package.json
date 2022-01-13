@@ -26,6 +26,7 @@
     "build": "tsc",
     "start": "node bin/src",
     "dev": "ts-node src",
+    "install-locally": "npm run build && sudo npm install -g .",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
     "prepare": "husky install"
