@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import chalk from 'chalk';
+import colors from 'colors';
 
 import { capitalize, insert, npmRun } from '../utils';
 
@@ -22,7 +22,7 @@ function createFolder(folderPath: string) {
     return false;
   }
 
-  console.log(`Creating ${chalk.green(folderPath)} folder`);
+  console.log(`Creating ${colors.green(folderPath)} folder`);
   fs.mkdirSync(folderPath);
   return true;
 }
@@ -35,7 +35,7 @@ async function fillPrismaSchema(singular: string) {
   }
   const initialLength = fs.statSync(schemaPath).size;
 
-  console.log(`Creating ${chalk.green(capitalize(singular))} model in ${chalk.blue(schemaPath)}`);
+  console.log(`Creating ${colors.green(capitalize(singular))} model in ${colors.blue(schemaPath)}`);
 
   fs.appendFileSync(
     schemaPath,
@@ -45,10 +45,10 @@ async function fillPrismaSchema(singular: string) {
   try {
     await npmRun('prisma:format');
     await npmRun('prisma:generate');
-    console.log(`Model ${chalk.green(capitalize(singular))} created in ${chalk.blue(schemaPath)}`);
+    console.log(`Model ${colors.green(capitalize(singular))} created in ${colors.blue(schemaPath)}`);
     return true;
   } catch (error) {
-    console.error(`The model ${chalk.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${chalk.blue(schemaPath)} `);
+    console.error(`The model ${colors.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${colors.blue(schemaPath)} `);
     fs.truncateSync(schemaPath, initialLength);
     return false;
   }
@@ -56,7 +56,7 @@ async function fillPrismaSchema(singular: string) {
 
 function fillRouter(singular: string, plural: string) {
   const routerPath = path.join(componentPath, 'index.ts');
-  console.log(`Filling ${chalk.green(routerPath)}...`);
+  console.log(`Filling ${colors.green(routerPath)}...`);
   if (!fs.existsSync(routerPath)) {
     console.error(`${componentPath} doesn't exist.`);
     return false;
@@ -78,7 +78,7 @@ function fillRouter(singular: string, plural: string) {
 function createTemplatedFile(directory: string, filename: string, content: string) {
   const filePath = path.join(directory, filename);
 
-  console.log(`Creating ${chalk.green(filePath)} file...`);
+  console.log(`Creating ${colors.green(filePath)} file...`);
   fs.writeFileSync(filePath, content);
 }
 

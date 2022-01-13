@@ -1,5 +1,5 @@
 import npm from 'npm';
-import chalk from 'chalk';
+import colors from 'colors';
 import figlet from 'figlet';
 import clear from 'clear';
 
@@ -27,7 +27,7 @@ export function insert(str: string, index: number, value: string) {
 export function displayCLIBanner() {
   clear();
   console.log(
-    chalk.green(
+    colors.green(
       figlet.textSync('Templated   project - CLI', { horizontalLayout: 'full' }),
     ),
   );

@@ -1,7 +1,15 @@
 {
   "name": "templated-project-cli",
   "version": "3.0.0",
-  "description": "CLI to assist development of API-template, devops-template and back-office-template",
+  "description": "CLI to assist development of API-template, devops-template and front-template",
+  "author": {
+    "name": "LeChatErrant",
+    "email": "guillaume.hector@epitech.eu",
+    "url": "https://github.com/LeChatErrant/"
+  },
+  "repository": {
+    "url": "https://github.com/LeChatErrant/templated-project-cli"
+  },
   "bin": {
     "templated-project-cli": "bin/src/index.js"
   },
@@ -9,17 +17,11 @@
     "bin/**/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
     "build": "tsc",
     "start": "node bin/src",
     "dev": "ts-node src",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
-    "lint:ci": "eslint './src/**/*.{ts,tsx}'",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "git add -A src",
-    "postversion": "git push && git push --tags"
+    "lint:ci": "eslint './src/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
@@ -40,9 +42,9 @@
   },
   "homepage": "https://github.com/LeChatErrant/templated-project-cli#readme",
   "dependencies": {
-    "chalk": "^5.0.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
+    "colors": "^1.4.0",
     "commander": "^8.3.0",
     "figlet": "^1.5.2",
     "inquirer": "^8.2.0",

@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import chalk from 'chalk';
+import colors from 'colors';
 import pluralize from 'pluralize';
 
 /**
@@ -11,7 +11,7 @@ export async function queryResourceName() {
   const { resourceName } = await inquirer.prompt([{
     name: 'resourceName',
     type: 'input',
-    message: `How should your new API resource be named ? ${chalk.red('(singular)')}`,
+    message: `How should your new API resource be named ? ${colors.red('(singular)')}`,
     validate: (input) => input !== '',
   }]);
   return resourceName.toLowerCase();
@@ -30,7 +30,7 @@ export async function queryPluralizedResourceName(resourceName: string) {
   const { isPluralCorrect } = await inquirer.prompt([{
     name: 'isPluralCorrect',
     type: 'list',
-    message: `Is '${chalk.blue(guess)}' the correct plural form ?`,
+    message: `Is '${colors.blue(guess)}' the correct plural form ?`,
     choices: ['Yes', 'No'],
   }]);
 
