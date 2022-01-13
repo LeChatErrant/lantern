@@ -13,7 +13,7 @@ import helpersTemplate from './template/helpers.template';
 import specTemplate from './template/spec.template';
 
 const projectPath = path.join('.');
-const componentPath = path.join(projectPath, 'src', 'components');
+const componentPath = path.join(projectPath, 'src', 'routes');
 const prismaPath = path.join(projectPath, 'prisma');
 
 function createFolder(folderPath: string) {
