@@ -3,7 +3,8 @@
   "version": "3.0.0",
   "description": "CLI to assist development of API-template, devops-template and front-template",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry":"https://npm.pkg.github.com",
+    "access": "public"
   },
   "bin": {
     "templated-project-cli": "bin/src/index.js"
