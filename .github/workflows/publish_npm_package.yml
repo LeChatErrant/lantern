@@ -1,10 +1,10 @@
-name: Publish to github npm registry
+name: Publish package to github npm registry
 
 on:
   release:
     types: [published]
 jobs:
-  publish-types:
+  publish-npm-package:
     runs-on: ubuntu-latest
     permissions:
       contents: read
