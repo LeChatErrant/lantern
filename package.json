@@ -8,13 +8,6 @@
   "files": [
     "bin/**/*"
   ],
-  "scripts": {
-    "build": "tsc",
-    "start": "node bin/src",
-    "dev": "ts-node src",
-    "lint": "eslint './src/**/*.{ts,tsx}' --fix",
-    "lint:ci": "eslint './src/**/*.{ts,tsx}'"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LeChatErrant/templated-project-cli.git"
@@ -29,6 +22,19 @@
     "url": "https://github.com/LeChatErrant/templated-project-cli/issues"
   },
   "homepage": "https://github.com/LeChatErrant/templated-project-cli#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node bin/src",
+    "dev": "ts-node src",
+    "lint": "eslint './src/**/*.{ts,tsx}' --fix",
+    "lint:ci": "eslint './src/**/*.{ts,tsx}'",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.@(ts|js)": [
+      "eslint --fix"
+    ]
+  },
   "dependencies": {
     "clear": "^0.1.0",
     "clui": "^0.3.6",
@@ -54,6 +60,8 @@
     "eslint": "^7.22.0",
     "eslint-config-airbnb-typescript": "^14.0.2",
     "eslint-plugin-import": "^2.25.4",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.1.7",
     "ts-node": "^10.4.0"
   }
 }
