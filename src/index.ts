@@ -8,6 +8,7 @@ import Commands from './Commands';
 import all from './all';
 import generate from './generate';
 import edit from './edit';
+import publishTypes from './publishTypes';
 
 const cli = new commander.Command();
 
@@ -31,5 +32,10 @@ cli
   .command('edit')
   .description(Commands.edit)
   .action(edit);
+
+cli
+  .command('publish types')
+  .description(Commands.publishTypes)
+  .action(publishTypes);
 
 cli.parse();
