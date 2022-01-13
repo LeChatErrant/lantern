@@ -1,5 +1,6 @@
 {
   "name": "@lechaterrant/templated-project-cli",
+  "version": "1.0.0",
   "description": "CLI to assist development of API-template, devops-template and front-template",
   "publishConfig": {
     "registry":"https://npm.pkg.github.com",
