@@ -1,12 +1,8 @@
-name: Publish types to Github npm package
+name: Publish to github npm registry
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Release version (example : 3.2.0)"
-        required: true
-
+  release:
+    types: [published]
 jobs:
   publish-types:
     runs-on: ubuntu-latest
@@ -25,16 +21,10 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
         scope: '@lechaterrant'
 
-    - name: Debug dir
-      run: ls -la $RUNNER_TEMP
-
-    - name: Debug
-      run: cat $RUNNER_TEMP/.npmrc
-
     - name: Install dependencies
       run: npm install
 
     - name: Publish
-      run: npm publish
+      run: npm publish --tag $GITHUB_REF
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
