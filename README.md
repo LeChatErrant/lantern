@@ -12,7 +12,7 @@ It essentially saves your time by writing **boilerplate code** for you
 >
 > Don't hesitate to share your improvements or to give feedback on Discord **(LeChatErrant#6074)** :wink:
 
-![Demo](.github/assets/generate.gif)
+![Demo](https://github.com/LeChatErrant/templated-project-cli/blob/master/.github/assets/generate.gif)
 
 # Get started
 
