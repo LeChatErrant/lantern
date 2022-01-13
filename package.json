@@ -2,6 +2,9 @@
   "name": "templated-project-cli",
   "version": "3.0.0",
   "description": "CLI to assist development of API-template, devops-template and front-template",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "bin": {
     "templated-project-cli": "bin/src/index.js"
   },
@@ -29,6 +32,7 @@
     "install-locally": "npm run build && sudo npm install -g .",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
+    "postinstall": "npm run build",
     "prepare": "husky install"
   },
   "lint-staged": {
