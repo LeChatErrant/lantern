@@ -18,13 +18,15 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
+        # Needs to match the package.json publishConfig.registry
         registry-url: 'https://npm.pkg.github.com'
+        # Needs to match the package.json name (@scope/pkg-name)
         scope: '@lechaterrant'
 
     - name: Install dependencies
       run: npm install
 
     - name: Publish
-      run: npm publish --tag $GITHUB_REF
+      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
