@@ -31,7 +31,8 @@
     "install-locally": "npm run build && sudo npm install -g .",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
-    "prepare": "husky install && npm run build"
+    "postinstall": "npm run build",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.@(ts|js)": [
