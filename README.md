@@ -16,7 +16,9 @@ Say hello to **Lantern**, your guide through the *****backend abyss*****
 
 It aims to make backend development **fast** and **easy**, and focuses on generating **maintainable code**
 
-![Demo](https://github.com/LeChatErrant/lantern/blob/master/.github/assets/generate.gif)
+| ![Demo](https://github.com/LeChatErrant/lantern/blob/master/.github/assets/generate.gif) |
+|------------------------------------------------------------------------------------------|
+| V1 demo, will be updated soon                                                            |
 
 A **lantern** project follows a lot of **good practices** while staying entirely **modifiable** by developers
 
