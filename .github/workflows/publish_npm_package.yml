@@ -68,6 +68,9 @@ jobs:
             const { owner, repo } = context.repo;
             core.info(`Identified repository ${owner}/${repo}`);
           
+            const version = core.getInput('version', { required: true });
+            core.info(`Version : ${version}`);
+
             core.info(`Creating tag ${version}`);
           
             const { data: { sha } } = await github.repos.getCommit({
