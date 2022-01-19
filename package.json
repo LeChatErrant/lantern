@@ -6,10 +6,10 @@
     "access": "public"
   },
   "bin": {
-    "lantern": "bin/src/index.js"
+    "lantern": "zebi/src/index.js"
   },
   "files": [
-    "bin/**/*.js"
+    "zebi/**/*"
   ],
   "repository": {
     "url": "https://github.com/LeChatErrant/lantern"
