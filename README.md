@@ -16,7 +16,7 @@ Say hello to **Lantern**, your guide through the *****backend abyss*****
 
 It aims to make backend development **fast** and **easy**, and focuses on generating **maintainable code**
 
-___
+![Demo](https://github.com/LeChatErrant/lantern/blob/master/.github/assets/generate.gif)
 
 A **lantern** project follows a lot of **good practices** while staying entirely **modifiable** by developers
 
@@ -24,8 +24,6 @@ In summary, it simply gives you a **guideline** by writing **boilerplate code**
 
 > An example lantern project, serving as guidelines reference, can be found at **[API-template](https://github.com/LeChatErrant/API-template)**
 
-
-![Demo](https://github.com/LeChatErrant/lantern/blob/master/.github/assets/generate.gif)
 
 # Get started
 
