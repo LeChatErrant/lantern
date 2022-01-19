@@ -3,7 +3,7 @@ import clui from 'clui';
 import { queryPluralizedResourceName, queryResourceName } from './queries';
 import { templateNewResource } from './templater';
 
-async function generate() {
+async function create() {
   const resourceName = await queryResourceName();
   const resourceNamePluralized = await queryPluralizedResourceName(resourceName);
 
@@ -18,4 +18,4 @@ async function generate() {
   }
 }
 
-export default generate;
+export default create;

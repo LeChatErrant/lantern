@@ -5,13 +5,15 @@ import figlet from 'figlet';
 import { version } from '../../package.json';
 
 /**
- * Clear screen and display CLI banner
+ * Clear screen and display clean CLI banner
  *
  *   _                       _
  *  | |       __ _   _ __   | |_    ___   _ __   _ __
  *  | |      / _` | | '_ \  | __|  / _ \ | '__| | '_ \
  *  | |___  | (_| | | | | | | |_  |  __/ | |    | | | |
  *  |_____|  \__,_| |_| |_|  \__|  \___| |_|    |_| |_|
+ *
+ *  Lantern CLI v3.2.0
  */
 export function displayCLIBanner() {
   clear();
@@ -23,4 +25,5 @@ export function displayCLIBanner() {
   console.log(
     colors.blue(`Lantern CLI v${version}`),
   );
+  console.log();
 }

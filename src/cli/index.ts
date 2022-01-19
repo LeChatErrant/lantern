@@ -4,7 +4,7 @@ import { version } from '../../package.json';
 
 import Command, { CommandsDescription } from './Command';
 import defaultCommand from './default';
-import generate from './generate';
+import create from './create';
 import edit from './edit';
 import publishTypes from './publishTypes';
 
@@ -22,9 +22,9 @@ cli
   .action(defaultCommand);
 
 cli
-  .command(Command.GENERATE)
-  .description(CommandsDescription[Command.GENERATE])
-  .action(generate);
+  .command(Command.CREATE)
+  .description(CommandsDescription[Command.CREATE])
+  .action(create);
 
 cli
   .command(Command.EDIT)

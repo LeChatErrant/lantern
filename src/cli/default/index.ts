@@ -1,7 +1,7 @@
 import colors from 'colors';
 
 import Command from '../Command';
-import generate from '../generate';
+import create from '../create';
 import edit from '../edit';
 import publishTypes from '../publishTypes';
 
@@ -13,7 +13,7 @@ async function defaultCommand() {
   switch (action) {
     case Command.INIT: console.log('Coming soon !');
       break;
-    case Command.GENERATE: await generate();
+    case Command.CREATE: await create();
       break;
     case Command.EDIT: await edit();
       break;

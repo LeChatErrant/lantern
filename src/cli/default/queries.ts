@@ -6,7 +6,7 @@ export async function queryCommand(): Promise<Command> {
   const { action } = await inquirer.prompt([{
     name: 'action',
     type: 'list',
-    message: 'What do you want to do ?',
+    message: 'How can I help you?',
     choices: Object
       .values(Command)
       .filter((command: Command) => command !== Command.DEFAULT)
