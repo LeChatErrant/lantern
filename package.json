@@ -1,5 +1,5 @@
 {
-  "name": "@lechaterrant/templated-project-cli",
+  "name": "templated-project-cli",
   "version": "1.0.0",
   "description": "CLI to assist development of API-template, devops-template and front-template",
   "publishConfig": {
