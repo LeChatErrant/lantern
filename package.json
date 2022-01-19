@@ -8,9 +8,6 @@
   "bin": {
     "lantern": "bin/src/index.js"
   },
-  "files": [
-    "bin"
-  ],
   "repository": {
     "url": "https://github.com/LeChatErrant/lantern"
   },
