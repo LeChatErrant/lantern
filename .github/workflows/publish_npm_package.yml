@@ -51,6 +51,12 @@ jobs:
     - name: Build CLI
       run: npm run build
 
+    - name: Debug
+      run: ls -R bin
+
+    - name: Stop
+      run: exit 1
+
     - name: Push bumped package.json
       env:
         VERSION: ${{ github.event.inputs.version }}
