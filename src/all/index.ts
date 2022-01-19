@@ -1,22 +1,26 @@
-import Commands from '../Commands';
+import colors from 'colors';
+
+import Command from '../Command';
 import generate from '../generate';
 import edit from '../edit';
+import publishTypes from '../publishTypes';
 
-import { queryAction } from './queries';
+import { queryCommand } from './queries';
 
 async function all() {
-  const action = await queryAction();
+  const action = await queryCommand();
 
   switch (action) {
-    case Commands.init: console.log('Coming soon !');
+    case Command.INIT: console.log('Coming soon !');
       break;
-    case Commands.generate: await generate();
+    case Command.GENERATE: await generate();
       break;
-    case Commands.edit: await edit();
+    case Command.EDIT: await edit();
       break;
-    case Commands.remove: console.log('Coming soon !');
+    case Command.PUBLISH: await publishTypes();
       break;
-    // no default
+    default: console.log(`Command ${colors.blue(action)} not supported`);
+      break;
   }
 }
 

@@ -4,7 +4,7 @@ import commander from 'commander';
 
 import { version } from '../package.json';
 
-import Commands from './Commands';
+import Command, { CommandsDescription } from './Command';
 import all from './all';
 import generate from './generate';
 import edit from './edit';
@@ -19,23 +19,23 @@ cli
   .allowUnknownOption(false);
 
 cli
-  .command('default', { hidden: true, isDefault: true })
-  .description('List available commands')
+  .command(Command.DEFAULT, { hidden: true, isDefault: true })
+  .description(CommandsDescription[Command.DEFAULT])
   .action(all);
 
 cli
-  .command('generate')
-  .description(Commands.generate)
+  .command(Command.GENERATE)
+  .description(CommandsDescription[Command.GENERATE])
   .action(generate);
 
 cli
-  .command('edit')
-  .description(Commands.edit)
+  .command(Command.EDIT)
+  .description(CommandsDescription[Command.EDIT])
   .action(edit);
 
 cli
-  .command('publish types')
-  .description(Commands.publishTypes)
+  .command(Command.PUBLISH)
+  .description(CommandsDescription[Command.PUBLISH])
   .action(publishTypes);
 
 cli.parse();
