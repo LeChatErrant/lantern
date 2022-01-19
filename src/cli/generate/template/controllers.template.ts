@@ -1,4 +1,4 @@
-import { capitalize } from '../../../utils/utils';
+import { capitalize } from '../../../utils/string';
 
 const controllersTemplate = (singular: string, plural: string) => `\
 import httpStatus from 'http-status-codes';

@@ -2,7 +2,8 @@ import path from 'path';
 import fs from 'fs';
 import colors from 'colors';
 
-import { capitalize, insert, npmRun } from '../../utils/utils';
+import { capitalize, insert } from '../../utils/string';
+import { npmRun } from '../../utils/npm';
 
 import routesTemplate from './template/routes.template';
 import controllersTemplate from './template/controllers.template';

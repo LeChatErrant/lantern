@@ -1,4 +1,4 @@
-import { capitalize } from '../../../utils/utils';
+import { capitalize } from '../../../utils/string';
 
 const middlewareTemplate = (singular: string) => `\
 import handler from 'express-async-handler';
