@@ -1,4 +1,4 @@
-name: Publish package to npm registry
+name: Create release and publish package to npm registry
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
         description: "Release version (example : 3.2.0)"
         required: true
 jobs:
-  publish-npm-package:
+  release-npm-package:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -59,7 +59,7 @@ jobs:
         git commit --allow-empty -am "Bumping package version to $VERSION"
         git push
 
-    - name: Create release
+    - name: Create github release
       uses: actions/github-script@v3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -109,7 +109,7 @@ jobs:
             core.setFailed(error.message);
           }
 
-    - name: Publish
+    - name: Publish to npm registry
       run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
