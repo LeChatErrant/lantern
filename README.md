@@ -1,4 +1,6 @@
 # Lantern
+[![Build](https://github.com/LeChatErrant/lantern/actions/workflows/build.yml/badge.svg)](https://github.com/LeChatErrant/lantern/actions/workflows/build.yml)
+[![Lint](https://github.com/LeChatErrant/lantern/actions/workflows/lint.yml/badge.svg)](https://github.com/LeChatErrant/lantern/actions/workflows/lint.yml)
 
 Backend development can be **hard**, **long**, and **dark**. Even more to produce **modern**, **robust**, **production-ready** APIs
 
