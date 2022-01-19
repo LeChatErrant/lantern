@@ -54,8 +54,8 @@ jobs:
     - name: Debug .npmrc
       run: cat /home/runner/work/_temp/.npmrc
 
-    - name: Remove .npmrc
-      run: rm /home/runner/work/_temp/.npmrc
+    - name: Debug permissions
+      run: ls -lRa zebi
 
     - name: Publish to npm registry
       run: npm publish
