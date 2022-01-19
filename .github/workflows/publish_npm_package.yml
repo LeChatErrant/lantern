@@ -9,9 +9,6 @@ on:
 jobs:
   release-npm-package:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
     - name: Checkout
