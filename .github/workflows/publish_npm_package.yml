@@ -55,7 +55,7 @@ jobs:
         VERSION: ${{ github.event.inputs.version }}
       run: |
         git config --global user.name "GitHub Action"
-        git config --global use.email "action@github.com"
+        git config --global user.email "action@github.com"
         git commit --allow-empty -am "Bumping package version to $VERSION"
         git push
 
