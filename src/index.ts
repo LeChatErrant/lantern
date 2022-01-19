@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
 import cli from './cli';
-import { displayCLIBanner } from './utils/display';
 import { LanternError } from './utils/errors';
 import logger from './utils/logger';
 import { revertAllFileModifications } from './utils/files';
-
-displayCLIBanner();
 
 async function main() {
   try {
