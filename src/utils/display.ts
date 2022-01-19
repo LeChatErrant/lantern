@@ -4,6 +4,8 @@ import figlet from 'figlet';
 
 import { version } from '../../package.json';
 
+import logger from './logger';
+
 /**
  * Clear screen and display clean CLI banner
  *
@@ -17,13 +19,13 @@ import { version } from '../../package.json';
  */
 export function displayCLIBanner() {
   clear();
-  console.log(
+  logger.log(
     colors.yellow(
       figlet.textSync('Lantern', { horizontalLayout: 'full' }),
     ),
   );
-  console.log(
+  logger.info(
     colors.blue(`Lantern CLI v${version}`),
   );
-  console.log();
+  logger.info();
 }
