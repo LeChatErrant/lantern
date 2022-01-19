@@ -7,7 +7,7 @@ import publishTypes from '../publishTypes';
 
 import { queryCommand } from './queries';
 
-async function all() {
+async function defaultCommand() {
   const action = await queryCommand();
 
   switch (action) {
@@ -24,4 +24,4 @@ async function all() {
   }
 }
 
-export default all;
+export default defaultCommand;

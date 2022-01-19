@@ -2,10 +2,10 @@
 
 import commander from 'commander';
 
-import { version } from '../package.json';
+import { version } from '../../package.json';
 
 import Command, { CommandsDescription } from './Command';
-import all from './all';
+import defaultCommand from './default';
 import generate from './generate';
 import edit from './edit';
 import publishTypes from './publishTypes';
@@ -21,7 +21,7 @@ cli
 cli
   .command(Command.DEFAULT, { hidden: true, isDefault: true })
   .description(CommandsDescription[Command.DEFAULT])
-  .action(all);
+  .action(defaultCommand);
 
 cli
   .command(Command.GENERATE)

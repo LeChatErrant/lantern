@@ -1,4 +1,4 @@
-import { capitalize } from '../../utils';
+import { capitalize } from '../../../utils/utils';
 
 const helpersTemplate = (singular: string) => `\
 import type { ${capitalize(singular)} } from '@prisma/client';
