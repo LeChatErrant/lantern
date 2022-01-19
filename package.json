@@ -31,7 +31,8 @@
     "install-locally": "npm run build && sudo npm install -g .",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublishOnly": "npm run build"
   },
   "lint-staged": {
     "*.@(ts|js)": [
@@ -39,6 +40,7 @@
     ]
   },
   "dependencies": {
+    "@lechaterrant/lantern": "^1.0.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
     "colors": "^1.4.0",
