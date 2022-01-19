@@ -44,7 +44,7 @@ jobs:
             package.version = version
             fs.writeFileSync('./package.json', JSON.stringify(package, null, 2));
           } catch (err) {
-            core.setFailed(error.message);
+            core.setFailed(err.message);
           }
 
     - name: Install dependencies and update package-lock.json
