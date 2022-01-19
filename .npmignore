@@ -1,0 +1,7 @@
+.github
+.git
+.husky
+src
+node_modules
+.eslintrc.js
+tsconfig.json
