@@ -99,7 +99,7 @@ jobs:
               draft: false,
               name: version,
               tag_name: version,
-              body: `# ${version}`",
+              body: `# ${version}`,
             });
             core.info(JSON.stringify(res));
           } catch (error) {
