@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        token: {{ secrets.GITHUB_TOKEN }}
 
     - name: Use Node.js
       uses: actions/setup-node@v2
@@ -56,6 +54,7 @@ jobs:
       env:
         VERSION: ${{ github.event.inputs.version }}
       run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
         git commit --allow-empty -am "Bumping package version to $VERSION"
