@@ -3,17 +3,21 @@ import colors from 'colors';
 class Logger {
   private silent = false;
 
-  public log(msg: string) {
+  public log(msg = '') {
     if (!this.silent) {
       console.log(msg);
     }
   }
 
-  public error(msg: string) {
+  public info(msg = '') {
+    console.log(colors.blue(msg));
+  }
+
+  public error(msg = '') {
     console.error(colors.red(msg));
   }
 
-  public success(msg: string) {
+  public success(msg = '') {
     console.log(colors.green(msg));
   }
 
