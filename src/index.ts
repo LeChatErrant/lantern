@@ -4,16 +4,21 @@ import cli from './cli';
 import { displayCLIBanner } from './utils/display';
 import { LanternError } from './utils/errors';
 import logger from './utils/logger';
+import { revertAllFileModifications } from './utils/files';
 
 displayCLIBanner();
 
 async function main() {
   try {
     await cli.parseAsync();
+    logger.success('Success !');
   } catch (err) {
     if (err instanceof LanternError) {
       logger.error(err.message);
       logger.error('Aborting...');
+      logger.setSilent();
+      revertAllFileModifications();
+      logger.error('Contact support on https://github.com/LeChatErrant/lantern/issues or directly on Discord @LeChatErrant#6074');
     } else {
       throw err;
     }
