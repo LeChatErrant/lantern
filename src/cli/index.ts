@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import commander from 'commander';
 
 import { version } from '../../package.json';
@@ -38,4 +36,4 @@ cli
   .description(CommandsDescription[Command.PUBLISH])
   .action(publishTypes);
 
-cli.parse();
+export default cli;
