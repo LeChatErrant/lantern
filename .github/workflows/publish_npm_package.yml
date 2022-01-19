@@ -52,7 +52,7 @@ jobs:
 
     - name: Push bumped packages
       env:
-        VERSION: ${{ github.event.inputs.version} }}
+        VERSION: ${{ github.event.inputs.version }}
       run: |
         git config --global user.name "GitHub Action"
         git config --global use.email "action@github.com"
