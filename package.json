@@ -1,18 +1,18 @@
 {
-  "name": "@lechaterrant/templated-project-cli",
-  "version": "1.1.2",
-  "description": "CLI to assist development of API-template, devops-template and front-template",
+  "name": "@lechaterrant/lantern",
+  "version": "1.0.0",
+  "description": "Opinionated CLI to assist backend development",
   "publishConfig": {
     "access": "public"
   },
   "bin": {
-    "templated-project-cli": "bin/src/index.js"
+    "lantern": "bin/src/index.js"
   },
   "files": [
     "bin/**/*"
   ],
   "repository": {
-    "url": "https://github.com/LeChatErrant/templated-project-cli"
+    "url": "https://github.com/LeChatErrant/lantern"
   },
   "author": {
     "name": "LeChatErrant",
@@ -21,9 +21,9 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LeChatErrant/templated-project-cli/issues"
+    "url": "https://github.com/LeChatErrant/lantern/issues"
   },
-  "homepage": "https://github.com/LeChatErrant/templated-project-cli#readme",
+  "homepage": "https://github.com/LeChatErrant/lantern#readme",
   "scripts": {
     "build": "tsc",
     "start": "node bin/src",
@@ -31,7 +31,6 @@
     "install-locally": "npm run build && sudo npm install -g .",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "lint:ci": "eslint './src/**/*.{ts,tsx}'",
-    "postinstall": "npm run build",
     "prepare": "husky install"
   },
   "lint-staged": {

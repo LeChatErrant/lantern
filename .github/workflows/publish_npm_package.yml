@@ -22,7 +22,7 @@ jobs:
         # Needs to match the package.json name (@scope/pkg-name)
         scope: '@lechaterrant'
 
-    - name: Bumping package.json
+    - name: Bump package.json
       uses: actions/github-script@v3
       with:
         version: ${{ github.event.inputs.version }}
@@ -45,16 +45,20 @@ jobs:
             core.setFailed(err.message);
           }
 
-    - name: Install dependencies and update package-lock.json
+    - name: Install dependencies
       run: npm install
 
-    - name: Push bumped packages
+    - name: Build CLI
+      run: npm run build
+
+    - name: Push bumped package.json
       env:
         VERSION: ${{ github.event.inputs.version }}
       run: |
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
-        git commit --allow-empty -am "Bumping package version to $VERSION"
+        git add package.json
+        git commit --allow-empty -m "Bumping package version to $VERSION"
         git push
 
     - name: Create github release
