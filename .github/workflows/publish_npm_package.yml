@@ -51,6 +51,12 @@ jobs:
     - name: Build CLI
       run: npm run build
 
+    - name: Debug .npmrc
+      run: cat /home/runner/work/_temp/.npmrc
+
+    - name: Remove .npmrc
+      run: rm /home/runner/work/_temp/.npmrc
+
     - name: Publish to npm registry
       run: npm publish
       env:
