@@ -55,7 +55,10 @@ jobs:
       run: cat /home/runner/work/_temp/.npmrc
 
     - name: Debug permissions
-      run: ls -lRa zebi
+      run: ls -lRa bin
+
+    - name: Debug package
+      run: cat package.json
 
     - name: Publish to npm registry
       run: npm publish
