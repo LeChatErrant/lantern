@@ -18,6 +18,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
+        # Needs to match the package.json name (@scope/pkg-name)
+        scope: '@lechaterrant'
 
     - name: Bumping package.json
       uses: actions/github-script@v3
