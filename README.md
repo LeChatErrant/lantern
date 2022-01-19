@@ -51,7 +51,7 @@ Documentation is currently being written and should be available soon. At this m
    - [ ] Project bootstraping
    - [ ] Resource deletion
  - [ ] Enhanced display
- - [ ] Revert in case of error
+ - [x] Revert modifications in case of error
 
 # How to contribute
 
