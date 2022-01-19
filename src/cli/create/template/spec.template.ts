@@ -1,4 +1,4 @@
-import { capitalize } from '../../../utils/string';
+import { capitalize } from '../../../utils/strings';
 
 const specTemplate = (singular: string) => `\
 /*  eslint-disable  @typescript-eslint/no-explicit-any  */

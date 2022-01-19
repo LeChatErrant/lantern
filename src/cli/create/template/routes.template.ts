@@ -1,4 +1,4 @@
-import { capitalize } from '../../../utils/string';
+import { capitalize } from '../../../utils/strings';
 
 const routesTemplate = (singular: string, plural: string) => `\
 import { AsyncRouter } from 'express-async-router';
