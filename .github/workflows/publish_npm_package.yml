@@ -1,8 +1,11 @@
 name: Publish package to npm registry
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (example : 3.2.0)"
+        required: true
 jobs:
   publish-npm-package:
     runs-on: ubuntu-latest
@@ -21,8 +24,90 @@ jobs:
         # Needs to match the package.json name (@scope/pkg-name)
         scope: '@lechaterrant'
 
-    - name: Install dependencies
+    - name: Bumping package.json
+      uses: actions/github-script@v3
+      with:
+        version: ${{ github.event.inputs.version }}
+        script: |
+          const fs = require('fs');
+          try {
+            core.info(`Version : ${version}`);
+
+            const version = core.getInput('version', { required: true });
+            const regex = new RegExp('^([0-9]+\.){0,2}([0-9]+)$');
+            if (!regex.test(version)) {
+              core.setFailed(`${version} is not a valid versionning`);
+            }
+          
+            const package = JSON.parse(fs.readFileSync('./package.json'));
+            core.info(`Package.json version : ${package.version}`);
+            package.version = version
+            fs.writeFileSync('./package.json', JSON.stringify(package, null, 2));
+          } catch (err) {
+            core.setFailed(error.message);
+          }
+
+    - name: Install dependencies and update package-lock.json
       run: npm install
+
+    - name: Push bumped packages
+      env:
+        VERSION: ${{ github.event.inputs.version} }}
+      run: |
+        git config --global user.name "GitHub Action"
+        git config --global use.email "action@github.com"
+        git commit --allow-empty -am "Bumping package version to $VERSION"
+        git push
+
+    - name: Create release
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        version: ${{ github.event.inputs.version }}
+        script: |
+          const fs = require('fs');
+
+          try {
+            const { owner, repo } = context.repo;
+            core.info(`Identified repository ${owner}/${repo}`);
+          
+            core.info(`Creating tag ${version}`);
+          
+            const { data: { sha } } = await github.repos.getCommit({
+              owner,
+              repo,
+              ref: 'refs/heads/master',
+              mediaType: {
+                format: 'sha'
+              },
+            });
+          
+            core.info(sha);
+          
+            await github.git.createTag({
+              owner,
+              repo,
+              tag: version,
+              message: `Release ${version}`,
+              object: sha,
+              type: 'commit',
+            });
+          
+            core.info(`Creating release ${version}`);
+
+            const res = await github.repos.createRelease({
+              owner,
+              repo,
+              prerelease: false,
+              draft: false,
+              name: version,
+              tag_name: version,
+              body: `# ${version}`",
+            });
+            core.info(JSON.stringify(res));
+          } catch (error) {
+            core.setFailed(error.message);
+          }
 
     - name: Publish
       run: npm publish
