@@ -1,7 +1,7 @@
-import PrismaObject from './PrismaObject';
-import PrismaIdentifier from './PrismaIdentifier';
+import { PrismaObject } from './PrismaObject';
+import { PrismaIdentifier } from './PrismaIdentifier';
 
-export default class PrismaDataSource extends PrismaObject {
+export class PrismaDataSource extends PrismaObject {
   constructor(name: string) {
     super(PrismaIdentifier.DATASOURCE, name);
   }

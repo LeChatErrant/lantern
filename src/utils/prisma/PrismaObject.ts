@@ -1,6 +1,6 @@
-import PrismaIdentifier from './PrismaIdentifier';
+import { PrismaIdentifier } from './PrismaIdentifier';
 
-export default abstract class PrismaObject {
+export abstract class PrismaObject {
   public readonly identifier: PrismaIdentifier;
 
   public readonly name: string;

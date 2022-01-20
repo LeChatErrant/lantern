@@ -1,17 +1,17 @@
 import { readFile } from '../files';
 import { PrismaError } from '../errors';
 
-import PrismaModel from './PrismaModel';
-import PrismaEnum from './PrismaEnum';
-import PrismaDataSource from './PrismaDataSource';
-import PrismaGenerator from './PrismaGenerator';
-import PrismaIdentifier from './PrismaIdentifier';
-import PrismaObject from './PrismaObject';
+import { PrismaModel } from './PrismaModel';
+import { PrismaEnum } from './PrismaEnum';
+import { PrismaDataSource } from './PrismaDataSource';
+import { PrismaGenerator } from './PrismaGenerator';
+import { PrismaIdentifier } from './PrismaIdentifier';
+import { PrismaObject } from './PrismaObject';
 
-export default class PrismaSchema {
+export class PrismaSchema {
   public readonly datasource: PrismaDataSource;
 
-  private readonly objects: PrismaObject[];
+  public readonly objects: PrismaObject[];
 
   constructor(objects: PrismaObject[]) {
     const datasources = objects.filter((o) => o.identifier === PrismaIdentifier.DATASOURCE);

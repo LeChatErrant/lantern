@@ -1,7 +1,7 @@
-import PrismaObject from './PrismaObject';
-import PrismaIdentifier from './PrismaIdentifier';
+import { PrismaObject } from './PrismaObject';
+import { PrismaIdentifier } from './PrismaIdentifier';
 
-export default class PrismaEnum extends PrismaObject {
+export class PrismaEnum extends PrismaObject {
   constructor(name: string) {
     super(PrismaIdentifier.ENUM, name);
   }

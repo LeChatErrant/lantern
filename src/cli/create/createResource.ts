@@ -1,9 +1,11 @@
+/*
 import path from 'path';
 import fs from 'fs';
 import colors from 'colors';
 
 import { capitalize, insert } from '../../utils/strings';
 import { npmRun } from '../../utils/npm';
+import { projectPath, routesPath, prismaPath } from '../../utils/referencePaths';
 
 import routesTemplate from './template/routes.template';
 import controllersTemplate from './template/controllers.template';
@@ -12,10 +14,8 @@ import prismaTemplate from './template/prisma.template';
 import typesTemplate from './template/types.template';
 import helpersTemplate from './template/helpers.template';
 import specTemplate from './template/spec.template';
-
-const projectPath = path.join('.');
-const componentPath = path.join(projectPath, 'src', 'routes');
-const prismaPath = path.join(projectPath, 'prisma');
+import { appendToFile, createDir } from '../../utils/files';
+import logger from '../../utils/logger';
 
 function createFolder(folderPath: string) {
   if (fs.existsSync(folderPath)) {
@@ -29,37 +29,25 @@ function createFolder(folderPath: string) {
 }
 
 async function fillPrismaSchema(singular: string) {
+  logger.log(`Creating ${colors.green(capitalize(singular))} model in ${colors.blue(schemaPath)}`);
+
   const schemaPath = path.join(prismaPath, 'schema.prisma');
-  if (!fs.existsSync(schemaPath)) {
-    console.error(`${schemaPath} doesn't exist`);
-    return false;
-  }
-  const initialLength = fs.statSync(schemaPath).size;
-
-  console.log(`Creating ${colors.green(capitalize(singular))} model in ${colors.blue(schemaPath)}`);
-
-  fs.appendFileSync(
-    schemaPath,
-    prismaTemplate(singular),
-  );
+  appendToFile(schemaPath, prismaTemplate(singular));
 
   try {
     await npmRun('prisma:format');
     await npmRun('prisma:generate');
     console.log(`Model ${colors.green(capitalize(singular))} created in ${colors.blue(schemaPath)}`);
-    return true;
   } catch (error) {
     console.error(`The model ${colors.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${colors.blue(schemaPath)} `);
-    fs.truncateSync(schemaPath, initialLength);
-    return false;
   }
 }
 
 function fillRouter(singular: string, plural: string) {
-  const routerPath = path.join(componentPath, 'index.ts');
+  const routerPath = path.join(routesPath, 'index.ts');
   console.log(`Filling ${colors.green(routerPath)}...`);
   if (!fs.existsSync(routerPath)) {
-    console.error(`${componentPath} doesn't exist.`);
+    console.error(`${routesPath} doesn't exist.`);
     return false;
   }
 
@@ -83,11 +71,10 @@ function createTemplatedFile(directory: string, filename: string, content: strin
   fs.writeFileSync(filePath, content);
 }
 
-export async function templateNewResource(singular: string, plural: string) {
-  const resourcePath = path.join(componentPath, singular);
+export default async function createResource(singular: string, plural: string) {
+  const resourcePath = path.join(routesPath, singular);
 
-  const folderSuccess = await createFolder(resourcePath);
-  if (!folderSuccess) return false;
+  await createDir(resourcePath);
 
   const prismaSuccess = await fillPrismaSchema(singular);
   if (!prismaSuccess) return false;
@@ -104,3 +91,4 @@ export async function templateNewResource(singular: string, plural: string) {
 
   return true;
 }
+*/

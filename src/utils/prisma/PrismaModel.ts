@@ -1,12 +1,12 @@
 import colors from 'colors';
 
 import { PrismaError } from '../errors';
-
-import PrismaObject from './PrismaObject';
-import PrismaIdentifier from './PrismaIdentifier';
 import { parseBetween } from '../strings';
 
-class PrismaModelAttribute {
+import { PrismaObject } from './PrismaObject';
+import { PrismaIdentifier } from './PrismaIdentifier';
+
+export class PrismaModelAttribute {
   public readonly type: string;
 
   public readonly content?: string;
@@ -21,7 +21,7 @@ class PrismaModelAttribute {
   }
 }
 
-type PrismaModelFieldType =
+export type PrismaModelFieldType =
   'String'
   | 'Boolean'
   | 'Int'
@@ -34,7 +34,7 @@ type PrismaModelFieldType =
   | 'Unsupported'
   | string;
 
-class PrismaModelField {
+export class PrismaModelField {
   public readonly name: string;
 
   public type: PrismaModelFieldType;
@@ -54,7 +54,7 @@ class PrismaModelField {
   }
 }
 
-export default class PrismaModel extends PrismaObject {
+export class PrismaModel extends PrismaObject {
   public readonly fields: PrismaModelField[];
 
   public readonly contraints: PrismaModelAttribute[];
