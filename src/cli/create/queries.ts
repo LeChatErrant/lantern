@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import colors from 'colors';
 import pluralize from 'pluralize';
+import { capitalize } from '../../utils/strings';
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -45,4 +46,20 @@ export async function queryPluralizedResourceName(resourceName: string) {
     validate: (input) => input !== '',
   }]);
   return pluralizedResourceName.toLowerCase();
+}
+
+/**
+ * Prompt the user to know if the model should be stored in database or not
+ *
+ * @param plural Ressource name pluralized
+ * @return True is a data model is needed, false otherwise
+ */
+export async function queryIfDatabaseModelIsNeeded(plural: string) {
+  const { isDbModelNeeded } = await inquirer.prompt([{
+    name: 'isDbModelNeeded',
+    type: 'list',
+    message: `Do you need to store '${capitalize(plural)}' in database ?`,
+    choices: ['Yes', 'No'],
+  }]);
+  return isDbModelNeeded === 'Yes';
 }
