@@ -77,7 +77,6 @@ export async function queryIfDatabaseModelIsNeeded(resourceName: string) {
 }
 
 export async function queryDefaultFields(model: PrismaModel) {
-  // Display schema
   console.clear();
   console.log(model.toString());
   console.log();
@@ -95,9 +94,11 @@ export async function queryDefaultFields(model: PrismaModel) {
     name: 'selected',
     type: 'checkbox',
     message: `Select ${colors.green('default fields')} to add to ${colors.blue(model.name)}`,
+    default: [true, true],
     choices: defaultFields.map((field, index) => ({
       name: field.name,
       value: index,
+      checked: true,
     })),
   }]);
 
@@ -107,7 +108,6 @@ export async function queryDefaultFields(model: PrismaModel) {
 }
 
 export async function queryRelation(schema: PrismaSchema, model: PrismaModel) {
-  // Display schema
   console.clear();
   console.log(model.toString());
   console.log();
@@ -123,7 +123,10 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel) {
     return;
   }
 
-  const models = schema.models;
+  // Remove schema models that are already references in new model
+  const models = schema.models.filter(
+    (schemaModel) => !model.fields.find((field) => field.type === schemaModel.name),
+  );
   const { target } = await inquirer.prompt([{
     name: 'target',
     type: 'list',
@@ -134,6 +137,19 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel) {
   if (target === colors.red('Cancel')) {
     return;
   }
+
+  const { relationType } = await inquirer.prompt([{
+    name: 'relationType',
+    type: 'list',
+    message: 'Of which type ?',
+    choices: [
+      `One to one   : ${colors.blue(target)} has one ${colors.blue(model.name)}`,
+      `One to many  : ${colors.blue(target)} has many ${colors.blue(model.name)}`,
+      `Many to one  : ${colors.blue(model.name)} has many ${colors.blue(target)}`,
+      `Many to many : ${colors.blue(target)} has many ${colors.blue(model.name)}, and ${colors.blue(model
+        .name)} has many ${colors.blue(target)}`,
+    ],
+  }]);
 
   await queryRelation(schema, model);
 }

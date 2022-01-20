@@ -27,15 +27,15 @@ export class PrismaSchema {
   }
 
   public get generators() {
-    return this.objects.filter((o) => o.identifier === PrismaIdentifier.GENERATOR);
+    return this.objects.filter((o) => o.identifier === PrismaIdentifier.GENERATOR) as PrismaGenerator[];
   }
 
   public get models() {
-    return this.objects.filter((o) => o.identifier === PrismaIdentifier.MODEL);
+    return this.objects.filter((o) => o.identifier === PrismaIdentifier.MODEL) as PrismaModel[];
   }
 
   public get enums() {
-    return this.objects.filter((o) => o.identifier === PrismaIdentifier.ENUM);
+    return this.objects.filter((o) => o.identifier === PrismaIdentifier.ENUM) as PrismaEnum[];
   }
 
   static fromFile(filePath: string): PrismaSchema {
