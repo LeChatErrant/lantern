@@ -12,7 +12,9 @@ import {
 } from './queries';
 
 async function create() {
-  const singular = await queryResourceName();
+  const schema = PrismaSchema.fromFile(prismaSchemaPath);
+
+  const singular = await queryResourceName(schema);
   const plural = await queryPluralizedResourceName(singular);
   const isDbModelNeed = await queryIfDatabaseModelIsNeeded(singular);
 
@@ -23,10 +25,6 @@ async function create() {
         new PrismaModelAttribute('@default', 'cuid()'),
       ]),
     ]);
-    const schema = PrismaSchema.fromFile(prismaSchemaPath);
-
-    const exists = !!schema.objects.find((o) => o.name === model.name);
-    if (exists) throw new PrismaError(`Model ${model.name} already exists in schema.prisma`);
 
     await queryDefaultFields(model);
     await queryRelation(schema, model);

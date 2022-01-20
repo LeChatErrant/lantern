@@ -10,12 +10,20 @@ import { PrismaModel, PrismaModelAttribute, PrismaModelField, PrismaSchema } fro
  *
  * @return Resource name (lowercase)
  */
-export async function queryResourceName() {
+export async function queryResourceName(schema: PrismaSchema) {
   const { resourceName } = await inquirer.prompt([{
     name: 'resourceName',
     type: 'input',
     message: `How should your new API resource be ${colors.green('named')} ? ${colors.red('(singular)')}`,
-    validate: (input) => input !== '' ? true : colors.red('Please enter resource name (example : user)'),
+    validate: (input) => {
+      if (input === '') {
+        return colors.red('Please enter resource name (example : user)');
+      }
+      if (schema.objects.find((o) => o.name === input || o.name === capitalize(input))) {
+        return colors.red(`Model ${input} already exists in schema.prisma`);
+      }
+      return true;
+    },
     suffix: '\n❯',
   }]);
   return resourceName.toLowerCase();
@@ -86,7 +94,7 @@ export async function queryDefaultFields(model: PrismaModel) {
   const { selected } = await inquirer.prompt([{
     name: 'selected',
     type: 'checkbox',
-    message: `Select default fields to add to ${colors.blue(model.name)}`,
+    message: `Select ${colors.green('default fields')} to add to ${colors.blue(model.name)}`,
     choices: defaultFields.map((field, index) => ({
       name: field.name,
       value: index,

@@ -24,6 +24,10 @@ class Logger {
   public setSilent(silent = true) {
     this.silent = silent;
   }
+
+  public getSilent() {
+    return this.silent;
+  }
 }
 
 const logger = new Logger();

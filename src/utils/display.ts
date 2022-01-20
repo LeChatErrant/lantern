@@ -18,7 +18,9 @@ import logger from './logger';
  *  Lantern CLI v3.2.0
  */
 export function displayCLIBanner() {
-  clear();
+  if (!logger.getSilent()) {
+    clear();
+  }
   logger.log(
     colors.yellow(
       figlet.textSync('Lantern', { horizontalLayout: 'full' }),
