@@ -2,7 +2,7 @@ import fs from 'fs';
 import colors from 'colors';
 import path from 'path';
 
-import { LanternError } from './errors';
+import { FileError } from './errors';
 import logger from './logger';
 
 enum ModificationType {
@@ -37,15 +37,15 @@ const fileModifications: Array<FileModification> = [];
 export function createDir(dirPath: string) {
   const basePath = path.dirname(dirPath);
   if (!fs.existsSync(basePath)) {
-    throw new LanternError(`Cannot create directory ${dirPath} : parent path ${basePath} doesn't exist`);
+    throw new FileError(`Cannot create directory ${dirPath} : parent path ${basePath} doesn't exist`);
   }
 
   if (!fs.statSync(basePath).isDirectory()) {
-    throw new LanternError(`Cannot create directory ${dirPath} : parents path ${basePath} is not a directory`);
+    throw new FileError(`Cannot create directory ${dirPath} : parents path ${basePath} is not a directory`);
   }
 
   if (fs.existsSync(dirPath)) {
-    throw new LanternError(`Cannot create directory ${dirPath} : already exists`);
+    throw new FileError(`Cannot create directory ${dirPath} : already exists`);
   }
 
   logger.log(`Creating folder ${colors.blue(dirPath)}`);
@@ -65,15 +65,15 @@ export function createDir(dirPath: string) {
  */
 export function removeDir(dirPath: string) {
   if (!fs.existsSync(dirPath)) {
-    throw new LanternError(`Cannot remove directory ${dirPath} : doesn't exist`);
+    throw new FileError(`Cannot remove directory ${dirPath} : doesn't exist`);
   }
 
   if (!fs.statSync(dirPath).isDirectory()) {
-    throw new LanternError(`Cannot remove directory ${dirPath} : is not a directory`);
+    throw new FileError(`Cannot remove directory ${dirPath} : is not a directory`);
   }
 
   if (fs.readdirSync(dirPath).length !== 0) {
-    throw new LanternError(`Cannot remove directory ${dirPath} : is not empty`);
+    throw new FileError(`Cannot remove directory ${dirPath} : is not empty`);
   }
 
   logger.log(`Removing folder ${colors.blue(dirPath)}`);
@@ -95,15 +95,15 @@ export function removeDir(dirPath: string) {
 export function createFile(filePath: string, data?: string) {
   const basePath = path.dirname(filePath);
   if (!fs.existsSync(basePath)) {
-    throw new LanternError(`Cannot create file ${filePath} : parent path ${basePath} doesn't exist`);
+    throw new FileError(`Cannot create file ${filePath} : parent path ${basePath} doesn't exist`);
   }
 
   if (!fs.statSync(basePath).isDirectory()) {
-    throw new LanternError(`Cannot create file ${filePath} : parent path ${basePath} is not a directory`);
+    throw new FileError(`Cannot create file ${filePath} : parent path ${basePath} is not a directory`);
   }
 
   if (fs.existsSync(filePath)) {
-    throw new LanternError(`Cannot create file ${filePath} : already exists`);
+    throw new FileError(`Cannot create file ${filePath} : already exists`);
   }
 
   logger.log(`Creating ${data ? '' : 'empty '}file ${colors.blue(filePath)}`);
@@ -117,6 +117,24 @@ export function createFile(filePath: string, data?: string) {
 }
 
 /**
+ * Read file content
+ *
+ * @param filePath Path to the file
+ * @return Content
+ */
+export function readFile(filePath: string) {
+  if (!fs.existsSync(filePath)) {
+    throw new FileError(`Cannot read file ${filePath} : doesn't exist`);
+  }
+
+  if (!fs.statSync(filePath).isFile()) {
+    throw new FileError(`Cannot read file ${filePath} : is not a file`);
+  }
+
+  return fs.readFileSync(filePath).toString();
+}
+
+/**
  * Write data into a file. Data can be omitted to erase file content
  *
  * @param filePath Path to the file
@@ -124,11 +142,11 @@ export function createFile(filePath: string, data?: string) {
  */
 export function editFile(filePath: string, data?: string) {
   if (!fs.existsSync(filePath)) {
-    throw new LanternError(`Cannot edit file ${filePath} : doesn't exist`);
+    throw new FileError(`Cannot edit file ${filePath} : doesn't exist`);
   }
 
   if (!fs.statSync(filePath).isFile()) {
-    throw new LanternError(`Cannot edit file ${filePath} : is not a file`);
+    throw new FileError(`Cannot edit file ${filePath} : is not a file`);
   }
 
   const content = fs.readFileSync(filePath).toString();
@@ -152,11 +170,11 @@ export function editFile(filePath: string, data?: string) {
  */
 export function appendToFile(filePath: string, data: string) {
   if (!fs.existsSync(filePath)) {
-    throw new LanternError(`Cannot append to file ${filePath} : doesn't exist`);
+    throw new FileError(`Cannot append to file ${filePath} : doesn't exist`);
   }
 
   if (!fs.statSync(filePath).isFile()) {
-    throw new LanternError(`Cannot append to file ${filePath} : is not a file`);
+    throw new FileError(`Cannot append to file ${filePath} : is not a file`);
   }
 
   const content = fs.readFileSync(filePath).toString();
@@ -179,11 +197,11 @@ export function appendToFile(filePath: string, data: string) {
  */
 export function removeFile(filePath: string) {
   if (!fs.existsSync(filePath)) {
-    throw new LanternError(`Cannot remove file ${filePath} : doesn't exist`);
+    throw new FileError(`Cannot remove file ${filePath} : doesn't exist`);
   }
 
   if (!fs.statSync(filePath).isFile()) {
-    throw new LanternError(`Cannot remove file ${filePath} : is not a file`);
+    throw new FileError(`Cannot remove file ${filePath} : is not a file`);
   }
 
   const content = fs.readFileSync(filePath).toString();

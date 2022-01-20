@@ -40,13 +40,15 @@ export default class PrismaSchema {
 
   static fromFile(filePath: string): PrismaSchema {
     let schema = readFile(filePath);
-    const objects = [] as PrismaObject[];
+    const objects: PrismaObject[] = [];
 
     for (let res = PrismaSchema.extractObject(schema) ; res ; res = PrismaSchema.extractObject(schema)) {
       schema = res.schema;
       objects.push(res.object);
     }
 
+    // Everything that is parsed is removed from schema
+    // At the end, only spaces and espace characters should be left
     schema = schema.trim();
     if (schema.length !== 0) {
       throw new PrismaError(`Parts of the schema were not parsed : ${schema}`);
@@ -67,6 +69,7 @@ export default class PrismaSchema {
     const prismaObjectDeclaration = schema.slice(0, firstOpeningBracket);
     const prismaObjectContent = schema.slice(firstOpeningBracket, firstClosingBracket + 1);
 
+    // Remove parsed part from schema
     // eslint-disable-next-line no-param-reassign
     schema = schema.replace(prismaObjectDeclaration + prismaObjectContent,  '');
 
@@ -86,9 +89,13 @@ export default class PrismaSchema {
   }
 
   private static extractObjectDeclaration(str: string) {
+    // Split by sequences of one or more of space or espace character
+    // Keep only alphanumerics words
     const prismaObjectDeclaration = str
       .split(/[ \n]+/)
       .filter((token) => token !== '');
+
+    // Should be of form [identifier] [name] {...}
     if (prismaObjectDeclaration.length !== 2) {
       throw new PrismaError(`Error while parsing prisma declaration ${str} : tokenized to ${JSON.stringify(prismaObjectDeclaration)}`);
     }
