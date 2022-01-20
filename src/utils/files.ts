@@ -124,7 +124,7 @@ export function createFile(filePath: string, data?: string) {
  */
 export function editFile(filePath: string, data?: string) {
   if (!fs.existsSync(filePath)) {
-    throw new LanternError(`Cannon edit file ${filePath} : doesn't exist`);
+    throw new LanternError(`Cannot edit file ${filePath} : doesn't exist`);
   }
 
   if (!fs.statSync(filePath).isFile()) {
@@ -144,9 +144,42 @@ export function editFile(filePath: string, data?: string) {
   fs.writeFileSync(filePath, data ?? '');
 }
 
+/**
+ * Append data at the end of a file
+ *
+ * @param filePath Path to the file
+ * @param data Data to append
+ */
+export function appendToFile(filePath: string, data: string) {
+  if (!fs.existsSync(filePath)) {
+    throw new LanternError(`Cannot append to file ${filePath} : doesn't exist`);
+  }
+
+  if (!fs.statSync(filePath).isFile()) {
+    throw new LanternError(`Cannot append to file ${filePath} : is not a file`);
+  }
+
+  const content = fs.readFileSync(filePath).toString();
+
+  logger.log(`Append data to file ${colors.blue(filePath)}`);
+  fileModifications.push({
+    fileType: FileType.FILE,
+    modificationType: ModificationType.EDIT,
+    path: filePath,
+    beforeModification: content,
+  });
+
+  fs.appendFileSync(filePath, data);
+}
+
+/**
+ * Remove a file
+ *
+ * @param filePath Path to the file
+ */
 export function removeFile(filePath: string) {
   if (!fs.existsSync(filePath)) {
-    throw new LanternError(`Cannon remove file ${filePath} : doesn't exist`);
+    throw new LanternError(`Cannot remove file ${filePath} : doesn't exist`);
   }
 
   if (!fs.statSync(filePath).isFile()) {
