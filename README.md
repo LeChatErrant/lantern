@@ -18,7 +18,7 @@ It aims to make backend development **fast** and **easy**, and focuses on genera
 
 | ![Demo](https://github.com/LeChatErrant/lantern/blob/master/.github/assets/generate.gif) |
 |------------------------------------------------------------------------------------------|
-| V1 demo, will be updated soon                                                            |
+| V1 demo, will be updated soon ! And trust me, V2 is nothing like V1 ❤️                   |
 
 A **lantern** project follows a lot of **good practices** while staying entirely **modifiable** by developers
 
@@ -26,8 +26,7 @@ In summary, it simply gives you a **guideline** by writing **boilerplate code**
 
 > An example lantern project, serving as guidelines reference, can be found at **[API-template](https://github.com/LeChatErrant/API-template)**
 
-
-# Get started
+# Getting started
 
 1. Install the CLI with `npm install -g @lechaterrant/lantern`
 2. Simply run `lantern` to launch the CLI
@@ -38,20 +37,24 @@ Documentation is currently being written and should be available soon. At this m
 
 # Roadmap
 
- - [x] Finding a real name
- - [ ] Graphic identity and logo
+ - [x] Finding a name and an identity
+ - [ ] Logo (WIP)
  - [ ] Website
  - [ ] Upgrade API resource generation
-   - [ ] Creating or not a data model 
-   - [ ] Specify relations
+   - [x] Prisma parser to understand current datastructure
+   - [x] Specify and custom fields
+   - [x] Specify relations
    - [ ] Dynamically add middlewares
    - [ ] Select fields to be exposed
  - [ ] New commands
    - [ ] Types sharing with front
    - [ ] Project bootstraping
    - [ ] Resource deletion
- - [ ] Enhanced display
- - [x] Revert modifications in case of error
+ - [ ] Display
+   - [x] v1
+   - [x] Enhanced display v2
+   - [ ] v3, using terminal layouts and more enhanced graphical features
+ - [x] Filesystem reverter for error during generation
 
 # How to contribute
 
