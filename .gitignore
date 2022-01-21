@@ -1,5 +1,5 @@
 .idea
-prisma
+schema.prisma
 
 # Build artifacts
 bin
