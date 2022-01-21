@@ -70,7 +70,7 @@ export class PrismaModel extends PrismaObject {
   }
 
   static fromFile(name: string, content: string): PrismaModel {
-    // Only one field declaration are possible per line
+    // Only one field declaration is possible per line
     const lines = content
       .split('\n')
       .map((line) => line.trim())
