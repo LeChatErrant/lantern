@@ -4,7 +4,7 @@
 
 Backend development can be **hard**, **long**, and **dark**. Even more to produce **modern**, **robust**, **production-ready** APIs
 
-Say hello to **Lantern**, your guide through the *****backend abyss*****
+Say hello to **[Lantern](https://github.com/LeChatErrant/lantern)**, your guide through the *****backend abyss*****
 
 > Lantern is currently under heavy development, so new features will be release soon ❤️
 >
@@ -12,7 +12,7 @@ Say hello to **Lantern**, your guide through the *****backend abyss*****
 
 # What is it ?
 
-**Lantern** is an **opinionated** CLI to assist backend development
+**[Lantern](https://github.com/LeChatErrant/lantern)** is an **opinionated** CLI to assist backend development
 
 It aims to make backend development **fast** and **easy**, and focuses on generating **maintainable code**
 
