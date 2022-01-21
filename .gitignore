@@ -1,4 +1,5 @@
 .idea
+prisma
 
 # Build artifacts
 bin
