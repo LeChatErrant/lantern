@@ -5,6 +5,7 @@ import figlet from 'figlet';
 import { version } from '../../package.json';
 
 import logger from './logger';
+import { PrismaModel } from './prisma';
 
 /**
  * Clear screen and display clean CLI banner
@@ -26,4 +27,10 @@ export function displayCLIBanner() {
   );
   logger.info(`Lantern CLI v${version}`);
   logger.info();
+}
+
+export function displayModel(model: PrismaModel) {
+  console.clear();
+  logger.log(model.toString());
+  logger.log();
 }

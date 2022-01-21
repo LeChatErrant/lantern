@@ -3,9 +3,9 @@ import colors from 'colors';
 import pluralize from 'pluralize';
 
 import { capitalize } from '../../utils/strings';
-import { PrismaModel, PrismaModelAttribute, PrismaModelField, PrismaSchema } from '../../utils/prisma';
-import logger from '../../utils/logger';
+import { PrismaEnum, PrismaModel, PrismaModelAttribute, PrismaModelField, PrismaSchema } from '../../utils/prisma';
 import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
+import { displayModel } from '../../utils/display';
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -79,9 +79,7 @@ export async function queryIfDatabaseModelIsNeeded(resourceName: string) {
 }
 
 export async function queryDefaultFields(model: PrismaModel) {
-  console.clear();
-  logger.log(model.toString());
-  logger.log();
+  displayModel(model);
 
   const defaultFieldsChoices = [
     new PrismaModelField('createdAt', 'DateTime', [
@@ -109,6 +107,73 @@ export async function queryDefaultFields(model: PrismaModel) {
   }
 }
 
+export async function queryFields(schema: PrismaSchema, model: PrismaModel, firstCall = true) {
+  displayModel(model);
+
+  const { addField } = await inquirer.prompt([{
+    name: 'addField',
+    type: 'list',
+    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('new field')} to ${colors.blue(model.name)} ?`,
+    choices: ['Yes', 'No'],
+  }]);
+
+  if (addField === 'No') {
+    return;
+  }
+
+  const { name } = await inquirer.prompt([{
+    name: 'name',
+    type: 'input',
+    message: 'Field name : ',
+    validate: (input) => input !== '' ? true : colors.red('Please enter a name for the field'),
+    suffix: '\n❯',
+  }]);
+
+  const types = [
+    'String', 'Boolean', 'Int', 'BigInt', 'Float', 'Decimal', 'DateTime', 'Json', 'Bytes',
+    ...schema.enums.map((e) => ({
+      name: colors.green(`${e.name} (enum)`),
+      value: e,
+    })),
+  ];
+
+  let { type } = await inquirer.prompt([{
+    name: 'type',
+    type: 'list',
+    message: 'Type : ',
+    choices: [...types, colors.blue('Custom'), colors.blue('Create new Enum'), colors.red('Cancel')],
+    loop: false,
+  }]);
+
+  if (type === colors.red('Cancel')) {
+    await queryFields(schema, model, false);
+    return;
+  }
+
+  if (type === colors.blue('Custom')) {
+    const { typeName } = await inquirer.prompt([{
+      name: 'typeName',
+      type: 'input',
+      message: 'Enter the custom type : ',
+      validate: (input) => input !== '' ? true : colors.red(`Please enter a custom type for the field ${name}`),
+      suffix: '\n❯',
+    }]);
+    type = typeName;
+  }
+
+  if (type === colors.blue('Create new Enum')) {
+    // Create new Enum
+  }
+
+  if (type instanceof PrismaEnum) {
+    model.fields.push(new PrismaModelField(name, type.name));
+  } else {
+    model.fields.push(new PrismaModelField(name, type));
+  }
+
+  await queryFields(schema, model, false);
+}
+
 export async function queryRelation(schema: PrismaSchema, model: PrismaModel, firstCall = true) {
   // Remove schema models that are already references in new model
   const availableModels = schema.models.filter(
@@ -118,9 +183,7 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel, fi
     return;
   }
   
-  console.clear();
-  logger.log(model.toString());
-  logger.log();
+  displayModel(model);
 
   const { addRelation } = await inquirer.prompt([{
     name: 'addRelation',
@@ -141,6 +204,7 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel, fi
   }]);
 
   if (target === colors.red('Cancel')) {
+    await queryRelation(schema, model, false);
     return;
   }
 

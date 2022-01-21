@@ -4,31 +4,32 @@ import { PrismaSchema, PrismaModel, PrismaModelField, PrismaModelAttribute } fro
 import { PrismaError } from '../../utils/errors';
 
 import {
-  queryDefaultFields,
+  queryDefaultFields, queryFields,
   queryIfDatabaseModelIsNeeded,
   queryPluralizedResourceName,
   queryRelation,
   queryResourceName,
 } from './queries';
+import { displayModel } from '../../utils/display';
 
 async function create() {
   const schema = PrismaSchema.fromFile(prismaSchemaPath);
 
   const singular = await queryResourceName(schema);
   const plural = await queryPluralizedResourceName(singular);
-  const isDbModelNeed = await queryIfDatabaseModelIsNeeded(singular);
+  //  const isDbModelNeed = await queryIfDatabaseModelIsNeeded(singular);
 
-  if (isDbModelNeed) {
-    const model = new PrismaModel(capitalize(singular), [
-      new PrismaModelField('id', 'String', [
-        new PrismaModelAttribute('@id'),
-        new PrismaModelAttribute('@default', 'cuid()'),
-      ]),
-    ], [], plural);
+  const model = new PrismaModel(capitalize(singular), [
+    new PrismaModelField('id', 'String', [
+      new PrismaModelAttribute('@id'),
+      new PrismaModelAttribute('@default', 'cuid()'),
+    ]),
+  ], [], plural);
 
-    await queryDefaultFields(model);
-    await queryRelation(schema, model);
-  }
+  await queryDefaultFields(model);
+  await queryFields(schema, model);
+  await queryRelation(schema, model);
+  displayModel(model);
 }
 
 export default create;
