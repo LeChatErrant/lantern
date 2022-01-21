@@ -38,6 +38,14 @@ export class PrismaSchema {
     return this.objects.filter((o) => o.identifier === PrismaIdentifier.ENUM) as PrismaEnum[];
   }
 
+  public getModel(name: string) {
+    const model = this.models.find((m) => m.name === name);
+    if (!model) {
+      throw new PrismaError(`Cannot find model ${name} in schema.prisma`);
+    }
+    return model;
+  }
+
   static fromFile(filePath: string): PrismaSchema {
     let schema = readFile(filePath);
     const objects: PrismaObject[] = [];

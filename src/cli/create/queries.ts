@@ -4,6 +4,8 @@ import pluralize from 'pluralize';
 
 import { capitalize } from '../../utils/strings';
 import { PrismaModel, PrismaModelAttribute, PrismaModelField, PrismaSchema } from '../../utils/prisma';
+import logger from '../../utils/logger';
+import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -78,10 +80,10 @@ export async function queryIfDatabaseModelIsNeeded(resourceName: string) {
 
 export async function queryDefaultFields(model: PrismaModel) {
   console.clear();
-  console.log(model.toString());
-  console.log();
+  logger.log(model.toString());
+  logger.log();
 
-  const defaultFields = [
+  const defaultFieldsChoices = [
     new PrismaModelField('createdAt', 'DateTime', [
       new PrismaModelAttribute('@default', 'now()'),
     ]),
@@ -95,7 +97,7 @@ export async function queryDefaultFields(model: PrismaModel) {
     type: 'checkbox',
     message: `Select ${colors.green('default fields')} to add to ${colors.blue(model.name)}`,
     default: [true, true],
-    choices: defaultFields.map((field, index) => ({
+    choices: defaultFieldsChoices.map((field, index) => ({
       name: field.name,
       value: index,
       checked: true,
@@ -103,19 +105,27 @@ export async function queryDefaultFields(model: PrismaModel) {
   }]);
 
   for (const index of selected) {
-    model.fields.push(defaultFields[index]);
+    model.fields.push(defaultFieldsChoices[index]);
   }
 }
 
-export async function queryRelation(schema: PrismaSchema, model: PrismaModel) {
+export async function queryRelation(schema: PrismaSchema, model: PrismaModel, firstCall = true) {
+  // Remove schema models that are already references in new model
+  const availableModels = schema.models.filter(
+    (schemaModel) => !model.fields.find((field) => field.type === schemaModel.name),
+  );
+  if (availableModels.length === 0) {
+    return;
+  }
+  
   console.clear();
-  console.log(model.toString());
-  console.log();
+  logger.log(model.toString());
+  logger.log();
 
   const { addRelation } = await inquirer.prompt([{
     name: 'addRelation',
     type: 'list',
-    message: `Add ${colors.green('relation')} to ${colors.blue(model.name)} ?`,
+    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('relation')} to ${colors.blue(model.name)} ?`,
     choices: ['Yes', 'No'],
   }]);
 
@@ -123,33 +133,41 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel) {
     return;
   }
 
-  // Remove schema models that are already references in new model
-  const models = schema.models.filter(
-    (schemaModel) => !model.fields.find((field) => field.type === schemaModel.name),
-  );
   const { target } = await inquirer.prompt([{
     name: 'target',
     type: 'list',
     message: 'With ?',
-    choices: [...models.map((m) => m.name), colors.red('Cancel')],
+    choices: [...availableModels.map((m) => m.name), colors.red('Cancel')],
   }]);
 
   if (target === colors.red('Cancel')) {
     return;
   }
 
+  const relationChoices = [
+    `One to one   : ${colors.blue(target)} has one ${colors.blue(model.name)}`,
+    `One to many  : ${colors.blue(target)} has many ${colors.blue(model.name)}`,
+    `Many to many : ${colors.blue(target)} has many ${colors.blue(model.name)}, and ${colors.blue(model.name)} has many ${colors.blue(target)}`,
+  ];
+
+  const targetModel = schema.getModel(target);
+  const relationActions = [
+    addOneToOneRelation,
+    addOneToManyRelation,
+    addManyToManyRelation,
+  ];
+
   const { relationType } = await inquirer.prompt([{
     name: 'relationType',
     type: 'list',
     message: 'Of which type ?',
-    choices: [
-      `One to one   : ${colors.blue(target)} has one ${colors.blue(model.name)}`,
-      `One to many  : ${colors.blue(target)} has many ${colors.blue(model.name)}`,
-      `Many to one  : ${colors.blue(model.name)} has many ${colors.blue(target)}`,
-      `Many to many : ${colors.blue(target)} has many ${colors.blue(model.name)}, and ${colors.blue(model
-        .name)} has many ${colors.blue(target)}`,
-    ],
+    choices: relationChoices.map((relationChoice, index) => ({
+      name: relationChoice,
+      value: index,
+    })),
   }]);
 
-  await queryRelation(schema, model);
+  relationActions[relationType](model, targetModel);
+
+  await queryRelation(schema, model, false);
 }

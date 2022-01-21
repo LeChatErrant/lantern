@@ -18,16 +18,12 @@ import logger from './logger';
  *  Lantern CLI v3.2.0
  */
 export function displayCLIBanner() {
-  if (!logger.getSilent()) {
-    clear();
-  }
+  clear();
   logger.log(
     colors.yellow(
       figlet.textSync('Lantern', { horizontalLayout: 'full' }),
     ),
   );
-  logger.info(
-    colors.blue(`Lantern CLI v${version}`),
-  );
+  logger.info(`Lantern CLI v${version}`);
   logger.info();
 }

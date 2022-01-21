@@ -24,7 +24,7 @@ async function create() {
         new PrismaModelAttribute('@id'),
         new PrismaModelAttribute('@default', 'cuid()'),
       ]),
-    ]);
+    ], [], plural);
 
     await queryDefaultFields(model);
     await queryRelation(schema, model);

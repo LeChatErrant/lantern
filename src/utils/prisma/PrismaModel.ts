@@ -1,3 +1,4 @@
+import pluralize from 'pluralize';
 import colors from 'colors';
 
 import { PrismaError } from '../errors';
@@ -17,7 +18,7 @@ export class PrismaModelAttribute {
   }
 
   public toString() {
-    return `${this.type} ${this.content ? '(' + this.content + ')' : ''}`;
+    return `${this.type}${this.content ? '(' + this.content + ')' : ''}`;
   }
 }
 
@@ -57,12 +58,15 @@ export class PrismaModelField {
 export class PrismaModel extends PrismaObject {
   public readonly fields: PrismaModelField[];
 
+  public plural: string;
+
   public readonly contraints: PrismaModelAttribute[];
 
-  constructor(name: string, fields: PrismaModelField[] = [], constraints: PrismaModelAttribute[] = []) {
+  constructor(name: string, fields: PrismaModelField[] = [], constraints: PrismaModelAttribute[] = [], plural = pluralize(name)) {
     super(PrismaIdentifier.MODEL, name);
     this.fields = fields;
     this.contraints = constraints;
+    this.plural = plural;
   }
 
   static fromFile(name: string, content: string): PrismaModel {
