@@ -6,6 +6,7 @@ import { parseBetween } from '../strings';
 
 import { PrismaObject } from './PrismaObject';
 import { PrismaIdentifier } from './PrismaIdentifier';
+import { PrismaEnum } from './PrismaEnum';
 
 export class PrismaModelAttribute {
   public readonly type: string;

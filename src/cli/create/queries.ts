@@ -3,7 +3,14 @@ import colors from 'colors';
 import pluralize from 'pluralize';
 
 import { capitalize } from '../../utils/strings';
-import { PrismaEnum, PrismaModel, PrismaModelAttribute, PrismaModelField, PrismaSchema } from '../../utils/prisma';
+import {
+  PrismaEnum,
+  PrismaModel,
+  PrismaModelAttribute,
+  PrismaModelField,
+  PrismaModelFieldType,
+  PrismaSchema,
+} from '../../utils/prisma';
 import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
 import { displayModel } from '../../utils/display';
 
@@ -107,6 +114,58 @@ export async function queryDefaultFields(model: PrismaModel) {
   }
 }
 
+async function queryAttributes(schema: PrismaSchema, field: PrismaModelField, type: string | PrismaEnum, firstCall = true) {
+  const { addAttribute } = await inquirer.prompt([{
+    name: 'addAttribute',
+    type: 'list',
+    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('attribute')} to field ${colors.blue(field.name)} ?`,
+    choices: ['Yes', 'No'],
+  }]);
+
+  if (addAttribute === 'No') {
+    return;
+  }
+
+  const attributes = ['@id', '@unique', '@default'];
+  const { attribute } = await inquirer.prompt([{
+    name: 'attribute',
+    type: 'list',
+    message: 'Which one ?',
+    choices: [...attributes, colors.red('Cancel')],
+  }]);
+
+  if (attribute === colors.red('Cancel')) {
+    await queryAttributes(schema, field, type, false);
+    return;
+  }
+
+  let content;
+
+  if (attribute === '@default') {
+    if (type instanceof PrismaEnum || type === 'Boolean') {
+      const { defaultVal } = await inquirer.prompt([{
+        name: 'defaultVal',
+        type: 'list',
+        message: `Which default value do you want for field ${colors.blue(field.name)}?`,
+        choices: type instanceof PrismaEnum ? type.values : ['true', 'false'],
+      }]);
+      content = defaultVal;
+    } else {
+      const { defaultVal } = await inquirer.prompt([{
+        name: 'defaultVal',
+        type: 'input',
+        message: `Enter the default value for ${colors.blue(field.name)} :`,
+        suffix: '\n❯',
+      }]);
+      content = defaultVal;
+    }
+  }
+
+  field.attributes.push(new PrismaModelAttribute(attribute, content));
+
+  await queryAttributes(schema, field, type, false);
+}
+
 export async function queryFields(schema: PrismaSchema, model: PrismaModel, firstCall = true) {
   displayModel(model);
 
@@ -141,7 +200,11 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     name: 'type',
     type: 'list',
     message: 'Type : ',
-    choices: [...types, colors.blue('Custom'), colors.blue('Create new Enum'), colors.red('Cancel')],
+    choices: [
+      ...types,
+      colors.blue('Custom'),
+      colors.blue('Create new Enum'),
+      colors.red('Cancel')],
     loop: false,
   }]);
 
@@ -165,11 +228,32 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     // Create new Enum
   }
 
-  if (type instanceof PrismaEnum) {
-    model.fields.push(new PrismaModelField(name, type.name));
-  } else {
-    model.fields.push(new PrismaModelField(name, type));
-  }
+  const typeName = type instanceof PrismaEnum ? type.name : type;
+
+  const { modifier } = await inquirer.prompt([{
+    name: 'modifier',
+    type: 'list',
+    message: 'Select modifier',
+    choices: [
+      {
+        name: `Normal : ${colors.red(typeName)}`,
+        value: typeName,
+      },
+      {
+        name: `Optional : ${colors.red(typeName)}?`,
+        value: `${typeName}?`,
+      },
+      {
+        name: `List : ${colors.red(typeName)}[]`,
+        value: `${typeName}[]`,
+      },
+    ],
+  }]);
+
+  const field = new PrismaModelField(name, type);
+  await queryAttributes(schema, field, type);
+
+  model.fields.push(field);
 
   await queryFields(schema, model, false);
 }
