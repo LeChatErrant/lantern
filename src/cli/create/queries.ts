@@ -8,11 +8,13 @@ import {
   PrismaModel,
   PrismaModelAttribute,
   PrismaModelField,
-  PrismaModelFieldType,
   PrismaSchema,
 } from '../../utils/prisma';
 import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
 import { displayModel } from '../../utils/display';
+
+const customPrompt = colors.blue('Custom');
+const cancelPrompt = colors.red('Cancel');
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -114,58 +116,6 @@ export async function queryDefaultFields(model: PrismaModel) {
   }
 }
 
-async function queryAttributes(schema: PrismaSchema, field: PrismaModelField, type: string | PrismaEnum, firstCall = true) {
-  const { addAttribute } = await inquirer.prompt([{
-    name: 'addAttribute',
-    type: 'list',
-    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('attribute')} to field ${colors.blue(field.name)} ?`,
-    choices: ['Yes', 'No'],
-  }]);
-
-  if (addAttribute === 'No') {
-    return;
-  }
-
-  const attributes = ['@id', '@unique', '@default'];
-  const { attribute } = await inquirer.prompt([{
-    name: 'attribute',
-    type: 'list',
-    message: 'Which one ?',
-    choices: [...attributes, colors.red('Cancel')],
-  }]);
-
-  if (attribute === colors.red('Cancel')) {
-    await queryAttributes(schema, field, type, false);
-    return;
-  }
-
-  let content;
-
-  if (attribute === '@default') {
-    if (type instanceof PrismaEnum || type === 'Boolean') {
-      const { defaultVal } = await inquirer.prompt([{
-        name: 'defaultVal',
-        type: 'list',
-        message: `Which default value do you want for field ${colors.blue(field.name)}?`,
-        choices: type instanceof PrismaEnum ? type.values : ['true', 'false'],
-      }]);
-      content = defaultVal;
-    } else {
-      const { defaultVal } = await inquirer.prompt([{
-        name: 'defaultVal',
-        type: 'input',
-        message: `Enter the default value for ${colors.blue(field.name)} :`,
-        suffix: '\n❯',
-      }]);
-      content = defaultVal;
-    }
-  }
-
-  field.attributes.push(new PrismaModelAttribute(attribute, content));
-
-  await queryAttributes(schema, field, type, false);
-}
-
 export async function queryFields(schema: PrismaSchema, model: PrismaModel, firstCall = true) {
   displayModel(model);
 
@@ -202,18 +152,18 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     message: 'Type : ',
     choices: [
       ...types,
-      colors.blue('Custom'),
+      customPrompt,
       colors.blue('Create new Enum'),
-      colors.red('Cancel')],
+      cancelPrompt],
     loop: false,
   }]);
 
-  if (type === colors.red('Cancel')) {
+  if (type === cancelPrompt) {
     await queryFields(schema, model, false);
     return;
   }
 
-  if (type === colors.blue('Custom')) {
+  if (type === customPrompt) {
     const { typeName } = await inquirer.prompt([{
       name: 'typeName',
       type: 'input',
@@ -237,21 +187,80 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     choices: [
       {
         name: `Normal : ${colors.red(typeName)}`,
-        value: typeName,
+        value: '',
       },
       {
         name: `Optional : ${colors.red(typeName)}?`,
-        value: `${typeName}?`,
+        value: '?',
       },
       {
         name: `List : ${colors.red(typeName)}[]`,
-        value: `${typeName}[]`,
+        value: '[]',
       },
     ],
   }]);
 
-  const field = new PrismaModelField(name, type);
-  await queryAttributes(schema, field, type);
+  const field = new PrismaModelField(name, typeName + modifier);
+
+  if (modifier !== '[]' && (type instanceof PrismaEnum || type === 'Boolean' || type === 'Int' || type === 'String' || type === 'DateTime')) {
+    const { needsDefault } = await inquirer.prompt([{
+      name: 'needsDefault',
+      type: 'list',
+      message: `Do you want to set a default value to ${colors.blue(field.name)} ?`,
+      choices: ['Yes', 'No'],
+    }]);
+
+    if (needsDefault === 'Yes') {
+      let choices: string[] = [];
+      if (type instanceof PrismaEnum) {
+        choices = type.values;
+      } else if (type === 'Boolean') {
+        choices = ['true', 'false'];
+      } else if (type === 'Int') {
+        choices = ['autoincrement()', customPrompt];
+      } else if (type === 'String') {
+        choices = ['cuid()', 'uuid()', customPrompt];
+      } else if (type === 'DateTime') {
+        choices = ['now()'];
+      }
+      let { defaultVal } = await inquirer.prompt([{
+        name: 'defaultVal',
+        type: 'list',
+        message: `Which default value do you want for field ${colors.blue(field.name)}?`,
+        choices: [...choices, cancelPrompt],
+      }]);
+      
+      if (defaultVal !== cancelPrompt) {
+        if (defaultVal === customPrompt) {
+          const { defaultInput } = await inquirer.prompt([{
+            name: 'defaultInput',
+            type: 'input',
+            message: `Enter the default value for ${colors.blue(field.name)} :`,
+            validate: (input) => {
+              if (input === '') {
+                return colors.red(`Enter a default value for field ${field.name}`);
+              }
+              if (type === 'Int') {
+                const num = Number(input);
+                if (Number.isNaN(num) || !Number.isInteger(num)) {
+                  return colors.red(`${num} is not a valid integer`);
+                }
+              }
+              return true;
+            },
+            suffix: '\n❯',
+          }]);
+          if (type === 'String') {
+            defaultVal = `"${defaultInput}"`;
+          } else {
+            defaultVal = defaultInput;
+          }
+        }
+        field.attributes.push(new PrismaModelAttribute('@default', defaultVal));
+      }
+    }
+
+  }
 
   model.fields.push(field);
 
@@ -284,10 +293,10 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel, fi
     name: 'target',
     type: 'list',
     message: 'With ?',
-    choices: [...availableModels.map((m) => m.name), colors.red('Cancel')],
+    choices: [...availableModels.map((m) => m.name), cancelPrompt],
   }]);
 
-  if (target === colors.red('Cancel')) {
+  if (target === cancelPrompt) {
     await queryRelation(schema, model, false);
     return;
   }
