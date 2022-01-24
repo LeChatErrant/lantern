@@ -44,7 +44,7 @@
     "inquirer": "^8.2.0",
     "npm": "7.9",
     "pluralize": "^8.0.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   },
   "devDependencies": {
     "@types/clear": "^0.1.2",
