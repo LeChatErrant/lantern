@@ -50,6 +50,7 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectO
         })),
       ])
       .flat(),
+    loop: false,
   }])).options;
 
   return projectOptionConfig;

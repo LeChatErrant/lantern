@@ -4,8 +4,8 @@ export enum ProjectOption {
   USER,
   USER_ROLE, // Role + admin middleware
   USER_AUTH, // Signin, signout + auth middleware (attention, auth sans session = problème)
-  USER_ME, // meMiddleware
-  USER_OWNERSHIP, // ownershipMiddleware
+  USER_ME_MIDDLEWARE, // meMiddleware
+  USER_OWNERSHIP_MIDDLEWARE, // ownershipMiddleware
 
   SESSION,
   REDIS_SESSION,
@@ -31,37 +31,83 @@ export const ProjectOptionDependencies: { [key in ProjectOption]?: ProjectOption
 };
 
 export const ProjectOptionCategories: { [category: string]: ProjectOption[] } = {
-  Docker: [
-    ProjectOption.DOCKERFILE,
-    ProjectOption.DOCKER_COMPOSE,
+  User: [
+    ProjectOption.USER,
+    ProjectOption.USER_AUTH,
+    ProjectOption.USER_ROLE,
+    ProjectOption.USER_ME_MIDDLEWARE,
+    ProjectOption.USER_OWNERSHIP_MIDDLEWARE,
   ],
   Session: [
     ProjectOption.SESSION,
     ProjectOption.REDIS_SESSION,
   ],
+  Configuration: [
+    ProjectOption.DOCKERFILE,
+    ProjectOption.DOCKER_COMPOSE,
+    ProjectOption.HEROKU,
+    ProjectOption.GITHUB_ISSUE_TEMPLATES,
+  ],
+  ['CI and pipelines']: [
+    ProjectOption.PRE_COMMIT_HOOKS,
+    ProjectOption.DEPENDABOT,
+    ProjectOption.MERGIFY,
+    ProjectOption.INTEGRATION_PIPELINE,
+    ProjectOption.LINT_PIPELINE,
+    ProjectOption.DOCKER_PIPELINE,
+    ProjectOption.TOC_PIPELINE,
+    ProjectOption.GREETINGS_PIPELINE,
+  ],
 };
 
-export const ProjectOptionDefault: { [key in ProjectOption]?: boolean } = {
+export const ProjectOptionDefault: { [key in ProjectOption]: boolean } = {
   [ProjectOption.USER]: true,
+  [ProjectOption.USER_AUTH]: true,
+  [ProjectOption.USER_ROLE]: true,
+  [ProjectOption.USER_ME_MIDDLEWARE]: true,
+  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: true,
+
   [ProjectOption.SESSION]: true,
   [ProjectOption.REDIS_SESSION]: true,
+
   [ProjectOption.DOCKERFILE]: true,
   [ProjectOption.DOCKER_COMPOSE]: true,
+  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: true,
   [ProjectOption.HEROKU]: true,
+
   [ProjectOption.PRE_COMMIT_HOOKS]: true,
+  [ProjectOption.DEPENDABOT]: true,
+  [ProjectOption.MERGIFY]: true,
+  [ProjectOption.INTEGRATION_PIPELINE]: true,
+  [ProjectOption.LINT_PIPELINE]: true,
+  [ProjectOption.DOCKER_PIPELINE]: true,
+  [ProjectOption.TOC_PIPELINE]: true,
+  [ProjectOption.GREETINGS_PIPELINE]: true,
 };
 
-export const ProjectOptionDescriptions: { [key in ProjectOption]?: string } = {
+export const ProjectOptionDescriptions: { [key in ProjectOption]: string } = {
   [ProjectOption.USER]: `Default ${colors.blue('user')}`,
+  [ProjectOption.USER_AUTH]: `${colors.blue('Authentification')}, with ${colors.green('signin')} / ${colors.green('signout')} routes and ${colors.green('authentification middleware')} to protect routes`,
+  [ProjectOption.USER_ROLE]: `User ${colors.blue('roles')} (by default, ${colors.green('USER')} or ${colors.green('ADMIN')}), with ${colors.green('admin middleware')} to make routes accessibles only by admins`,
+  [ProjectOption.USER_ME_MIDDLEWARE]: `${colors.blue("'Me' middleware")}, allowing logged in user to refer to himself like this : ${colors.green('GET /users/me')}, ${colors.green('POST /users/me/posts')}, ...`,
+  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: `${colors.blue('Ownership middleware')}, allowing to restrict a route to only the user owning the resource (example : posts created under ${colors.green('/users/XXX/posts')} can only be accessed by user ${colors.green('XXX')})`,
 
-  [ProjectOption.SESSION]: `${colors.blue('Session')} to persist user connection (useful for example to keen user logged in)`,
-  [ProjectOption.REDIS_SESSION]: `${colors.blue('Redis')} based sessions to persist it across multiple instances`,
+  [ProjectOption.SESSION]: `${colors.blue('Session')} to ${colors.green('persist')} user connection (useful for example to keen user logged in)`,
+  [ProjectOption.REDIS_SESSION]: `${colors.blue('Redis')} based sessions to persist it across ${colors.green('multiple instances')}`,
 
-  [ProjectOption.DOCKERFILE]: `${colors.blue('Dockerfile')} to launch the containerized app`,
-  [ProjectOption.DOCKER_COMPOSE]: `${colors.blue('Docker-compose')} file to launch the app, the database, and redis`,
+  [ProjectOption.DOCKERFILE]: `${colors.blue('Dockerfile')} to launch the ${colors.green('containerized')} app`,
+  [ProjectOption.DOCKER_COMPOSE]: `${colors.blue('Docker-compose')} file to launch the ${colors.green('full stack')} ('app, database, and redis if needed')`,
+  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: `${colors.blue('Default issue templates')} for ${colors.green('github')} ('feature request, bug report and security issue)`,
+  [ProjectOption.HEROKU]: `${colors.blue('Heroku')} integration, to easily ${colors.green('deploy')} the app`,
 
-  [ProjectOption.HEROKU]: `${colors.blue('Heroku')} integration, to easily deploy the app`,
-  [ProjectOption.PRE_COMMIT_HOOKS]: `${colors.blue('Pre-commit hooks')}, automatically linting your files and validating database schema`,
+  [ProjectOption.PRE_COMMIT_HOOKS]: `${colors.blue('Pre-commit hooks')}, automatically ${colors.green('linting')} your files and ${colors.green('validating database schema')}`,
+  [ProjectOption.DEPENDABOT]: `${colors.blue('Dependabot')}, automatically creating ${colors.green('pull requests')} to ${colors.green('upgrade dependencies')} when needed`,
+  [ProjectOption.MERGIFY]: `${colors.blue('Mergify')} configured to automatically merge ${colors.green('dependabot')} PRs if the CI succeeds`,
+  [ProjectOption.INTEGRATION_PIPELINE]: `${colors.blue('Integration tests pipeline')} to test ${colors.green('API endpoints')}`,
+  [ProjectOption.LINT_PIPELINE]: `${colors.blue('Lint pipeline')} to validate ${colors.green('code styling')}`,
+  [ProjectOption.DOCKER_PIPELINE]: `${colors.blue('Docker pipeline')} to ${colors.green('build and publish docker image')} on releases / pushes on master`,
+  [ProjectOption.TOC_PIPELINE]: `${colors.blue('Table of content pipeline')} to update the TOC section of ${colors.green('README.md')} when needed`,
+  [ProjectOption.GREETINGS_PIPELINE]: `${colors.blue('Greetings pipeline')} to... greet you each time a pull request is closed ${colors.green('(you deserves it !)')}`,
 };
 
 export type ProjectOptionConfig = { [key in ProjectOption]: boolean };
