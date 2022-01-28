@@ -7,10 +7,12 @@ import dockerComposeTemplate from './templates/docker-compose.template';
 import envrcTemplate from './templates/envrc.template';
 import gitignoreTemplate from './templates/gitignore.template';
 import jestConfigTemplate from './templates/jest.config.template';
+import licenteTemplate from './templates/licente.template';
 
 export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
 
+  licenteTemplate(projectName);
   gitignoreTemplate(projectName);
   envrcTemplate(projectName, projectConfig);
   jestConfigTemplate(projectName);
