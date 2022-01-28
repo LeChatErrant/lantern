@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
 import colors from 'colors';
 
-import { enumToDisplayable, inputPromptSuffix } from '../../utils/display';
+import { arrayToDisplayableEnum, enumToDisplayable, inputPromptSuffix } from '../../utils/display';
 
 import {
   ProjectOptionConfig,
@@ -32,7 +32,7 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectO
         if (dependencies && !dependencies.every((dependency) => input.includes(dependency))) {
           return colors.red(
             'You need to enable '
-            + colors.bold(dependencies.map((dep) => enumToDisplayable(ProjectOption[dep])).join(', '))
+            + colors.bold(arrayToDisplayableEnum(dependencies.map((dep) => enumToDisplayable(ProjectOption[dep]))))
             + ` to use ${colors.bold(enumToDisplayable(ProjectOption[projectOption]))}`,
           );
         }

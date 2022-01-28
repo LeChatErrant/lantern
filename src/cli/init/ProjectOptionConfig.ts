@@ -2,10 +2,10 @@ import colors from 'colors';
 
 export enum ProjectOption {
   USER,
-  USER_ROLE, // Role + admin middleware
-  USER_AUTH, // Signin, signout + auth middleware (attention, auth sans session = problème)
-  USER_ME_MIDDLEWARE, // meMiddleware
-  USER_OWNERSHIP_MIDDLEWARE, // ownershipMiddleware
+  USER_AUTH,
+  USER_ROLE,
+  USER_ME_MIDDLEWARE,
+  USER_OWNERSHIP_MIDDLEWARE,
 
   SESSION,
   REDIS_SESSION,
@@ -26,8 +26,17 @@ export enum ProjectOption {
 }
 
 export const ProjectOptionDependencies: { [key in ProjectOption]?: ProjectOption[] } = {
-  [ProjectOption.DOCKER_COMPOSE]: [ProjectOption.DOCKERFILE],
+  [ProjectOption.USER_AUTH]: [ProjectOption.USER, ProjectOption.SESSION],
+  [ProjectOption.USER_ROLE]: [ProjectOption.USER],
+  [ProjectOption.USER_ME_MIDDLEWARE]: [ProjectOption.USER],
+  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: [ProjectOption.USER],
+
   [ProjectOption.REDIS_SESSION]: [ProjectOption.SESSION],
+
+  [ProjectOption.DOCKER_COMPOSE]: [ProjectOption.DOCKERFILE],
+
+  [ProjectOption.MERGIFY]: [ProjectOption.DEPENDABOT],
+  [ProjectOption.DOCKER_PIPELINE]: [ProjectOption.DOCKERFILE],
 };
 
 export const ProjectOptionCategories: { [category: string]: ProjectOption[] } = {
@@ -73,7 +82,7 @@ export const ProjectOptionDefault: { [key in ProjectOption]: boolean } = {
   [ProjectOption.DOCKERFILE]: true,
   [ProjectOption.DOCKER_COMPOSE]: true,
   [ProjectOption.GITHUB_ISSUE_TEMPLATES]: true,
-  [ProjectOption.HEROKU]: true,
+  [ProjectOption.HEROKU]: false,
 
   [ProjectOption.PRE_COMMIT_HOOKS]: true,
   [ProjectOption.DEPENDABOT]: true,
