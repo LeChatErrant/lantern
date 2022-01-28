@@ -9,6 +9,7 @@ import gitignoreTemplate from './templates/gitignore.template';
 import jestConfigTemplate from './templates/jest.config.template';
 import licenseTemplate from './templates/license.template';
 import procfileTemplate from './templates/procfile.template';
+import tsconfigTemplate from './templates/tsconfig.template';
 
 export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
@@ -16,6 +17,7 @@ export function initTemplate(projectName: string, projectConfig: ProjectConfig) 
   licenseTemplate(projectName);
   gitignoreTemplate(projectName);
   envrcTemplate(projectName, projectConfig);
+  tsconfigTemplate(projectName);
   jestConfigTemplate(projectName);
 
   if (projectConfig[ProjectOption.DOCKERFILE]) {
