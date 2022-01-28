@@ -29,8 +29,27 @@ export function displayCLIBanner() {
   logger.info();
 }
 
+/**
+ * Clear the terminal then display a Prisma model
+ *
+ * @param model Prisma model
+ */
 export function displayModel(model: PrismaModel) {
   console.clear();
   logger.log(model.toString());
   logger.log();
 }
+
+/**
+ * Convert an enum value (MY_VALUE) to a displayable string (my value, colored in blue)
+ *
+ * @param str String to convert
+ * @return Formatted string
+ */
+export function enumToDisplayable(str: string) {
+  return colors.blue(str.toLowerCase().replace('_', ' '));
+}
+
+export const customPrompt = colors.blue('Custom');
+export const cancelPrompt = colors.red('Cancel');
+export const inputPromptSuffix = '\n❯';

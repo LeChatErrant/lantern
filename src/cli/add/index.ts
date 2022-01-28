@@ -10,7 +10,7 @@ import {
 } from './queries';
 import { displayModel } from '../../utils/display';
 
-async function create() {
+async function add() {
   const schema = PrismaSchema.fromFile(prismaSchemaPath);
 
   const singular = await queryResourceName(schema);
@@ -30,4 +30,4 @@ async function create() {
   displayModel(model);
 }
 
-export default create;
+export default add;

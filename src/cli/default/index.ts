@@ -1,7 +1,8 @@
 import colors from 'colors';
 
 import Command from '../Command';
-import create from '../create';
+import init from '../init';
+import add from '../add';
 import edit from '../edit';
 import publishTypes from '../publishTypes';
 
@@ -11,9 +12,9 @@ async function defaultCommand() {
   const action = await queryCommand();
 
   switch (action) {
-    case Command.INIT: console.log('Coming soon !');
+    case Command.INIT: await init();
       break;
-    case Command.CREATE: await create();
+    case Command.ADD: await add();
       break;
     case Command.EDIT: await edit();
       break;

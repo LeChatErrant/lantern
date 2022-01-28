@@ -5,7 +5,8 @@ import { displayCLIBanner } from '../utils/display';
 
 import Command, { CommandsDescription } from './Command';
 import defaultCommand from './default';
-import create from './create';
+import init from './init';
+import add from './add';
 import edit from './edit';
 import publishTypes from './publishTypes';
 
@@ -17,7 +18,8 @@ cli
   .allowExcessArguments(false)
   .allowUnknownOption(false);
 
-cli.hook('preAction', () => displayCLIBanner());
+cli
+  .hook('preAction', () => displayCLIBanner());
 
 cli
   .command(Command.DEFAULT, { hidden: true, isDefault: true })
@@ -25,9 +27,14 @@ cli
   .action(defaultCommand);
 
 cli
-  .command(Command.CREATE)
-  .description(CommandsDescription[Command.CREATE])
-  .action(create);
+  .command(Command.INIT)
+  .description(CommandsDescription[Command.INIT])
+  .action(init);
+
+cli
+  .command(Command.ADD)
+  .description(CommandsDescription[Command.ADD])
+  .action(add);
 
 cli
   .command(Command.EDIT)
