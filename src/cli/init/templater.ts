@@ -6,12 +6,14 @@ import dockerignoreTemplate from './templates/dockerignore.template';
 import dockerComposeTemplate from './templates/docker-compose.template';
 import envrcTemplate from './templates/envrc.template';
 import gitignoreTemplate from './templates/gitignore.template';
+import jestConfigTemplate from './templates/jest.config.template';
 
 export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
 
   gitignoreTemplate(projectName);
   envrcTemplate(projectName, projectConfig);
+  jestConfigTemplate(projectName);
 
   if (projectConfig[ProjectOption.DOCKERFILE]) {
     dockerfileTemplate(projectName);
