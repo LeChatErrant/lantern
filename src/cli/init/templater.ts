@@ -7,12 +7,13 @@ import dockerComposeTemplate from './templates/docker-compose.template';
 import envrcTemplate from './templates/envrc.template';
 import gitignoreTemplate from './templates/gitignore.template';
 import jestConfigTemplate from './templates/jest.config.template';
-import licenteTemplate from './templates/licente.template';
+import licenseTemplate from './templates/license.template';
+import procfileTemplate from './templates/procfile.template';
 
 export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
 
-  licenteTemplate(projectName);
+  licenseTemplate(projectName);
   gitignoreTemplate(projectName);
   envrcTemplate(projectName, projectConfig);
   jestConfigTemplate(projectName);
@@ -23,5 +24,9 @@ export function initTemplate(projectName: string, projectConfig: ProjectConfig) 
     if (projectConfig[ProjectOption.DOCKER_COMPOSE]) {
       dockerComposeTemplate(projectName, projectConfig);
     }
+  }
+
+  if (projectConfig[ProjectOption.HEROKU]) {
+    procfileTemplate(projectName);
   }
 }

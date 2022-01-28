@@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 `.substring(1);
 
-export default function licenteTemplate(projectName: string) {
+export default function licenseTemplate(projectName: string) {
   const filePath = path.join(projectName, 'LICENSE');
   createFile(filePath, content);
 }
