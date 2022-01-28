@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import colors from 'colors';
 
 import { arrayToDisplayableEnum, enumToDisplayable, inputPromptSuffix } from '../../utils/display';
+import { directoryExists, fileExists } from '../../utils/files';
 
 import {
   ProjectOptionConfig,
@@ -15,7 +16,18 @@ export async function queryProjectName() {
     name: 'projectName',
     type: 'input',
     message: `How your project should be ${colors.blue('named')} ?`,
-    validate: (input) => input === '' ? colors.red('Please enter a project name') : true,
+    validate: (input) => {
+      if (input === '') {
+        return colors.red('Please enter a project name');
+      }
+      if (fileExists(input)) {
+        return colors.red(`A file named ${colors.bold(input)} already exists`);
+      }
+      if (directoryExists(input)) {
+        return colors.red(`A directory named ${colors.bold(input)} already exists`);
+      }
+      return true;
+    },
     suffix: inputPromptSuffix,
   }]);
   return projectName;
