@@ -4,9 +4,12 @@ import { ProjectConfig, ProjectOption } from './ProjectConfig';
 import dockerfileTemplate from './templates/dockerfile.template';
 import dockerignoreTemplate from './templates/dockerignore.template';
 import dockerComposeTemplate from './templates/docker-compose.template';
+import envrcTemplate from './templates/envrc.template';
 
 export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
+
+  envrcTemplate(projectName, projectConfig);
 
   if (projectConfig[ProjectOption.DOCKERFILE]) {
     dockerfileTemplate(projectName);
