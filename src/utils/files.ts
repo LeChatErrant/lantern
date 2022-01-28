@@ -4,6 +4,7 @@ import path from 'path';
 
 import { FileError } from './errors';
 import logger from './logger';
+import { dir } from 'npm';
 
 enum ModificationType {
   'CREATE',
@@ -56,6 +57,16 @@ export function createDir(dirPath: string) {
   });
 
   fs.mkdirSync(dirPath);
+}
+
+/**
+ * Check if a directory exists and is a directory
+ *
+ * @param dirPath Path to the directory
+ * @return True if the path exists and is a directory, false otherwise
+ */
+export function directoryExists(dirPath: string) {
+  return fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory();
 }
 
 /**
@@ -114,6 +125,16 @@ export function createFile(filePath: string, data?: string) {
   });
 
   fs.writeFileSync(filePath, data ?? '');
+}
+
+/**
+ * Check if file exists and is a file
+ *
+ * @param filePath Path to the file
+ * @return True if the path exists and is a file, false otherwise
+ */
+export function fileExists(filePath: string) {
+  return fs.existsSync(filePath) && fs.statSync(filePath).isFile();
 }
 
 /**

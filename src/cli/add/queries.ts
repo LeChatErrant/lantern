@@ -12,9 +12,7 @@ import {
 } from '../../utils/prisma';
 import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
 import { displayModel } from '../../utils/display';
-
-const customPrompt = colors.blue('Custom');
-const cancelPrompt = colors.red('Cancel');
+import { customPrompt, cancelPrompt, inputPromptSuffix } from '../../utils/display';
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -35,7 +33,7 @@ export async function queryResourceName(schema: PrismaSchema) {
       }
       return true;
     },
-    suffix: '\n❯',
+    suffix: inputPromptSuffix,
   }]);
   return resourceName.toLowerCase();
 }
@@ -66,7 +64,7 @@ export async function queryPluralizedResourceName(resourceName: string) {
     type: 'input',
     message: `Write it in the ${colors.green('plural form')} :`,
     validate: (input) => input !== '' ? true : colors.red('Please enter pluralized form (example : users)'),
-    suffix: '\n❯',
+    suffix: inputPromptSuffix,
   }]);
   return pluralizedResourceName.toLowerCase();
 }
@@ -135,7 +133,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     type: 'input',
     message: 'Field name : ',
     validate: (input) => input !== '' ? true : colors.red('Please enter a name for the field'),
-    suffix: '\n❯',
+    suffix: inputPromptSuffix,
   }]);
 
   const types = [
@@ -169,7 +167,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
       type: 'input',
       message: 'Enter the custom type : ',
       validate: (input) => input !== '' ? true : colors.red(`Please enter a custom type for the field ${name}`),
-      suffix: '\n❯',
+      suffix: inputPromptSuffix,
     }]);
     type = typeName;
   }
@@ -248,7 +246,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
               }
               return true;
             },
-            suffix: '\n❯',
+            suffix: inputPromptSuffix,
           }]);
           if (type === 'String') {
             defaultVal = `"${defaultInput}"`;

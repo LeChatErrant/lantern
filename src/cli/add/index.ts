@@ -1,11 +1,9 @@
 import { capitalize } from '../../utils/strings';
 import { prismaSchemaPath } from '../../utils/referencePaths';
 import { PrismaSchema, PrismaModel, PrismaModelField, PrismaModelAttribute } from '../../utils/prisma';
-import { PrismaError } from '../../utils/errors';
 
 import {
   queryDefaultFields, queryFields,
-  queryIfDatabaseModelIsNeeded,
   queryPluralizedResourceName,
   queryRelation,
   queryResourceName,
