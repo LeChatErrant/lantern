@@ -7,13 +7,13 @@ import { capitalize, insert } from '../../utils/strings';
 import { npmRun } from '../../utils/npm';
 import { projectPath, routesPath, prismaPath } from '../../utils/referencePaths';
 
-import routesTemplate from './template/routes.template';
-import controllersTemplate from './template/controllers.template';
-import middlewareTemplate from './template/middleware.template';
-import prismaTemplate from './template/prisma.template';
-import typesTemplate from './template/types.template';
-import helpersTemplate from './template/helpers.template';
-import specTemplate from './template/spec.template';
+import routesTemplate from './templates/routes.templates';
+import controllersTemplate from './templates/controllers.templates';
+import middlewareTemplate from './templates/middleware.templates';
+import prismaTemplate from './templates/prisma.templates';
+import typesTemplate from './templates/types.templates';
+import helpersTemplate from './templates/helpers.templates';
+import specTemplate from './templates/spec.templates';
 import { appendToFile, createDir } from '../../utils/files';
 import logger from '../../utils/logger';
 

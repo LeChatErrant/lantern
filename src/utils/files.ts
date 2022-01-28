@@ -65,7 +65,7 @@ export function createDir(dirPath: string) {
  * @param dirPath Path to the directory
  * @return True if the path exists and is a directory, false otherwise
  */
-export function directoryExists(dirPath: string) {
+export function dirExists(dirPath: string) {
   return fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory();
 }
 

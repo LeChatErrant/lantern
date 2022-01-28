@@ -1,29 +1,31 @@
 import colors from 'colors';
 
 export enum ProjectOption {
-  USER,
-  USER_AUTH,
-  USER_ROLE,
-  USER_ME_MIDDLEWARE,
-  USER_OWNERSHIP_MIDDLEWARE,
+  USER = 'user',
+  USER_AUTH = 'user auth',
+  USER_ROLE = 'user role',
+  USER_ME_MIDDLEWARE = 'user me middleware',
+  USER_OWNERSHIP_MIDDLEWARE = 'user ownership middleware',
 
-  SESSION,
-  REDIS_SESSION,
+  SESSION = 'session',
+  REDIS_SESSION = 'redis session',
 
-  DOCKERFILE,
-  DOCKER_COMPOSE,
+  DOCKERFILE = 'dockerfile',
+  DOCKER_COMPOSE = 'docker compos',
 
-  HEROKU,
-  PRE_COMMIT_HOOKS,
-  DEPENDABOT,
-  MERGIFY,
-  GITHUB_ISSUE_TEMPLATES,
-  INTEGRATION_PIPELINE,
-  LINT_PIPELINE,
-  DOCKER_PIPELINE,
-  TOC_PIPELINE,
-  GREETINGS_PIPELINE,
+  HEROKU = 'heroku',
+  PRE_COMMIT_HOOKS = 'pre commit hooks',
+  DEPENDABOT = 'dependabot',
+  MERGIFY = 'mergify',
+  GITHUB_ISSUE_TEMPLATES = 'github issue template',
+  INTEGRATION_PIPELINE = 'integration pipeline',
+  LINT_PIPELINE = 'lint pipeline',
+  DOCKER_PIPELINE = 'docker pipeline',
+  TOC_PIPELINE = 'toc pipeline',
+  GREETINGS_PIPELINE = 'greetings pipeline',
 }
+
+export type ProjectConfig = { [key in ProjectOption]: boolean };
 
 export const ProjectOptionDependencies: { [key in ProjectOption]?: ProjectOption[] } = {
   [ProjectOption.USER_AUTH]: [ProjectOption.USER, ProjectOption.SESSION],
@@ -54,8 +56,8 @@ export const ProjectOptionCategories: { [category: string]: ProjectOption[] } = 
   Configuration: [
     ProjectOption.DOCKERFILE,
     ProjectOption.DOCKER_COMPOSE,
-    ProjectOption.HEROKU,
     ProjectOption.GITHUB_ISSUE_TEMPLATES,
+    ProjectOption.HEROKU,
   ],
   ['CI and pipelines']: [
     ProjectOption.PRE_COMMIT_HOOKS,
@@ -69,7 +71,7 @@ export const ProjectOptionCategories: { [category: string]: ProjectOption[] } = 
   ],
 };
 
-export const ProjectOptionDefault: { [key in ProjectOption]: boolean } = {
+export const ProjectOptionDefault: ProjectConfig = {
   [ProjectOption.USER]: true,
   [ProjectOption.USER_AUTH]: true,
   [ProjectOption.USER_ROLE]: true,
@@ -91,7 +93,7 @@ export const ProjectOptionDefault: { [key in ProjectOption]: boolean } = {
   [ProjectOption.LINT_PIPELINE]: true,
   [ProjectOption.DOCKER_PIPELINE]: true,
   [ProjectOption.TOC_PIPELINE]: true,
-  [ProjectOption.GREETINGS_PIPELINE]: true,
+  [ProjectOption.GREETINGS_PIPELINE]: false,
 };
 
 export const ProjectOptionDescriptions: { [key in ProjectOption]: string } = {
@@ -118,5 +120,3 @@ export const ProjectOptionDescriptions: { [key in ProjectOption]: string } = {
   [ProjectOption.TOC_PIPELINE]: `${colors.blue('Table of content pipeline')} to update the TOC section of ${colors.green('README.md')} when needed`,
   [ProjectOption.GREETINGS_PIPELINE]: `${colors.blue('Greetings pipeline')} to... greet you each time a pull request is closed ${colors.green('(you deserves it !)')}`,
 };
-
-export type ProjectOptionConfig = { [key in ProjectOption]: boolean };

@@ -35,7 +35,7 @@ export function displayCLIBanner() {
  * @param model Prisma model
  */
 export function displayModel(model: PrismaModel) {
-  console.clear();
+//  console.clear();
   logger.log(model.toString());
   logger.log();
 }
