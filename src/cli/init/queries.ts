@@ -18,7 +18,7 @@ export async function queryProjectName() {
     name: 'projectName',
     type: 'input',
     message: `How your project should be ${colors.blue('named')} ?`,
-    validate: (input) => {
+    validate: (input: string) => {
       if (input === '') {
         return colors.red('Please enter a project name');
       }
