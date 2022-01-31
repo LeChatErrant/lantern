@@ -11,10 +11,10 @@ export enum ProjectOption {
   REDIS_SESSION = 'redis session',
 
   DOCKERFILE = 'dockerfile',
-  DOCKER_COMPOSE = 'docker compose',
+  DOCKER_COMPOSE = 'docker-compose',
 
   HEROKU = 'heroku',
-  PRE_COMMIT_HOOKS = 'pre commit hooks',
+  PRE_COMMIT_HOOKS = 'pre-commit hooks',
   DEPENDABOT = 'dependabot',
   MERGIFY = 'mergify',
   GITHUB_ISSUE_TEMPLATES = 'github issue template',

@@ -7,6 +7,10 @@ export function bold(str: string) {
   return colors.bold(str);
 }
 
+export function underline(str: string) {
+  return colors.underline(str);
+}
+
 export function blue(str: string) {
   return bold(colors.blue(str));
 }

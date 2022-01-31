@@ -73,6 +73,18 @@ export function arrayToDisplayableEnum(arr: string[]) {
   }
 }
 
+/**
+ * Return the right amount of spaces needed to align `str` tail with all string in `arr`
+ *
+ * @param str String you want to align tail
+ * @param arr Array of string to be aligned with
+ * @return String composed of multiple spaces, to align the tail of `str`
+ */
+export function alignTail(str: string, arr: string[]) {
+  const maxLength = arr.reduce((acc, val) => val.length > acc ? val.length : acc, 0);
+  return ' '.repeat(maxLength + 1 - str.length);
+}
+
 export const customPrompt = blue('Custom');
 export const cancelPrompt = red('Cancel');
 export const inputPromptSuffix = '\n❯';

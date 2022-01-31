@@ -1,8 +1,8 @@
 import inquirer from 'inquirer';
 
-import { arrayToDisplayableEnum, enumToDisplayable, inputPromptSuffix } from '../../utils/display';
+import { alignTail, arrayToDisplayableEnum, inputPromptSuffix } from '../../utils/display';
 import { dirExists, fileExists } from '../../utils/files';
-import { blue, green, red, bold } from '../../utils/colors';
+import { blue, green, red, bold, underline } from '../../utils/colors';
 
 import {
   ProjectConfig,
@@ -12,6 +12,8 @@ import {
   ProjectOptionDependencies,
   ProjectOptionDescriptions,
 } from './ProjectConfig';
+import { yellow } from 'colors/safe';
+import { capitalize } from '../../utils/strings';
 
 export async function queryProjectName() {
   const { projectName } = await inquirer.prompt([{
@@ -46,8 +48,8 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectC
         if (dependencies && !dependencies.every((dependency) => input.includes(dependency))) {
           return red(
             'You need to enable '
-            + bold(arrayToDisplayableEnum(dependencies))
-            + ` to use ${bold(projectOption)}`,
+            + underline(arrayToDisplayableEnum(dependencies))
+            + ` to use ${underline(projectOption)}`,
           );
         }
       }
@@ -58,7 +60,7 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectC
       .map(([category, projectOptions]) => [
         new inquirer.Separator(' - ' + category),
         ...projectOptions.map((projectOption) => ({
-          name: ProjectOptionDescriptions[projectOption],
+          name: `${blue(capitalize(projectOption))} ${alignTail(projectOption, Object.values(ProjectOption))} ${yellow('|')} ${ProjectOptionDescriptions[projectOption]}`,
           value: projectOption,
           checked: ProjectOptionDefault[projectOption],
         })),
@@ -83,10 +85,23 @@ export async function queryProjectConfig(projectName: string): Promise<ProjectCo
     name: 'type',
     type: 'list',
     message: 'What configuration do you want for your new project ?',
-    choices: ['Complete', 'Minimal', 'Custom'],
+    choices: [
+      {
+        name: 'Complete',
+        value: 'complete',
+      },
+      {
+        name: 'Minimal',
+        value: 'minimal',
+      },
+      {
+        name: 'Custom',
+        value: 'custom',
+      },
+    ],
   }]);
 
-  if (type === 'Complete') {
+  if (type === 'complete') {
     const projectConfig = Object
       .values(ProjectOption)
       .reduce((acc, val: ProjectOption) => ({
@@ -94,7 +109,7 @@ export async function queryProjectConfig(projectName: string): Promise<ProjectCo
         [val]: true,
       }), {} as ProjectConfig);
     return projectConfig;
-  } else if (type === 'Minimal') {
+  } else if (type === 'minimal') {
     const projectConfig = Object
       .values(ProjectOption)
       .reduce((acc, val: ProjectOption) => ({
