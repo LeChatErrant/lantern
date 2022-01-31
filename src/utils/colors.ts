@@ -16,7 +16,7 @@ export function green(str: string) {
 }
 
 export function red(str: string) {
-  return colors.red(str);
+  return bold(colors.red(str));
 }
 
 export function yellow(str: string) {
