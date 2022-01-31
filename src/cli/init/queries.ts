@@ -57,17 +57,17 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectC
     },
     choices: Object
       .entries(ProjectOptionCategories)
-      .map(([category, projectOptions]) => [
-        new inquirer.Separator(' - ' + category),
+      .map(([category, projectOptions], index) => [
+        new inquirer.Separator(`${index !== 0 ? '\n' : ''} - ` + category),
         ...projectOptions.map((projectOption) => ({
-          name: `${blue(capitalize(projectOption))} ${alignTail(projectOption, Object.values(ProjectOption))} ${yellow('|')} ${ProjectOptionDescriptions[projectOption]}`,
+          name: `${blue(capitalize(projectOption))} ${alignTail(projectOption, Object.values(ProjectOption))} ${'|'} ${ProjectOptionDescriptions[projectOption]}`,
           value: projectOption,
           checked: ProjectOptionDefault[projectOption],
         })),
       ])
       .flat(),
     loop: false,
-    pageSize: ProjectOptionCategories[Object.keys(ProjectOptionCategories)[0]].length + 1 + 1 + 1, // First separator, whole first category, second separator, first item of next category
+    pageSize: ProjectOptionCategories[Object.keys(ProjectOptionCategories)[0]].length + 4, // First separator, whole first category, second separator, first item of next category
   }])).options;
 
   const projectConfig = Object

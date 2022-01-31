@@ -74,16 +74,16 @@ export const ProjectOptionCategories: { [category: string]: ProjectOption[] } = 
 export const ProjectOptionDefault: ProjectConfig = {
   [ProjectOption.USER]: true,
   [ProjectOption.USER_AUTH]: true,
-  [ProjectOption.USER_ROLE]: true,
-  [ProjectOption.USER_ME_MIDDLEWARE]: true,
-  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: true,
+  [ProjectOption.USER_ROLE]: false,
+  [ProjectOption.USER_ME_MIDDLEWARE]: false,
+  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: false,
 
   [ProjectOption.SESSION]: true,
   [ProjectOption.REDIS_SESSION]: true,
 
   [ProjectOption.DOCKERFILE]: true,
   [ProjectOption.DOCKER_COMPOSE]: true,
-  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: true,
+  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: false,
   [ProjectOption.HEROKU]: false,
 
   [ProjectOption.PRE_COMMIT_HOOKS]: true,
@@ -103,7 +103,7 @@ export const ProjectOptionDescriptions: { [key in ProjectOption]: string } = {
   [ProjectOption.USER_ME_MIDDLEWARE]: `${blue("'Me' middleware")}, allowing logged in user to refer to himself like this : ${green('GET /users/me')}, ${green('POST /users/me/posts')}, ...`,
   [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: `${blue('Ownership middleware')}, allowing to restrict a route to only the user owning the resource (example : posts created under ${green('/users/XXX/posts')} can only be accessed by user ${green('XXX')})`,
 
-  [ProjectOption.SESSION]: `${blue('Session')} to ${green('persist')} user connection (useful for example to keen user logged in)`,
+  [ProjectOption.SESSION]: `${blue('Session')} to ${green('persist')} user connection, useful for example to keep user logged in`,
   [ProjectOption.REDIS_SESSION]: `${blue('Redis')} based sessions to persist it across ${green('multiple instances')}`,
 
   [ProjectOption.DOCKERFILE]: `${blue('Dockerfile')} to launch the ${green('containerized')} app`,
