@@ -77,3 +77,32 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectC
 
   return projectConfig;
 }
+
+export async function queryProjectConfig(projectName: string): Promise<ProjectConfig> {
+  const { type } = await inquirer.prompt([{
+    name: 'type',
+    type: 'list',
+    message: 'What configuration do you want for your new project ?',
+    choices: ['Complete', 'Minimal', 'Custom'],
+  }]);
+
+  if (type === 'Complete') {
+    const projectConfig = Object
+      .values(ProjectOption)
+      .reduce((acc, val: ProjectOption) => ({
+        ...acc,
+        [val]: true,
+      }), {} as ProjectConfig);
+    return projectConfig;
+  } else if (type === 'Minimal') {
+    const projectConfig = Object
+      .values(ProjectOption)
+      .reduce((acc, val: ProjectOption) => ({
+        ...acc,
+        [val]: false,
+      }), {} as ProjectConfig);
+    return projectConfig;
+  } else {
+    return queryProjectOptions(projectName);
+  }
+}
