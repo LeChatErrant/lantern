@@ -39,7 +39,7 @@
     "clear": "^0.1.0",
     "clui": "^0.3.6",
     "colors": "^1.4.0",
-    "commander": "^8.3.0",
+    "commander": "^9.0.0",
     "figlet": "^1.5.2",
     "inquirer": "^8.2.0",
     "npm": "7.9",
