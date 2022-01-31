@@ -1,10 +1,9 @@
 import fs from 'fs';
-import colors from 'colors';
 import path from 'path';
 
+import { blue } from './colors';
 import { FileError } from './errors';
 import logger from './logger';
-import { dir } from 'npm';
 
 enum ModificationType {
   'CREATE',
@@ -49,7 +48,7 @@ export function createDir(dirPath: string) {
     throw new FileError(`Cannot create directory ${dirPath} : already exists`);
   }
 
-  logger.log(`Creating folder ${colors.blue(dirPath)}`);
+  logger.log(`Creating folder ${blue(dirPath)}`);
   fileModifications.push({
     fileType: FileType.DIR,
     modificationType: ModificationType.CREATE,
@@ -87,7 +86,7 @@ export function removeDir(dirPath: string) {
     throw new FileError(`Cannot remove directory ${dirPath} : is not empty`);
   }
 
-  logger.log(`Removing folder ${colors.blue(dirPath)}`);
+  logger.log(`Removing folder ${blue(dirPath)}`);
   fileModifications.push({
     fileType: FileType.DIR,
     modificationType: ModificationType.REMOVE,
@@ -117,7 +116,7 @@ export function createFile(filePath: string, data?: string) {
     throw new FileError(`Cannot create file ${filePath} : already exists`);
   }
 
-  logger.log(`Creating ${data ? '' : 'empty '}file ${colors.blue(filePath)}`);
+  logger.log(`Creating ${data ? '' : 'empty '}file ${blue(filePath)}`);
   fileModifications.push({
     fileType: FileType.FILE,
     modificationType: ModificationType.CREATE,
@@ -172,7 +171,7 @@ export function editFile(filePath: string, data?: string) {
 
   const content = fs.readFileSync(filePath).toString();
 
-  logger.log(`${data ? 'Editing' : 'Erasing content in'} file ${colors.blue(filePath)}`);
+  logger.log(`${data ? 'Editing' : 'Erasing content in'} file ${blue(filePath)}`);
   fileModifications.push({
     fileType: FileType.FILE,
     modificationType: ModificationType.EDIT,
@@ -200,7 +199,7 @@ export function appendToFile(filePath: string, data: string) {
 
   const content = fs.readFileSync(filePath).toString();
 
-  logger.log(`Append data to file ${colors.blue(filePath)}`);
+  logger.log(`Append data to file ${blue(filePath)}`);
   fileModifications.push({
     fileType: FileType.FILE,
     modificationType: ModificationType.EDIT,
@@ -227,7 +226,7 @@ export function removeFile(filePath: string) {
 
   const content = fs.readFileSync(filePath).toString();
 
-  logger.log(`Removing file ${colors.blue(filePath)}`);
+  logger.log(`Removing file ${blue(filePath)}`);
   fileModifications.push({
     fileType: FileType.FILE,
     modificationType: ModificationType.REMOVE,

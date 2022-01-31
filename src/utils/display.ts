@@ -1,11 +1,11 @@
 import clear from 'clear';
-import colors from 'colors';
 import figlet from 'figlet';
 
 import { version } from '../../package.json';
 
 import logger from './logger';
 import { PrismaModel } from './prisma';
+import { blue, red, yellow } from './colors';
 
 /**
  * Clear screen and display clean CLI banner
@@ -21,7 +21,7 @@ import { PrismaModel } from './prisma';
 export function displayCLIBanner() {
   clear();
   logger.log(
-    colors.yellow(
+    yellow(
       figlet.textSync('Lantern', { horizontalLayout: 'full' }),
     ),
   );
@@ -35,7 +35,7 @@ export function displayCLIBanner() {
  * @param model Prisma model
  */
 export function displayModel(model: PrismaModel) {
-//  console.clear();
+  console.clear();
   logger.log(model.toString());
   logger.log();
 }
@@ -50,7 +50,7 @@ export function displayModel(model: PrismaModel) {
  * enumToDisplayable('MY_ENUM_VALUE'); // 'my enum value'
  */
 export function enumToDisplayable(str: string) {
-  return colors.blue(str.toLowerCase().replace('_', ' '));
+  return blue(str.toLowerCase().replace('_', ' '));
 }
 
 /**
@@ -73,6 +73,6 @@ export function arrayToDisplayableEnum(arr: string[]) {
   }
 }
 
-export const customPrompt = colors.blue('Custom');
-export const cancelPrompt = colors.red('Cancel');
+export const customPrompt = blue('Custom');
+export const cancelPrompt = red('Cancel');
 export const inputPromptSuffix = '\n❯';

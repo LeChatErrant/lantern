@@ -1,4 +1,4 @@
-import colors from 'colors';
+import { blue, green, red } from './colors';
 
 class Logger {
   private silent = false;
@@ -10,15 +10,15 @@ class Logger {
   }
 
   public info(msg = '') {
-    console.log(colors.blue(msg));
+    console.log(blue(msg));
   }
 
   public error(msg = '') {
-    console.error(colors.red(msg));
+    console.error(red(msg));
   }
 
   public success(msg = '') {
-    console.log(colors.green(msg));
+    console.log(green(msg));
   }
 
   public setSilent(silent = true) {

@@ -1,8 +1,8 @@
 import inquirer from 'inquirer';
-import colors from 'colors';
 
 import { arrayToDisplayableEnum, enumToDisplayable, inputPromptSuffix } from '../../utils/display';
 import { dirExists, fileExists } from '../../utils/files';
+import { blue, green, red, bold } from '../../utils/colors';
 
 import {
   ProjectConfig,
@@ -17,16 +17,16 @@ export async function queryProjectName() {
   const { projectName } = await inquirer.prompt([{
     name: 'projectName',
     type: 'input',
-    message: `How your project should be ${colors.blue('named')} ?`,
+    message: `How your project should be ${blue('named')} ?`,
     validate: (input: string) => {
       if (input === '') {
-        return colors.red('Please enter a project name');
+        return red('Please enter a project name');
       }
       if (fileExists(input)) {
-        return colors.red(`A file named ${colors.bold(input)} already exists`);
+        return red(`A file named ${bold(input)} already exists`);
       }
       if (dirExists(input)) {
-        return colors.red(`A directory named ${colors.bold(input)} already exists`);
+        return red(`A directory named ${bold(input)} already exists`);
       }
       return true;
     },
@@ -39,15 +39,15 @@ export async function queryProjectOptions(projectName: string): Promise<ProjectC
   const answers: ProjectOption[] = (await inquirer.prompt([{
     name: 'options',
     type: 'checkbox',
-    message: `What ${colors.green('options')} do you want to add to ${colors.blue(projectName)} ?`,
+    message: `What ${green('options')} do you want to add to ${blue(projectName)} ?`,
     validate(input: ProjectOption[]) {
       for (const projectOption of input) {
         const dependencies = ProjectOptionDependencies[projectOption];
         if (dependencies && !dependencies.every((dependency) => input.includes(dependency))) {
-          return colors.red(
+          return red(
             'You need to enable '
-            + colors.bold(arrayToDisplayableEnum(dependencies))
-            + ` to use ${colors.bold(projectOption)}`,
+            + bold(arrayToDisplayableEnum(dependencies))
+            + ` to use ${bold(projectOption)}`,
           );
         }
       }

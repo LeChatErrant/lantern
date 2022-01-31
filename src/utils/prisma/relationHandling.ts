@@ -1,5 +1,3 @@
-import pluralize from 'pluralize';
-
 import { PrismaError } from '../errors';
 
 import { PrismaModel, PrismaModelField, PrismaModelAttribute } from './PrismaModel';

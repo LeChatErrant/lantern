@@ -1,12 +1,11 @@
 import pluralize from 'pluralize';
-import colors from 'colors';
 
 import { PrismaError } from '../errors';
 import { parseBetween } from '../strings';
+import { blue, green, red, bold, grey } from '../colors';
 
 import { PrismaObject } from './PrismaObject';
 import { PrismaIdentifier } from './PrismaIdentifier';
-import { PrismaEnum } from './PrismaEnum';
 
 export class PrismaModelAttribute {
   public readonly type: string;
@@ -50,8 +49,8 @@ export class PrismaModelField {
   }
 
   public toString() {
-    return `  ${colors.green(this.name)} ${colors.red(this.type)} ` + this.attributes
-      .map((attr) => colors.bold(colors.grey(attr.toString())))
+    return `  ${green(this.name)} ${red(this.type)} ` + this.attributes
+      .map((attr) => bold(grey(attr.toString())))
       .join(' ');
   }
 }
@@ -144,7 +143,7 @@ export class PrismaModel extends PrismaObject {
 
   public toString() {
     return [
-      colors.blue(this.name) + ' {',
+      blue(this.name) + ' {',
       ...this.fields
         .map((field) => field.toString()),
       '}',

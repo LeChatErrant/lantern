@@ -1,5 +1,4 @@
-import colors from 'colors';
-
+import { blue } from '../../utils/colors';
 import Command from '../Command';
 import init from '../init';
 import add from '../add';
@@ -20,7 +19,7 @@ async function defaultCommand() {
       break;
     case Command.PUBLISH: await publishTypes();
       break;
-    default: console.log(`Command ${colors.blue(action)} not supported`);
+    default: console.log(`Command ${blue(action)} not supported`);
       break;
   }
 }

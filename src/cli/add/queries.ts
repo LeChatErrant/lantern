@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
-import colors from 'colors';
 import pluralize from 'pluralize';
 
+import { blue, green, red } from '../../utils/colors';
 import { capitalize } from '../../utils/strings';
 import {
   PrismaEnum,
@@ -11,8 +11,7 @@ import {
   PrismaSchema,
 } from '../../utils/prisma';
 import { addManyToManyRelation, addOneToManyRelation, addOneToOneRelation } from '../../utils/prisma/relationHandling';
-import { displayModel } from '../../utils/display';
-import { customPrompt, cancelPrompt, inputPromptSuffix } from '../../utils/display';
+import { displayModel, customPrompt, cancelPrompt, inputPromptSuffix } from '../../utils/display';
 
 /**
  * Prompt the user for the name of the resource to be created
@@ -23,13 +22,13 @@ export async function queryResourceName(schema: PrismaSchema) {
   const { resourceName } = await inquirer.prompt([{
     name: 'resourceName',
     type: 'input',
-    message: `How should your new API resource be ${colors.green('named')} ? ${colors.red('(singular)')}`,
+    message: `How should your new API resource be ${green('named')} ? ${red('(singular)')}`,
     validate: (input) => {
       if (input === '') {
-        return colors.red('Please enter resource name (example : user)');
+        return red('Please enter resource name (example : user)');
       }
       if (schema.objects.find((o) => o.name === input || o.name === capitalize(input))) {
-        return colors.red(`Model ${input} already exists in schema.prisma`);
+        return red(`Model ${input} already exists in schema.prisma`);
       }
       return true;
     },
@@ -51,7 +50,7 @@ export async function queryPluralizedResourceName(resourceName: string) {
   const { isPluralCorrect } = await inquirer.prompt([{
     name: 'isPluralCorrect',
     type: 'list',
-    message: `Is '${colors.blue(guess)}' the correct ${colors.green('plural form')} ?`,
+    message: `Is '${blue(guess)}' the correct ${green('plural form')} ?`,
     choices: ['Yes', 'No'],
   }]);
 
@@ -62,8 +61,8 @@ export async function queryPluralizedResourceName(resourceName: string) {
   const { pluralizedResourceName } = await inquirer.prompt([{
     name: 'pluralizedResourceName',
     type: 'input',
-    message: `Write it in the ${colors.green('plural form')} :`,
-    validate: (input) => input !== '' ? true : colors.red('Please enter pluralized form (example : users)'),
+    message: `Write it in the ${green('plural form')} :`,
+    validate: (input) => input !== '' ? true : red('Please enter pluralized form (example : users)'),
     suffix: inputPromptSuffix,
   }]);
   return pluralizedResourceName.toLowerCase();
@@ -79,7 +78,7 @@ export async function queryIfDatabaseModelIsNeeded(resourceName: string) {
   const { isDbModelNeeded } = await inquirer.prompt([{
     name: 'isDbModelNeeded',
     type: 'list',
-    message: `Do you need to store ${colors.blue(capitalize(resourceName))} in ${colors.green('database')} ?`,
+    message: `Do you need to store ${blue(capitalize(resourceName))} in ${green('database')} ?`,
     choices: ['Yes', 'No'],
   }]);
   return isDbModelNeeded === 'Yes';
@@ -100,7 +99,7 @@ export async function queryDefaultFields(model: PrismaModel) {
   const { selected } = await inquirer.prompt([{
     name: 'selected',
     type: 'checkbox',
-    message: `Select ${colors.green('default fields')} to add to ${colors.blue(model.name)}`,
+    message: `Select ${green('default fields')} to add to ${blue(model.name)}`,
     default: [true, true],
     choices: defaultFieldsChoices.map((field, index) => ({
       name: field.name,
@@ -120,7 +119,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
   const { addField } = await inquirer.prompt([{
     name: 'addField',
     type: 'list',
-    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('new field')} to ${colors.blue(model.name)} ?`,
+    message: `Add ${!firstCall ? 'another ' : ''}${green('new field')} to ${blue(model.name)} ?`,
     choices: ['Yes', 'No'],
   }]);
 
@@ -132,14 +131,14 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     name: 'name',
     type: 'input',
     message: 'Field name : ',
-    validate: (input) => input !== '' ? true : colors.red('Please enter a name for the field'),
+    validate: (input) => input !== '' ? true : red('Please enter a name for the field'),
     suffix: inputPromptSuffix,
   }]);
 
   const types = [
     'String', 'Boolean', 'Int', 'BigInt', 'Float', 'Decimal', 'DateTime', 'Json', 'Bytes',
     ...schema.enums.map((e) => ({
-      name: colors.green(`${e.name} (enum)`),
+      name: green(`${e.name} (enum)`),
       value: e,
     })),
   ];
@@ -151,7 +150,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     choices: [
       ...types,
       customPrompt,
-      colors.blue('Create new Enum'),
+      blue('Create new Enum'),
       cancelPrompt],
     loop: false,
   }]);
@@ -166,13 +165,13 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
       name: 'typeName',
       type: 'input',
       message: 'Enter the custom type : ',
-      validate: (input) => input !== '' ? true : colors.red(`Please enter a custom type for the field ${name}`),
+      validate: (input) => input !== '' ? true : red(`Please enter a custom type for the field ${name}`),
       suffix: inputPromptSuffix,
     }]);
     type = typeName;
   }
 
-  if (type === colors.blue('Create new Enum')) {
+  if (type === blue('Create new Enum')) {
     // Create new Enum
   }
 
@@ -184,15 +183,15 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     message: 'Select modifier',
     choices: [
       {
-        name: `Normal : ${colors.red(typeName)}`,
+        name: `Normal : ${red(typeName)}`,
         value: '',
       },
       {
-        name: `Optional : ${colors.red(typeName)}?`,
+        name: `Optional : ${red(typeName)}?`,
         value: '?',
       },
       {
-        name: `List : ${colors.red(typeName)}[]`,
+        name: `List : ${red(typeName)}[]`,
         value: '[]',
       },
     ],
@@ -204,7 +203,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
     const { needsDefault } = await inquirer.prompt([{
       name: 'needsDefault',
       type: 'list',
-      message: `Do you want to set a default value to ${colors.blue(field.name)} ?`,
+      message: `Do you want to set a default value to ${blue(field.name)} ?`,
       choices: ['Yes', 'No'],
     }]);
 
@@ -224,7 +223,7 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
       let { defaultVal } = await inquirer.prompt([{
         name: 'defaultVal',
         type: 'list',
-        message: `Which default value do you want for field ${colors.blue(field.name)}?`,
+        message: `Which default value do you want for field ${blue(field.name)}?`,
         choices: [...choices, cancelPrompt],
       }]);
       
@@ -233,15 +232,15 @@ export async function queryFields(schema: PrismaSchema, model: PrismaModel, firs
           const { defaultInput } = await inquirer.prompt([{
             name: 'defaultInput',
             type: 'input',
-            message: `Enter the default value for ${colors.blue(field.name)} :`,
+            message: `Enter the default value for ${blue(field.name)} :`,
             validate: (input) => {
               if (input === '') {
-                return colors.red(`Enter a default value for field ${field.name}`);
+                return red(`Enter a default value for field ${field.name}`);
               }
               if (type === 'Int') {
                 const num = Number(input);
                 if (Number.isNaN(num) || !Number.isInteger(num)) {
-                  return colors.red(`${num} is not a valid integer`);
+                  return red(`${num} is not a valid integer`);
                 }
               }
               return true;
@@ -279,7 +278,7 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel, fi
   const { addRelation } = await inquirer.prompt([{
     name: 'addRelation',
     type: 'list',
-    message: `Add ${!firstCall ? 'another ' : ''}${colors.green('relation')} to ${colors.blue(model.name)} ?`,
+    message: `Add ${!firstCall ? 'another ' : ''}${green('relation')} to ${blue(model.name)} ?`,
     choices: ['Yes', 'No'],
   }]);
 
@@ -300,9 +299,9 @@ export async function queryRelation(schema: PrismaSchema, model: PrismaModel, fi
   }
 
   const relationChoices = [
-    `One to one   : ${colors.blue(target)} has one ${colors.blue(model.name)}`,
-    `One to many  : ${colors.blue(target)} has many ${colors.blue(model.name)}`,
-    `Many to many : ${colors.blue(target)} has many ${colors.blue(model.name)}, and ${colors.blue(model.name)} has many ${colors.blue(target)}`,
+    `One to one   : ${blue(target)} has one ${blue(model.name)}`,
+    `One to many  : ${blue(target)} has many ${blue(model.name)}`,
+    `Many to many : ${blue(target)} has many ${blue(model.name)}, and ${blue(model.name)} has many ${blue(target)}`,
   ];
 
   const targetModel = schema.getModel(target);

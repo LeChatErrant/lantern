@@ -1,7 +1,7 @@
 /*
 import path from 'path';
 import fs from 'fs';
-import colors from 'colors';
+ from 'colors';
 
 import { capitalize, insert } from '../../utils/strings';
 import { npmRun } from '../../utils/npm';
@@ -23,13 +23,13 @@ function createFolder(folderPath: string) {
     return false;
   }
 
-  console.log(`Creating ${colors.green(folderPath)} folder`);
+  console.log(`Creating ${green(folderPath)} folder`);
   fs.mkdirSync(folderPath);
   return true;
 }
 
 async function fillPrismaSchema(singular: string) {
-  logger.log(`Creating ${colors.green(capitalize(singular))} model in ${colors.blue(schemaPath)}`);
+  logger.log(`Creating ${green(capitalize(singular))} model in ${blue(schemaPath)}`);
 
   const schemaPath = path.join(prismaPath, 'schema.prisma');
   appendToFile(schemaPath, prismaTemplate(singular));
@@ -37,15 +37,15 @@ async function fillPrismaSchema(singular: string) {
   try {
     await npmRun('prisma:format');
     await npmRun('prisma:generate');
-    console.log(`Model ${colors.green(capitalize(singular))} created in ${colors.blue(schemaPath)}`);
+    console.log(`Model ${green(capitalize(singular))} created in ${blue(schemaPath)}`);
   } catch (error) {
-    console.error(`The model ${colors.red(capitalize(singular))} cannon be defined because a model with that name already exists in ${colors.blue(schemaPath)} `);
+    console.error(`The model ${red(capitalize(singular))} cannon be defined because a model with that name already exists in ${blue(schemaPath)} `);
   }
 }
 
 function fillRouter(singular: string, plural: string) {
   const routerPath = path.join(routesPath, 'index.ts');
-  console.log(`Filling ${colors.green(routerPath)}...`);
+  console.log(`Filling ${green(routerPath)}...`);
   if (!fs.existsSync(routerPath)) {
     console.error(`${routesPath} doesn't exist.`);
     return false;
@@ -67,7 +67,7 @@ function fillRouter(singular: string, plural: string) {
 function createTemplatedFile(directory: string, filename: string, content: string) {
   const filePath = path.join(directory, filename);
 
-  console.log(`Creating ${colors.green(filePath)} file...`);
+  console.log(`Creating ${green(filePath)} file...`);
   fs.writeFileSync(filePath, content);
 }
 

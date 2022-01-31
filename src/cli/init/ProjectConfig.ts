@@ -1,4 +1,4 @@
-import colors from 'colors';
+import { blue, green } from '../../utils/colors';
 
 export enum ProjectOption {
   USER = 'user',
@@ -11,7 +11,7 @@ export enum ProjectOption {
   REDIS_SESSION = 'redis session',
 
   DOCKERFILE = 'dockerfile',
-  DOCKER_COMPOSE = 'docker compos',
+  DOCKER_COMPOSE = 'docker compose',
 
   HEROKU = 'heroku',
   PRE_COMMIT_HOOKS = 'pre commit hooks',
@@ -97,26 +97,26 @@ export const ProjectOptionDefault: ProjectConfig = {
 };
 
 export const ProjectOptionDescriptions: { [key in ProjectOption]: string } = {
-  [ProjectOption.USER]: `Default ${colors.blue('user')}`,
-  [ProjectOption.USER_AUTH]: `${colors.blue('Authentification')}, with ${colors.green('signin')} / ${colors.green('signout')} routes and ${colors.green('authentification middleware')} to protect routes`,
-  [ProjectOption.USER_ROLE]: `User ${colors.blue('roles')} (by default, ${colors.green('USER')} or ${colors.green('ADMIN')}), with ${colors.green('admin middleware')} to make routes accessibles only by admins`,
-  [ProjectOption.USER_ME_MIDDLEWARE]: `${colors.blue("'Me' middleware")}, allowing logged in user to refer to himself like this : ${colors.green('GET /users/me')}, ${colors.green('POST /users/me/posts')}, ...`,
-  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: `${colors.blue('Ownership middleware')}, allowing to restrict a route to only the user owning the resource (example : posts created under ${colors.green('/users/XXX/posts')} can only be accessed by user ${colors.green('XXX')})`,
+  [ProjectOption.USER]: `Default ${blue('user')}`,
+  [ProjectOption.USER_AUTH]: `${blue('Authentification')}, with ${green('signin')} / ${green('signout')} routes and ${green('authentification middleware')} to protect routes`,
+  [ProjectOption.USER_ROLE]: `User ${blue('roles')} (by default, ${green('USER')} or ${green('ADMIN')}), with ${green('admin middleware')} to make routes accessibles only by admins`,
+  [ProjectOption.USER_ME_MIDDLEWARE]: `${blue("'Me' middleware")}, allowing logged in user to refer to himself like this : ${green('GET /users/me')}, ${green('POST /users/me/posts')}, ...`,
+  [ProjectOption.USER_OWNERSHIP_MIDDLEWARE]: `${blue('Ownership middleware')}, allowing to restrict a route to only the user owning the resource (example : posts created under ${green('/users/XXX/posts')} can only be accessed by user ${green('XXX')})`,
 
-  [ProjectOption.SESSION]: `${colors.blue('Session')} to ${colors.green('persist')} user connection (useful for example to keen user logged in)`,
-  [ProjectOption.REDIS_SESSION]: `${colors.blue('Redis')} based sessions to persist it across ${colors.green('multiple instances')}`,
+  [ProjectOption.SESSION]: `${blue('Session')} to ${green('persist')} user connection (useful for example to keen user logged in)`,
+  [ProjectOption.REDIS_SESSION]: `${blue('Redis')} based sessions to persist it across ${green('multiple instances')}`,
 
-  [ProjectOption.DOCKERFILE]: `${colors.blue('Dockerfile')} to launch the ${colors.green('containerized')} app`,
-  [ProjectOption.DOCKER_COMPOSE]: `${colors.blue('Docker-compose')} file to launch the ${colors.green('full stack')} ('app, database, and redis if needed')`,
-  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: `${colors.blue('Default issue templates')} for ${colors.green('github')} ('feature request, bug report and security issue)`,
-  [ProjectOption.HEROKU]: `${colors.blue('Heroku')} integration, to easily ${colors.green('deploy')} the app`,
+  [ProjectOption.DOCKERFILE]: `${blue('Dockerfile')} to launch the ${green('containerized')} app`,
+  [ProjectOption.DOCKER_COMPOSE]: `${blue('Docker-compose')} file to launch the ${green('full stack')} ('app, database, and redis if needed')`,
+  [ProjectOption.GITHUB_ISSUE_TEMPLATES]: `${blue('Default issue templates')} for ${green('github')} ('feature request, bug report and security issue)`,
+  [ProjectOption.HEROKU]: `${blue('Heroku')} integration, to easily ${green('deploy')} the app`,
 
-  [ProjectOption.PRE_COMMIT_HOOKS]: `${colors.blue('Pre-commit hooks')}, automatically ${colors.green('linting')} your files and ${colors.green('validating database schema')}`,
-  [ProjectOption.DEPENDABOT]: `${colors.blue('Dependabot')}, automatically creating ${colors.green('pull requests')} to ${colors.green('upgrade dependencies')} when needed`,
-  [ProjectOption.MERGIFY]: `${colors.blue('Mergify')} configured to automatically merge ${colors.green('dependabot')} PRs if the CI succeeds`,
-  [ProjectOption.INTEGRATION_PIPELINE]: `${colors.blue('Integration tests pipeline')} to test ${colors.green('API endpoints')}`,
-  [ProjectOption.LINT_PIPELINE]: `${colors.blue('Lint pipeline')} to validate ${colors.green('code styling')}`,
-  [ProjectOption.DOCKER_PIPELINE]: `${colors.blue('Docker pipeline')} to ${colors.green('build and publish docker image')} on releases / pushes on master`,
-  [ProjectOption.TOC_PIPELINE]: `${colors.blue('Table of content pipeline')} to update the TOC section of ${colors.green('README.md')} when needed`,
-  [ProjectOption.GREETINGS_PIPELINE]: `${colors.blue('Greetings pipeline')} to... greet you each time a pull request is closed ${colors.green('(you deserves it !)')}`,
+  [ProjectOption.PRE_COMMIT_HOOKS]: `${blue('Pre-commit hooks')}, automatically ${green('linting')} your files and ${green('validating database schema')}`,
+  [ProjectOption.DEPENDABOT]: `${blue('Dependabot')}, automatically creating ${green('pull requests')} to ${green('upgrade dependencies')} when needed`,
+  [ProjectOption.MERGIFY]: `${blue('Mergify')} configured to automatically merge ${green('dependabot')} PRs if the CI succeeds`,
+  [ProjectOption.INTEGRATION_PIPELINE]: `${blue('Integration tests pipeline')} to test ${green('API endpoints')}`,
+  [ProjectOption.LINT_PIPELINE]: `${blue('Lint pipeline')} to validate ${green('code styling')}`,
+  [ProjectOption.DOCKER_PIPELINE]: `${blue('Docker pipeline')} to ${green('build and publish docker image')} on releases / pushes on master`,
+  [ProjectOption.TOC_PIPELINE]: `${blue('Table of content pipeline')} to update the TOC section of ${green('README.md')} when needed`,
+  [ProjectOption.GREETINGS_PIPELINE]: `${blue('Greetings pipeline')} to... greet you each time a pull request is closed ${green('(you deserves it !)')}`,
 };
