@@ -1,4 +1,3 @@
-import clear from 'clear';
 import figlet from 'figlet';
 
 import { version } from '../../package.json';
@@ -19,7 +18,7 @@ import { blue, red, yellow } from './colors';
  *  Lantern CLI v3.2.0
  */
 export function displayCLIBanner() {
-  clear();
+  console.clear();
   logger.log(
     yellow(
       figlet.textSync('Lantern', { horizontalLayout: 'full' }),
