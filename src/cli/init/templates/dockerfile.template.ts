@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 FROM node:lts
@@ -19,7 +18,6 @@ ENTRYPOINT [ "npm", "run" ]
 CMD [ "start" ]
 `.substring(1);
 
-export default function dockerfileTemplate(projectName: string) {
-  const filePath = path.join(projectName, 'Dockerfile');
-  createFile(filePath, content);
+export default function dockerfileTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.dockerfile, content);
 }

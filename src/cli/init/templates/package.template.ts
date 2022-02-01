@@ -1,11 +1,10 @@
-import path from 'path';
-
 import { ProjectConfig, ProjectOption } from '../ProjectConfig';
 import { createFile } from '../../../utils/files';
 import { beautifyJson, sortJsonKeys } from '../../../utils/json';
 import { downloadWithSpinner } from '../../../utils/download';
+import ProjectPath from '../../../utils/ProjectPath';
 
-export default async function packageTemplate(projectName: string, projectConfig: ProjectConfig) {
+export default async function packageTemplate(projectName: string, projectPath: ProjectPath, projectConfig: ProjectConfig) {
   const content = await downloadWithSpinner('https://raw.githubusercontent.com/LeChatErrant/API-template/master/package.json');
   const packageJson = JSON.parse(content);
 
@@ -46,6 +45,5 @@ export default async function packageTemplate(projectName: string, projectConfig
   packageJson.dependencies = sortJsonKeys(packageJson.dependencies);
   packageJson.devDependencies = sortJsonKeys(packageJson.devDependencies);
 
-  const filePath = path.join(projectName, 'package.json');
-  createFile(filePath, beautifyJson(packageJson));
+  createFile(projectPath.packageJson, beautifyJson(packageJson));
 }

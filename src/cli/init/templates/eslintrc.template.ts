@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 module.exports = {
@@ -43,7 +42,6 @@ module.exports = {
 };
 `.substring(1);
 
-export default function eslintrcTemplate(projectName: string) {
-  const filePath = path.join(projectName, '.eslintrc.js');
-  createFile(filePath, content);
+export default function eslintrcTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.eslintrc, content);
 }

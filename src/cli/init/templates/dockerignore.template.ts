@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 .git
@@ -12,7 +11,6 @@ logs
 coverage
 `.substring(1);
 
-export default function dockerignoreTemplate(projectName: string) {
-  const filePath = path.join(projectName, '.dockerignore');
-  createFile(filePath, content);
+export default function dockerignoreTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.dockerignore, content);
 }

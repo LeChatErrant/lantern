@@ -1,5 +1,5 @@
 import { capitalize } from '../../utils/strings';
-import { prismaSchemaPath } from '../../utils/referencePaths';
+import ProjectPath from '../../utils/ProjectPath';
 import { PrismaSchema, PrismaModel, PrismaModelField, PrismaModelAttribute } from '../../utils/prisma';
 
 import {
@@ -11,11 +11,11 @@ import {
 import { displayModel } from '../../utils/display';
 
 async function add() {
-  const schema = PrismaSchema.fromFile(prismaSchemaPath);
+  const projectPath = new ProjectPath('.');
+  const schema = PrismaSchema.fromFile(projectPath.prismaSchema);
 
   const singular = await queryResourceName(schema);
   const plural = await queryPluralizedResourceName(singular);
-  //  const isDbModelNeed = await queryIfDatabaseModelIsNeeded(singular);
 
   const model = new PrismaModel(capitalize(singular), [
     new PrismaModelField('id', 'String', [

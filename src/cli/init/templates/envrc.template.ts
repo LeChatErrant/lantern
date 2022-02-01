@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 import { ProjectConfig, ProjectOption } from '../ProjectConfig';
 
 const redisConf = `
@@ -34,7 +33,6 @@ ${projectConfig[ProjectOption.REDIS_SESSION] ? redisConf : ''}
 export STUDIO_PORT=8001
 `.substring(1);
 
-export default function envrcTemplate(projectName: string, projectConfig: ProjectConfig) {
-  const filePath = path.join(projectName, '.envrc');
-  createFile(filePath, content(projectConfig));
+export default function envrcTemplate(projectPath: ProjectPath, projectConfig: ProjectConfig) {
+  createFile(projectPath.envrc, content(projectConfig));
 }

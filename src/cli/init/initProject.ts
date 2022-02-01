@@ -1,4 +1,5 @@
 import { createDir } from '../../utils/files';
+import { launch } from '../../utils/subprocess';
 
 import { ProjectConfig, ProjectOption } from './ProjectConfig';
 import dockerfileTemplate from './templates/dockerfile.template';
@@ -12,31 +13,37 @@ import procfileTemplate from './templates/procfile.template';
 import tsconfigTemplate from './templates/tsconfig.template';
 import eslintrcTemplate from './templates/eslintrc.template';
 import packageTemplate from './templates/package.template';
-import { launch } from '../../utils/subprocess';
+import initGithub from './initGithub';
+import ProjectPath from '../../utils/ProjectPath';
 
-export async function initProject(projectName: string, projectConfig: ProjectConfig) {
-  createDir(projectName);
+async function initProject(projectName: string, projectPath: ProjectPath, projectConfig: ProjectConfig) {
+  createDir(projectPath.root);
 
-  licenseTemplate(projectName);
-  gitignoreTemplate(projectName);
-  envrcTemplate(projectName, projectConfig);
-  tsconfigTemplate(projectName);
-  eslintrcTemplate(projectName);
-  jestConfigTemplate(projectName);
-
-  await packageTemplate(projectName, projectConfig);
+  licenseTemplate(projectPath);
+  gitignoreTemplate(projectPath);
+  envrcTemplate(projectPath, projectConfig);
+  tsconfigTemplate(projectPath);
+  eslintrcTemplate(projectPath);
+  jestConfigTemplate(projectPath);
 
   if (projectConfig[ProjectOption.DOCKERFILE]) {
-    dockerfileTemplate(projectName);
-    dockerignoreTemplate(projectName);
+    dockerfileTemplate(projectPath);
+    dockerignoreTemplate(projectPath);
     if (projectConfig[ProjectOption.DOCKER_COMPOSE]) {
-      dockerComposeTemplate(projectName, projectConfig);
+      dockerComposeTemplate(projectPath, projectConfig);
     }
   }
 
   if (projectConfig[ProjectOption.HEROKU]) {
-    procfileTemplate(projectName);
+    procfileTemplate(projectPath);
   }
 
+  if (projectConfig[ProjectOption.GITHUB_ISSUE_TEMPLATES]) {
+    initGithub(projectPath, projectConfig);
+  }
+
+  await packageTemplate(projectName, projectPath, projectConfig);
   await launch(projectName, 'npm', 'install');
 }
+
+export default initProject;

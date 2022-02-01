@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 /*  eslint-disable max-len  */
@@ -201,7 +200,6 @@ module.exports = {
 };
 `.substring(1);
 
-export default function jestConfigTemplate(projectName: string) {
-  const filePath = path.join(projectName, 'jest.config.js');
-  createFile(filePath, content);
+export default function jestConfigTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.jestConfig, content);
 }

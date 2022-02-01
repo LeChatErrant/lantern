@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 MIT License
@@ -26,7 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 `.substring(1);
 
-export default function licenseTemplate(projectName: string) {
-  const filePath = path.join(projectName, 'LICENSE');
-  createFile(filePath, content);
+export default function licenseTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.license, content);
 }

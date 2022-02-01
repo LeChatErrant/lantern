@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 .idea
@@ -111,7 +110,6 @@ dist
 .tern-port
 `.substring(1);
 
-export default function gitignoreTemplate(projectName: string) {
-  const filePath = path.join(projectName, '.gitignore');
-  createFile(filePath, content);
+export default function gitignoreTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.gitignore, content);
 }

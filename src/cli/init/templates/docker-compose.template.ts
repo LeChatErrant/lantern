@@ -1,7 +1,6 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
 import { ProjectConfig, ProjectOption } from '../ProjectConfig';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const redisService = `
   redis:
@@ -66,7 +65,6 @@ volumes:
   db-data:
 `.substring(1);
 
-export default function dockerComposeTemplate(projectName: string, projectConfig: ProjectConfig) {
-  const filePath = path.join(projectName, 'docker-compose.yml');
-  createFile(filePath, content(projectConfig));
+export default function dockerComposeTemplate(projectPath: ProjectPath, projectConfig: ProjectConfig) {
+  createFile(projectPath.dockerCompose, content(projectConfig));
 }

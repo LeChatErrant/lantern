@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { createFile } from '../../../utils/files';
+import ProjectPath from '../../../utils/ProjectPath';
 
 const content = `
 {
@@ -79,7 +78,6 @@ const content = `
 }
 `.substring(1);
 
-export default function tsconfigTemplate(projectName: string) {
-  const filePath = path.join(projectName, 'tsconfig.json');
-  createFile(filePath, content);
+export default function tsconfigTemplate(projectPath: ProjectPath) {
+  createFile(projectPath.tsConfig, content);
 }
