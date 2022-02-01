@@ -40,6 +40,7 @@
     "clui": "^0.3.6",
     "colors": "^1.4.0",
     "commander": "^9.0.0",
+    "download": "^8.0.0",
     "figlet": "^1.5.2",
     "inquirer": "^8.2.0",
     "npm": "7.9",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@types/clear": "^0.1.2",
     "@types/clui": "^0.3.1",
+    "@types/download": "^8.0.1",
     "@types/figlet": "^1.5.4",
     "@types/inquirer": "^8.2.0",
     "@types/node": "^17.0.13",
