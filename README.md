@@ -3,6 +3,8 @@
 [![Lint](https://github.com/LeChatErrant/lantern/actions/workflows/lint.yml/badge.svg)](https://github.com/LeChatErrant/lantern/actions/workflows/lint.yml)
 ![Weekly downloads](https://img.shields.io/npm/dw/@lechaterrant/lantern)
 ![Total downloads](https://img.shields.io/npm/dt/@lechaterrant/lantern?label=Total%20downloads)
+![Version](https://img.shields.io/npm/v/@lechaterrant/lantern)
+![License](https://img.shields.io/npm/l/@lechaterrant/lantern?color=blue)
 
 Backend development can be **hard**, **long**, and **dark**. Even more to produce **modern**, **robust**, **production-ready** APIs
 
