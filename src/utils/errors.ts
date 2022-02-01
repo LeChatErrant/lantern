@@ -11,3 +11,15 @@ export class PrismaError extends LanternError {
     super(`Prisma error : ${msg}`);
   }
 }
+
+export class ExecError extends LanternError {
+  constructor(msg: string) {
+    super(`Exec error : ${msg}`);
+  }
+}
+
+export class DownloadError extends LanternError {
+  constructor(msg: string) {
+    super(`Download error : ${msg}`);
+  }
+}

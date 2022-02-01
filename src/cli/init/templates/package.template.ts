@@ -28,7 +28,7 @@ export default async function packageTemplate(projectName: string, projectConfig
   }
 
   if (!projectConfig[ProjectOption.REDIS_SESSION]) {
-    delete packageJson.scroll['dev:redis'];
+    delete packageJson.scripts['dev:redis'];
     delete packageJson.dependencies.redis;
     delete packageJson.dependencies['connect-redis'];
     delete packageJson.devDependencies['@types/redis'];

@@ -12,8 +12,9 @@ import procfileTemplate from './templates/procfile.template';
 import tsconfigTemplate from './templates/tsconfig.template';
 import eslintrcTemplate from './templates/eslintrc.template';
 import packageTemplate from './templates/package.template';
+import { launch } from '../../utils/subprocess';
 
-export async function initTemplate(projectName: string, projectConfig: ProjectConfig) {
+export async function initProject(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
 
   licenseTemplate(projectName);
@@ -36,4 +37,6 @@ export async function initTemplate(projectName: string, projectConfig: ProjectCo
   if (projectConfig[ProjectOption.HEROKU]) {
     procfileTemplate(projectName);
   }
+
+  await launch(projectName, 'npm', 'install');
 }
