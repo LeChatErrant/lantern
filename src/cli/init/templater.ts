@@ -13,7 +13,7 @@ import tsconfigTemplate from './templates/tsconfig.template';
 import eslintrcTemplate from './templates/eslintrc.template';
 import packageTemplate from './templates/package.template';
 
-export function initTemplate(projectName: string, projectConfig: ProjectConfig) {
+export async function initTemplate(projectName: string, projectConfig: ProjectConfig) {
   createDir(projectName);
 
   licenseTemplate(projectName);
@@ -23,7 +23,7 @@ export function initTemplate(projectName: string, projectConfig: ProjectConfig) 
   eslintrcTemplate(projectName);
   jestConfigTemplate(projectName);
 
-  packageTemplate(projectName, projectConfig);
+  await packageTemplate(projectName, projectConfig);
 
   if (projectConfig[ProjectOption.DOCKERFILE]) {
     dockerfileTemplate(projectName);

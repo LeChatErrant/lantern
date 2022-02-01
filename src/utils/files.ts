@@ -242,6 +242,7 @@ export function removeFile(filePath: string) {
  * Used to restore the file system to its previous state, before running CLI
  */
 export function revertAllFileModifications() {
+  logger.error('Reverting all modifications...');
   fileModifications
     .reverse()
     .forEach((f) => {

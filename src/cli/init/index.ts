@@ -6,7 +6,7 @@ async function init() {
   const projectOptions = await queryProjectConfig(projectName);
 
   console.clear();
-  initTemplate(projectName, projectOptions);
+  await initTemplate(projectName, projectOptions);
 }
 
 export default init;
