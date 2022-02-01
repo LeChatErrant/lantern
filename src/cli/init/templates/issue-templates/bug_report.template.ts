@@ -27,5 +27,5 @@ assignees: ''
 `.substring(1);
 
 export default function bugReportTemplate(projectPath: ProjectPath) {
-  createFile(projectPath.bugReport, content);
+  createFile(projectPath.bugReportTemplate, content);
 }

@@ -18,5 +18,5 @@ assignees: ''
 `.substring(1);
 
 export default function securityIssueTemplate(projectPath: ProjectPath) {
-  createFile(projectPath.securityIssue, content);
+  createFile(projectPath.securityIssueTemplate, content);
 }

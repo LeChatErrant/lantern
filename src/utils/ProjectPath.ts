@@ -103,19 +103,31 @@ export default class ProjectPath {
     return path.join(this.github, 'ISSUE_TEMPLATE');
   }
 
-  public get featureRequest() {
+  public get featureRequestTemplate() {
     return path.join(this.issueTemplate, 'feature_request.md');
   }
 
-  public get bugReport() {
+  public get bugReportTemplate() {
     return path.join(this.issueTemplate, 'bug_report.md');
   }
 
-  public get securityIssue() {
+  public get securityIssueTemplate() {
     return path.join(this.issueTemplate, 'security_issue.md');
   }
 
   public get workflows() {
     return path.join(this.github, 'workflows');
+  }
+
+  public get lintWorkflow() {
+    return path.join(this.workflows, 'lint.yml');
+  }
+
+  public get dockerWorkflow() {
+    return path.join(this.workflows, 'build_docker_image.yml');
+  }
+
+  public get integrationWorkflow() {
+    return path.join(this.workflows, 'integration_tests.yml');
   }
 }

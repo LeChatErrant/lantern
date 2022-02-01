@@ -20,5 +20,5 @@ assignees: ''
 `.substring(1);
 
 export default function featureRequestTemplate(projectPath: ProjectPath) {
-  createFile(projectPath.featureRequest, content);
+  createFile(projectPath.featureRequestTemplate, content);
 }
