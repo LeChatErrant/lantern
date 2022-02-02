@@ -2,12 +2,14 @@ import { createDir } from '../../utils/files';
 import ProjectPath from '../../utils/ProjectPath';
 
 import { ProjectConfig, ProjectOption } from './ProjectConfig';
-import featureRequestTemplate from './templates/issue-templates/feature_request.template';
-import securityIssueTemplate from './templates/issue-templates/security_issue.template';
-import bugReportTemplate from './templates/issue-templates/bug_report.template';
+import featureRequestTemplate from './templates/issue-templates/featureRequest.template';
+import securityIssueTemplate from './templates/issue-templates/securityIssue.template';
+import bugReportTemplate from './templates/issue-templates/bugReport.template';
 import lintWorkflowTemplate from './templates/workflows/lintWorkflow.template';
 import dockerWorkflowTemplate from './templates/workflows/dockerWorkflow.template';
 import integrationWorkflowTemplate from './templates/workflows/integrationWorkflow.template';
+import tableOfContentsWorkflowTemplate from './templates/workflows/tableOfContentsWorkflow.template';
+import mergeGreetingsWorkflowTemplate from './templates/workflows/mergeGreetingsWorkflow.template';
 
 function initGithub(projectPath: ProjectPath, projectConfig: ProjectConfig) {
   createDir(projectPath.github);
@@ -39,6 +41,12 @@ function initGithub(projectPath: ProjectPath, projectConfig: ProjectConfig) {
     }
     if (projectConfig[ProjectOption.INTEGRATION_PIPELINE]) {
       integrationWorkflowTemplate(projectPath);
+    }
+    if (projectConfig[ProjectOption.TOC_PIPELINE]) {
+      tableOfContentsWorkflowTemplate(projectPath);
+    }
+    if (projectConfig[ProjectOption.GREETINGS_PIPELINE]) {
+      mergeGreetingsWorkflowTemplate(projectPath);
     }
   }
 }

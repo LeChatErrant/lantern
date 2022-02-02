@@ -130,4 +130,12 @@ export default class ProjectPath {
   public get integrationWorkflow() {
     return path.join(this.workflows, 'integration_tests.yml');
   }
+
+  public get mergeGreetingsWorkflow() {
+    return path.join(this.workflows,  'merge_greetings.yml');
+  }
+
+  public get tableOfContentsWorkflow() {
+    return path.join(this.workflows, 'table_of_contents.yml');
+  }
 }
