@@ -67,7 +67,8 @@
   },
   "include": [
     "src/**/*.ts",
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "tsconfig.json"
   ],
   "exclude": [
     "node_modules"
