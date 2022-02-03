@@ -15,6 +15,7 @@ import eslintrcTemplate from './templates/eslintrc.template';
 import packageTemplate from './templates/package.template';
 import initGithub from './initGithub';
 import ProjectPath from '../../utils/ProjectPath';
+import initSources from './templates/initSources';
 
 async function initProject(projectName: string, projectPath: ProjectPath, projectConfig: ProjectConfig) {
   createDir(projectPath.root);
@@ -39,6 +40,8 @@ async function initProject(projectName: string, projectPath: ProjectPath, projec
   }
 
   initGithub(projectPath, projectConfig);
+
+  initSources(projectName, projectPath, projectConfig);
 
   await packageTemplate(projectName, projectPath, projectConfig);
   await launch(projectName, 'npm', 'install');
