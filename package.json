@@ -9,7 +9,8 @@
     "lantern": "bin/src/index.js"
   },
   "repository": {
-    "url": "https://github.com/LeChatErrant/lantern"
+    "type": "git",
+    "url": "https://github.com/LeChatErrant/lantern.git"
   },
   "author": {
     "name": "LeChatErrant",
