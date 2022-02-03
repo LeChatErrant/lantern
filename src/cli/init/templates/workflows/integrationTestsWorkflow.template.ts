@@ -43,6 +43,6 @@ jobs:
       run: source .envrc; npm run integration
 `.substring(1);
 
-export default function integrationWorkflowTemplate(projectPath: ProjectPath) {
+export default function integrationTestsWorkflowTemplate(projectPath: ProjectPath) {
   createFile(projectPath.integrationWorkflow, content);
 }

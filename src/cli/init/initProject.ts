@@ -38,9 +38,7 @@ async function initProject(projectName: string, projectPath: ProjectPath, projec
     procfileTemplate(projectPath);
   }
 
-  if (projectConfig[ProjectOption.GITHUB_ISSUE_TEMPLATES]) {
-    initGithub(projectPath, projectConfig);
-  }
+  initGithub(projectPath, projectConfig);
 
   await packageTemplate(projectName, projectPath, projectConfig);
   await launch(projectName, 'npm', 'install');

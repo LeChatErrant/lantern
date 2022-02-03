@@ -99,6 +99,14 @@ export default class ProjectPath {
     return path.join(this.root, '.github');
   }
 
+  public get dependabot() {
+    return path.join(this.github, 'dependabot.yml');
+  }
+
+  public get mergify() {
+    return path.join(this.github, 'mergify.yml');
+  }
+
   public get issueTemplate() {
     return path.join(this.github, 'ISSUE_TEMPLATE');
   }

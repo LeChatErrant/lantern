@@ -16,9 +16,23 @@ export function capitalize(str: string) {
  * @param str The string in which you want to insert value
  * @param index The index from where the value should be inserted
  * @param value The string to be inserted
+ * @return Result string
  */
 export function insert(str: string, index: number, value: string) {
   return `${str.slice(0, index)}${value}${str.slice(index)}`;
+}
+
+/**
+ * Remove empty lines from a string
+ *
+ * @param str String to format
+ * @return formated string
+ */
+export function removeEmptyLines(str: string) {
+  return str
+    .split('\n')
+    .filter((line) => line !== '')
+    .join('\n');
 }
 
 /**
@@ -27,6 +41,7 @@ export function insert(str: string, index: number, value: string) {
  * @param str String to search in
  * @param left Left operator
  * @param right Right operator
+ * @return Content between `left` and `right`
  *
  * @example
  * parseBetween('a + (b + (c + d))', '(', ')'); // Returns 'b + (c + d)'
