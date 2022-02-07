@@ -1,7 +1,9 @@
-import { createDir } from '../../utils/files';
+import { createDir, registerDirModification, registerFileModification } from '../../utils/files';
 import { launch } from '../../utils/subprocess';
+import ProjectPath from '../../utils/ProjectPath';
 
 import { ProjectConfig, ProjectOption } from './ProjectConfig';
+import initGithub from './initGithub';
 import dockerfileTemplate from './templates/dockerfile.template';
 import dockerignoreTemplate from './templates/dockerignore.template';
 import dockerComposeTemplate from './templates/docker-compose.template';
@@ -13,8 +15,6 @@ import procfileTemplate from './templates/procfile.template';
 import tsconfigTemplate from './templates/tsconfig.template';
 import eslintrcTemplate from './templates/eslintrc.template';
 import packageTemplate from './templates/package.template';
-import initGithub from './initGithub';
-import ProjectPath from '../../utils/ProjectPath';
 import initSources from './templates/initSources';
 
 async function initProject(projectName: string, projectPath: ProjectPath, projectConfig: ProjectConfig) {
@@ -44,6 +44,16 @@ async function initProject(projectName: string, projectPath: ProjectPath, projec
   initSources(projectName, projectPath, projectConfig);
 
   await packageTemplate(projectName, projectPath, projectConfig);
+
+  registerFileModification({
+    path: projectPath.packageLockJson,
+    modificationType: 'CREATE',
+  });
+  registerDirModification({
+    path: projectPath.nodeModules,
+    modificationType: 'CREATE',
+    allowNonEmptyDelete: true,
+  });
   await launch(projectName, 'npm', 'install');
 }
 

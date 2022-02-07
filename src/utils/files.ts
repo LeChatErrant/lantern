@@ -5,29 +5,72 @@ import { blue } from './colors';
 import { FileError } from './errors';
 import logger from './logger';
 
-enum ModificationType {
-  'CREATE',
-  'EDIT',
-  'REMOVE',
-}
-
 enum FileType {
   'DIR',
   'FILE',
 }
 
-type FileModification = {
-  modificationType: ModificationType;
-  fileType: FileType;
+interface FileModification {
   path: string;
+  fileType: FileType.FILE;
+  modificationType: 'CREATE' | 'EDIT' | 'REMOVE',
   beforeModification?: string;
-};
+}
+
+interface DirModification {
+  path: string;
+  fileType: FileType.DIR;
+  modificationType: 'CREATE' | 'REMOVE',
+  allowNonEmptyDelete?: boolean;
+}
+
+type FSModification = FileModification | DirModification;
 
 /**
  * Ordered array storing every file modifications
  * Used to revert to the previous filesystem state in case of errors
  */
-const fileModifications: Array<FileModification> = [];
+const fsModifications: Array<FSModification> = [];
+
+/**
+ * Custom type predicate for `FileModification`
+ */
+function isFileModification(mod: FSModification): mod is FileModification {
+  return mod.fileType === FileType.FILE;
+}
+
+/**
+ * Custom type predicate for `DirModification`
+ */
+function isDirModification(mod: FSModification): mod is DirModification {
+  return mod.fileType === FileType.DIR;
+}
+
+/**
+ * Register a file system modification on a directory.
+ * If an error happens during the execution of the program, it will be used to revert the file system to its previous state
+ *
+ * This function is exported so, when a directory is created without using the `files` library, it still can be registered
+ * (example : the `node_modules` directory on a `npm install` command)
+ *
+ * @param mod Directory modification to register
+ */
+export function registerDirModification(mod: Omit<DirModification, 'fileType'>) {
+  fsModifications.push({ ...mod, fileType: FileType.DIR });
+}
+
+/**
+ * Register a file system modification on a file.
+ * If an error happens during the execution of the program, it will be used to revert the file system to its previous state
+ *
+ * This function is exported so, when a file is created without using the `files` library, it still can be registered
+ * (example : the `package-lock.json` directory on a `npm install` command)
+ *
+ * @param mod File modification to register
+ */
+export function registerFileModification(mod: Omit<FileModification, 'fileType'>) {
+  fsModifications.push({ ...mod, fileType: FileType.FILE });
+}
 
 /**
  * Create a new empty directory
@@ -49,10 +92,9 @@ export function createDir(dirPath: string) {
   }
 
   logger.log(`Creating folder ${blue(dirPath)}`);
-  fileModifications.push({
-    fileType: FileType.DIR,
-    modificationType: ModificationType.CREATE,
+  registerDirModification({
     path: dirPath,
+    modificationType: 'CREATE',
   });
 
   fs.mkdirSync(dirPath);
@@ -73,7 +115,7 @@ export function dirExists(dirPath: string) {
  *
  * @param dirPath Path to the directory
  */
-export function removeDir(dirPath: string) {
+export function removeDir(dirPath: string, allowNonEmptyDelete = false) {
   if (!fs.existsSync(dirPath)) {
     throw new FileError(`Cannot remove directory ${dirPath} : doesn't exist`);
   }
@@ -82,18 +124,21 @@ export function removeDir(dirPath: string) {
     throw new FileError(`Cannot remove directory ${dirPath} : is not a directory`);
   }
 
-  if (fs.readdirSync(dirPath).length !== 0) {
+  if (!allowNonEmptyDelete && fs.readdirSync(dirPath).length !== 0) {
     throw new FileError(`Cannot remove directory ${dirPath} : is not empty`);
   }
 
   logger.log(`Removing folder ${blue(dirPath)}`);
-  fileModifications.push({
-    fileType: FileType.DIR,
-    modificationType: ModificationType.REMOVE,
+  registerDirModification({
     path: dirPath,
+    modificationType: 'REMOVE',
   });
 
-  fs.rmdirSync(dirPath);
+  if (allowNonEmptyDelete) {
+    fs.rmSync(dirPath, { recursive: true });
+  } else {
+    fs.rmdirSync(dirPath);
+  }
 }
 
 /**
@@ -117,10 +162,9 @@ export function createFile(filePath: string, data?: string) {
   }
 
   logger.log(`Creating ${data ? '' : 'empty '}file ${blue(filePath)}`);
-  fileModifications.push({
-    fileType: FileType.FILE,
-    modificationType: ModificationType.CREATE,
+  registerFileModification({
     path: filePath,
+    modificationType: 'CREATE',
   });
 
   fs.writeFileSync(filePath, data ?? '');
@@ -172,10 +216,9 @@ export function editFile(filePath: string, data?: string) {
   const content = fs.readFileSync(filePath).toString();
 
   logger.log(`${data ? 'Editing' : 'Erasing content in'} file ${blue(filePath)}`);
-  fileModifications.push({
-    fileType: FileType.FILE,
-    modificationType: ModificationType.EDIT,
+  registerFileModification({
     path: filePath,
+    modificationType: 'EDIT',
     beforeModification: content,
   });
 
@@ -200,10 +243,9 @@ export function appendToFile(filePath: string, data: string) {
   const content = fs.readFileSync(filePath).toString();
 
   logger.log(`Append data to file ${blue(filePath)}`);
-  fileModifications.push({
-    fileType: FileType.FILE,
-    modificationType: ModificationType.EDIT,
+  registerFileModification({
     path: filePath,
+    modificationType: 'EDIT',
     beforeModification: content,
   });
 
@@ -227,10 +269,9 @@ export function removeFile(filePath: string) {
   const content = fs.readFileSync(filePath).toString();
 
   logger.log(`Removing file ${blue(filePath)}`);
-  fileModifications.push({
-    fileType: FileType.FILE,
-    modificationType: ModificationType.REMOVE,
+  registerFileModification({
     path: filePath,
+    modificationType: 'REMOVE',
     beforeModification: content,
   });
 
@@ -243,22 +284,25 @@ export function removeFile(filePath: string) {
  */
 export function revertAllFileModifications() {
   logger.error('Reverting all modifications...');
-  fileModifications
+  fsModifications
     .reverse()
     .forEach((f) => {
-      switch (f.modificationType) {
-        // Here, eslint is trying to prevent us to add side effects
-        // which is what we want, so we can disable it
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        case ModificationType.CREATE: f.fileType === FileType.FILE ? removeFile(f.path) : removeDir(f.path);
-          break;
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        case ModificationType.EDIT: editFile(f.path, f.beforeModification);
-          break;
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        case ModificationType.REMOVE: f.fileType === FileType.FILE ? createFile(f.path, f.beforeModification) : createDir(f.path);
-          break;
+      if (isFileModification(f)) {
+        switch (f.modificationType) {
+          case 'CREATE': removeFile(f.path);
+            break;
+          case 'EDIT': editFile(f.path, f.beforeModification);
+            break;
+          case 'REMOVE': createFile(f.path, f.beforeModification);
+            break;
+        }
+      } else {
+        switch (f.modificationType) {
+          case 'CREATE': removeDir(f.path, f.allowNonEmptyDelete);
+            break;
+          case 'REMOVE': createDir(f.path);
+            break;
+        }
       }
     });
 }
