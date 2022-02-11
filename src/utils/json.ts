@@ -1,10 +1,11 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 /**
  * Stringify a data in a readable way, with indents and line break
  *
  * @param json Json to beautify
  * @return Printable string
  */
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export function beautifyJson(json: any) {
   return JSON.stringify(json, null, 2);
 }
@@ -15,7 +16,26 @@ export function beautifyJson(json: any) {
  * @param json Json to sort
  * @return Sorted json
  */
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export function sortJsonKeys(json: Record<string, any>) {
   return JSON.parse(JSON.stringify(json, Object.keys(json).sort()));
+}
+
+/**
+ * JSON.parse doesn't convert dates to Date type (yeah, it's insane :( )
+ * Use parseJsonWithDates to correctly have Dates deserialized
+ *
+ * @param str JSON stringifies
+ * @return JSON deserialized, including dates
+ */
+export function parseJsonWithDates(str: string) {
+  const isDateValid = (val: any) => !Number.isNaN(new Date(val).valueOf());
+
+  const handleDates = (key: string, val: any) => {
+    if (isDateValid(val)) {
+      return new Date(val);
+    }
+    return val;
+  };
+
+  return JSON.parse(str, handleDates);
 }
