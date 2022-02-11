@@ -28,10 +28,10 @@ export function sortJsonKeys(json: Record<string, any>) {
  * @return JSON deserialized, including dates
  */
 export function parseJsonWithDates(str: string) {
-  const isDateValid = (val: any) => !Number.isNaN(new Date(val).valueOf());
+  const isDateValid = (val: string) => !Number.isNaN(Date.parse(val)) && Number.isNaN(Number(val));
 
   const handleDates = (key: string, val: any) => {
-    if (isDateValid(val)) {
+    if (typeof val === 'string' && isDateValid(val)) {
       return new Date(val);
     }
     return val;
