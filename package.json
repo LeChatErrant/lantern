@@ -51,7 +51,7 @@
     "@types/download": "^8.0.1",
     "@types/figlet": "^1.5.4",
     "@types/inquirer": "^8.2.1",
-    "@types/node": "^18.0.0",
+    "@types/node": "^18.0.1",
     "@types/pluralize": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
