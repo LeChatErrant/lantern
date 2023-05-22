@@ -42,7 +42,7 @@
     "commander": "^10.0.1",
     "download": "^8.0.0",
     "figlet": "^1.6.0",
-    "inquirer": "9.2.5",
+    "inquirer": "9.2.6",
     "pluralize": "^8.0.0",
     "typescript": "^5.0.4"
   },
