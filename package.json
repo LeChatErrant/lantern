@@ -53,7 +53,7 @@
     "@types/inquirer": "9.0.3",
     "@types/node": "^20.5.6",
     "@types/pluralize": "^0.0.30",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-typescript": "^14.0.2",
