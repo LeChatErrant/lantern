@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@types/clui": "^0.3.4",
-    "@types/download": "^8.0.4",
+    "@types/download": "^8.0.5",
     "@types/figlet": "^1.5.8",
     "@types/inquirer": "9.0.7",
     "@types/node": "^20.9.0",
