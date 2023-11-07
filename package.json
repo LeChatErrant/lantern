@@ -47,7 +47,7 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/clui": "^0.3.3",
+    "@types/clui": "^0.3.4",
     "@types/download": "^8.0.4",
     "@types/figlet": "^1.5.7",
     "@types/inquirer": "9.0.6",
