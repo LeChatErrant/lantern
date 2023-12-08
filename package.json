@@ -60,6 +60,6 @@
     "eslint-plugin-import": "^2.29.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.2"
   }
 }
