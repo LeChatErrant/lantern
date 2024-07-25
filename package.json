@@ -58,7 +58,7 @@
     "eslint": "^7.22.0",
     "eslint-config-airbnb-typescript": "^14.0.2",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^8.0.3",
+    "husky": "^9.1.2",
     "lint-staged": "^15.2.7",
     "ts-node": "^10.9.2"
   }
