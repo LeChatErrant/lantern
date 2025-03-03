@@ -55,7 +55,7 @@
     "@types/pluralize": "^0.0.33",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.22.0",
+    "eslint": "^9.21.0",
     "eslint-config-airbnb-typescript": "^14.0.2",
     "eslint-plugin-import": "^2.31.0",
     "husky": "^8.0.3",
