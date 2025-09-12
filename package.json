@@ -39,7 +39,7 @@
   "dependencies": {
     "clui": "^0.3.6",
     "colors": "^1.4.0",
-    "commander": "^14.0.0",
+    "commander": "^14.0.1",
     "download": "^8.0.0",
     "figlet": "^1.9.1",
     "inquirer": "9.3.4",
