@@ -41,7 +41,7 @@
     "colors": "^1.4.0",
     "commander": "^14.0.2",
     "download": "^8.0.0",
-    "figlet": "^1.9.4",
+    "figlet": "^1.10.0",
     "inquirer": "13.2.1",
     "pluralize": "^8.0.0",
     "typescript": "^5.9.3"
