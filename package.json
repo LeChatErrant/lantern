@@ -44,7 +44,7 @@
     "figlet": "^1.11.0",
     "inquirer": "13.2.1",
     "pluralize": "^8.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@types/clui": "^0.3.5",
